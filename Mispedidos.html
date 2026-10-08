@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Pedidos</title>
+  <link rel="stylesheet" href="Style.css">
+  <style>
+    .contenedor{ width:90%; max-width:1000px; text-align:center; }
+    .contenedor h2{ color: azure; margin-bottom:20px; font-size:28px; }
+    .grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:20px; }
+    .card{ background: rgb(21,22,22); padding:20px; border-radius:15px; box-shadow:0 0 20px rgba(0,0,0,.8); color:white; text-align:left; border-top:5px solid orange; }
+    .card.Preparando{ border-top-color: orange; }
+    .card.Enviando{ border-top-color: #3498db; }
+    .card.Entregado{ border-top-color: #2ecc71; opacity:0.85; }
+    .card h3{ margin-bottom:5px; font-size:18px; }
+    .card small{ color:#aaa; display:block; margin-bottom:10px; }
+    .card p{ font-size:14px; margin:4px 0; }
+    .badge{ display:inline-block; padding:5px 12px; border-radius:20px; font-size:12px; font-weight:bold; margin:10px 0; }
+    .Preparando .badge{ background:orange; color:black; }
+    .Enviando .badge{ background:#3498db; color:white; }
+    .Entregado .badge{ background:#2ecc71; color:white; }
+    .btns{ display:flex; gap:5px; flex-wrap:wrap; margin-top:10px; }
+    .btns button{ flex:1; padding:8px; border:none; border-radius:8px; cursor:pointer; font-size:12px; }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <h2>Mis Pedidos</h2>
+    <button onclick="exportarTodo()" class="btn-link" style="border:none;cursor:pointer;margin-bottom:20px">
+  Exportar todo
+    </button>
+    <div class="grid" id="gridPedidos"></div>
+    <div style="margin-top:20px">
+      <a href="index.html" class="btn-link">Volver a Registrar</a>
+    </div>
+  </div>
+
+<script>
+  function mostrarPedidos(){
+    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    const grid = document.getElementById("gridPedidos");
+    grid.innerHTML = "";
+    if(pedidos.length===0){ grid.innerHTML="<p style='color:white'>No hay pedidos aún</p>"; return; }
+
+    pedidos.forEach((p,i)=>{
+      // para pedidos viejos que no tienen fecha/estado
+      if(!p.fecha) p.fecha = "Sin fecha";
+      if(!p.estado) p.estado = "Preparando";
+
+      const div = document.createElement("div");
+      div.className = `card ${p.estado.replace(" ", "-")}`;
+      div.innerHTML = `
+        <h3>${p.nombre} ${p.apellido}</h3>
+        <small>🔖 Pedido: ${p.codigo ?? "s/c"}</small>
+        <small>📅 Registrado: ${p.fecha}</small>
+        <p><b>N°:</b> ${p.numero}</p>
+        <p><b>Provincia:</b> ${p.provincia}</p>
+        <p><b>Pedido:</b> ${p.pedido} x${p.cantidad}</p>
+        <span class="badge">${p.estado}</span>
+        <div class="btns">
+          <button onclick="cambiarEstado(${i},'En espera')" style="background:#95a5a6">En espera</button>
+         <button onclick="prepararPedido(${i})" style="background:orange">Preparando</button>
+         <button onclick="enviarPedido(${i})" style="background:#3498db;color:white">Enviando</button>
+          <button onclick="entregarPedido(${i})" style="background:#2ecc71;color:white">Entregado</button>
+        </div>
+        <div class="btns">
+          <button onclick="borrarUno(${i})" style="background:#603432;color:white">Eliminar</button>
+        </div>
+        <div class="btns">
+           <button onclick="exportarUno(${i})" style="background:#8e44ad;color:white">Exportar</button>
+          </div>
+        
+      `;
+      grid.appendChild(div);
+    });
+  }
+
+  async function prepararPedido(i) {
+    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    const p = pedidos[i];
+
+    if (!p) return;
+
+    p.estado = "Preparando";
+
+// Actualizar estado en Supabase
+const { error } = await supabaseClient
+    .from("pedidos")
+    .update({ estado: "Preparando" })
+    .eq("codigo", p.codigo);
+
+if (error) {
+    console.error("ERROR AL ACTUALIZAR ESTADO:", error);
+    alert(error.message);
+    return;
+}
+
+// Mantener también actualizado el localStorage
+localStorage.setItem("pedidos", JSON.stringify(pedidos));
+
+    let numero = String(p.numero).replace(/\D/g, "");
+
+    if (numero.length === 9) {
+        numero = "51" + numero;
+    }
+
+  const mensaje =
+    "Hola " + p.nombre + "\n\n" +
+    "Tu pedido " + p.codigo + " ya está preparado nos comunicaremos cuando el pedido este en camino.\n\n" +
+    "Pedido: " + p.pedido + "\n" +
+    "Cantidad: " + p.cantidad + "\n\n" +
+    "¡Gracias por tu compra!";
+
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
+
+    mostrarPedidos();
+      
+}
+
+function enviarPedido(i) {
+
+    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    const p = pedidos[i];
+
+    if (!p) return;
+
+    p.estado = "Enviando";
+
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+
+    let numero = String(p.numero).replace(/\D/g, "");
+
+    if (numero.length === 9) {
+        numero = "51" + numero;
+    }
+
+    const mensaje =
+        "Hola " + p.nombre + "\n\n" +
+        "Tu pedido " + p.codigo + " ya está en camino.\n\n" +
+        "Pedido: " + p.pedido + "\n" +
+        "Cantidad: " + p.cantidad + "\n\n" +
+        "ya estamos en camino, gracias por la espera <3";
+
+    const url =
+        `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
+
+    mostrarPedidos();
+}
+function entregarPedido(i) {
+
+    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    const p = pedidos[i];
+
+    if (!p) return;
+
+    p.estado = "Entregado";
+
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+
+    let numero = String(p.numero).replace(/\D/g, "");
+
+    if (numero.length === 9) {
+        numero = "51" + numero;
+    }
+
+    const mensaje =
+        "Hola " + p.nombre + "\n\n" +
+        "Tu pedido " + p.codigo + " ha sido entregado correctamente.\n\n" +
+        "Gracias por tu compra.";
+
+    const url =
+        `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, "_blank");
+
+    mostrarPedidos();
+}
+  function cambiarEstado(i, nuevoEstado){
+    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    pedidos[i].estado = nuevoEstado;
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    mostrarPedidos();
+  }
+  function borrarUno(i){
+    let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    pedidos.splice(i,1);
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    mostrarPedidos();
+  }
+  mostrarPedidos();
+
+   // Convierte pedidos a texto CSV
+  function pedidosACSV(pedidos) {
+    const columnas = ["codigo", "nombre", "apellido", "numero", "provincia", "fecha", "estado", "cantidad", "pedido"];
+    const encabezado = columnas.join(";");
+    const filas = pedidos.map(p =>
+      columnas.map(c => `"${(p[c] ?? "").toString().replace(/"/g, '""')}"`).join(";")
+    );
+    return [encabezado, ...filas].join("\n");
+  }
+
+  // Descarga el texto como archivo
+  function descargarArchivo(contenido, nombreArchivo) {
+    const blob = new Blob([contenido], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = nombreArchivo;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // Exportar TODOS
+  function exportarTodo() {
+    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    if (pedidos.length === 0) { alert("No hay pedidos para exportar"); return; }
+    descargarArchivo(pedidosACSV(pedidos), "todos_los_pedidos.csv");
+  }
+
+  // Exportar UNO
+  function exportarUno(i) {
+    const pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+    const p = pedidos[i];
+    if (!p) return;
+    descargarArchivo(pedidosACSV([p]), `pedido_${p.nombre}_${p.apellido}.csv`);
+  }
+</script>
+</body>
+</html>

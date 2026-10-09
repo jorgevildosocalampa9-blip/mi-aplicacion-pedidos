@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="fotos/LOGO.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/Style.css">
+
+    <title>Control de Inventario</title>
+</head>
+
+<body class="pagina-inventario">
+
+    <!-- BOTÓN Y FONDO DEL MENÚ -->
+    <button id="btnMenu" class="btn-menu"
+        type="button" aria-label="Abrir menú">☰</button>
+
+    <div id="menuFondo" class="menu-fondo"></div>
+
+    <!-- MENÚ LATERAL -->
+    <nav id="menuLateral" class="menu-lateral">
+        <h2>MENÚ</h2>
+
+        <a href="index.html">Registrar pedido</a>
+        <a href="mispedidos.html">Ver mis pedidos</a>
+        <a href="inventario.html">Inventario</a>
+
+        <button id="btnCerrarSesionMenu" type="button">
+            Cerrar sesión
+        </button>
+    </nav>
+
+    <main class="inventario-contenedor">
+
+        <!-- ENCABEZADO -->
+        <header class="inv-encabezado">
+            <div>
+                <p class="inv-etiqueta">GESTIÓN DE MERCADERÍA</p>
+
+                <h1 class="inventario-titulo">INVENTARIO</h1>
+
+                <p class="inventario-descripcion">
+                    Administra tus productos, compras y existencias.
+                </p>
+            </div>
+        </header>
+
+        <!-- OPCIONES PRINCIPALES -->
+        <section class="inventario-opciones">
+
+            <button type="button"
+                class="inventario-opcion"
+                onclick="mostrarSeccion('registrarProducto')">
+
+                <span class="inventario-icono">＋</span>
+
+                <strong>Registrar productos</strong>
+
+                <span>
+                    Agregar mercadería y costos de compra.
+                </span>
+            </button>
+
+            <button type="button"
+                class="inventario-opcion"
+                onclick="mostrarSeccion('controlStock')">
+
+                <span class="inventario-icono">▦</span>
+
+                <strong>Control de stock</strong>
+
+                <span>
+                    Consultar existencias y movimientos registrados.
+                </span>
+            </button>
+
+        </section>
+
+        <!-- ========================================= -->
+        <!-- REGISTRAR PRODUCTOS                       -->
+        <!-- ========================================= -->
+
+        <section id="registrarProducto"
+            class="inventario-panel" hidden>
+
+            <div class="inv-panel-cabecera">
+
+                <div>
+                    <p class="inv-etiqueta">NUEVO REGISTRO</p>
+                    <h2>Registrar productos</h2>
+                </div>
+
+                <button type="button"
+                    class="btn-link"
+                    onclick="volverOpciones()">
+                    ← Volver
+                </button>
+
+            </div>
+
+            <form id="formularioProducto"
+                class="inv-formulario">
+
+                <div class="inv-campo">
+                    <label for="nombreProducto">
+                        Nombre del producto
+                    </label>
+
+                    <input type="text"
+                        id="nombreProducto"
+                        placeholder="Ej. Polera negra"
+                        required>
+                </div>
+
+                <div class="inv-campo">
+                    <label for="precioVenta">
+                        Precio de venta por unidad (S/)
+                    </label>
+
+                    <input type="number"
+                        id="precioVenta"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="Ej. 25.00"
+                        required>
+                </div>
+
+                <div class="inv-campo">
+                    <label for="codigoProducto">
+                        Código del producto
+                    </label>
+
+                    <input type="text"
+                        id="codigoProducto"
+                        placeholder="Ej. POL-001"
+                        required>
+                </div>
+
+                <div class="inv-campo">
+                    <label for="cantidadComprada">
+                        Cantidad comprada
+                    </label>
+
+                    <input type="number"
+                        id="cantidadComprada"
+                        min="1"
+                        step="1"
+                        placeholder="Ej. 20"
+                        required>
+                </div>
+
+                <div class="inv-campo">
+                    <label for="costoUnitario">
+                        Costo por unidad (S/)
+                    </label>
+
+                    <input type="number"
+                        id="costoUnitario"
+                        min="0"
+                        step="0.01"
+                        placeholder="Ej. 15.00"
+                        required>
+                </div>
+
+                <div class="inv-campo">
+                    <label for="fechaCompra">
+                        Fecha de compra
+                    </label>
+
+                    <input type="date"
+                        id="fechaCompra"
+                        required>
+                </div>
+
+                <div class="inv-total-compra">
+                    <span>Costo total de compra</span>
+                    <strong id="costoTotalPreview">S/ 0.00</strong>
+                </div>
+
+                <button type="submit"
+                    class="btn inv-btn-guardar">
+                    Registrar producto
+                </button>
+
+            </form>
+        </section>
+
+        <!-- ========================================= -->
+        <!-- CONTROL DE STOCK                          -->
+        <!-- ========================================= -->
+
+        <section id="controlStock"
+            class="inventario-panel" hidden>
+
+            <div class="inv-panel-cabecera">
+
+                <div>
+                    <p class="inv-etiqueta">
+                        RESUMEN DE MERCADERÍA
+                    </p>
+
+                    <h2>Control de stock y compras</h2>
+
+                    <p class="inv-subtitulo">
+                        Consulta los costos, las existencias y las fechas de compra.
+                    </p>
+                </div>
+
+                <button type="button"
+                    class="btn-link"
+                    onclick="volverOpciones()">
+                    ← Volver
+                </button>
+
+            </div>
+
+            <!-- RESÚMENES -->
+            <div class="inventario-resumen">
+
+                <div class="inv-resumen-card">
+                    <span>Unidades disponibles</span>
+                    <strong id="totalUnidades">0</strong>
+                    <small>Unidades registradas</small>
+                </div>
+
+                <div class="inv-resumen-card inv-resumen-destacado">
+                    <span>Valor del stock al costo</span>
+                    <strong id="valorStock">S/ 0.00</strong>
+                    <small>Stock × costo unitario</small>
+                </div>
+
+                <div class="inv-resumen-card inv-resumen-verde">
+                    <span>Total vendido</span>
+                    <strong id="totalVendido">S/ 0.00</strong>
+                    <small>Solo pedidos entregados</small>
+                </div>
+
+            </div>
+
+            <!-- TABLA DE PRODUCTOS -->
+            <div class="inv-tabla-cabecera">
+
+                <div>
+                    <h3>Productos registrados</h3>
+
+                    <p>
+                        Busca un artículo o exporta tu inventario a Excel.
+                    </p>
+                </div>
+
+                <div class="inv-acciones-tabla">
+
+                    <input type="search"
+                        id="buscarProducto"
+                        placeholder="Buscar por nombre o código"
+                        aria-label="Buscar producto">
+
+                    <button type="button"
+                        class="btn-exportar-excel"
+                        onclick="exportarInventarioExcel()">
+                        ↓ Exportar a Excel
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- TABLA -->
+            <div class="inventario-tabla-contenedor">
+
+                <table class="inventario-tabla">
+
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Stock</th>
+                            <th>Costo unitario</th>
+                            <th>Precio de venta</th>
+                            <th>Valor total</th>
+                            <th>Fecha de compra</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="listaStock">
+                        <tr>
+                            <td colspan="8">
+                                Cargando productos...
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <p class="inv-nota">
+                El valor total se calcula multiplicando el stock
+                por el costo unitario.
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- SUPABASE Y JAVASCRIPT -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/inventario.js"></script>
+
+</body>
+</html>

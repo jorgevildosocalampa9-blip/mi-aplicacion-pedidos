@@ -4,13 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/LOGO.ico" type="image/x-icon">
+    <link rel="icon" href="fotos/LOGO.ico" type="image/x-icon">
+
     <title>Registro</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="./css/Style.css">
     
 </head>
 <body>
+<!-- MENÚ LATERAL -->
+    <button id="btnMenu" class="btn-menu" type="button">
+        ☰
+    </button>
+
+    <div id="menuFondo" class="menu-fondo"></div>
+
+    <nav id="menuLateral" class="menu-lateral">
+        <h2>MENÚ</h2>
+        <a href="mispedidos.html">Ver mis pedidos</a>
+        <a href="inventario.html">Inventario</a>
+        <button id="btnCerrarSesionMenu" type="button">
+            Cerrar sesión
+        </button>
+    </nav>
     <div id="loginOverlay">
 
     <div id="loginBox">
@@ -40,16 +56,16 @@
       <input type="text" id="apellido" placeholder="Apellido" required>
       <input type="text" id="numero" placeholder="Numero" required>
       <input type="text" id="provincia" placeholder="Provincia" required>
-      <input type="text" id="pedido" placeholder="Pedido" required>
+      <select id="pedido" required>
+    <option value="">Cargando productos...</option>
+</select>
       <input type="number" id="cantidad" placeholder="Cantidad" required>
       <input type="submit" class="btn" value="Registrar">
     
   </form>
 
-  <a href="mispedidos.html" class="btn-link">Ver Mis Pedidos</a>
-
   <button id="btnCerrarSesion">Cerrar sesión</button>
   
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>

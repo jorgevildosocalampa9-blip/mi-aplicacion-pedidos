@@ -1,0 +1,1257 @@
+* {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+
+}
+
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    background-image: url("../fotos/LOGO.jpeg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+
+}
+
+form{
+   background-color: rgba(21, 22, 22, 0.317);
+   display: flex; 
+   flex-direction: column;
+   padding: 50px;
+   width: 420px;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.274);
+   text-align: center;
+}
+
+form h2{
+    font-size: 30px;
+    color: azure;
+    margin-bottom: 35px;
+
+}
+
+input{
+    padding: 17px;
+    border-radius: 25px;
+    background-color: transparent;
+    border: 2px solid #603432;
+    margin-bottom: 30px;
+    outline: none;
+    color: white;
+    font-size: 16px;
+}
+
+::placeholder{
+    color: white;
+}
+
+.btn{
+    background-color: rgba(195, 36, 36, 0.545);
+    border: 2px solid red;
+    cursor: pointer;
+}
+
+.btn:hover{
+   background-color: rgba(144, 42, 42, 0.545);
+    border: 2px solid rgb(123, 22, 22); 
+}
+@media (max-width:991px){
+    body{
+        padding: 30px;
+    }
+    form{
+        width: 340px;
+    }
+}
+
+.btn-link{
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 40px;
+  border-radius: 25px;
+  background-color: rgba(195, 36, 36, 0.545);
+  border: 2px solid red;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+.btn-link:hover{
+  background-color: rgba(144, 42, 42, 0.545);
+}
+.card.En-espera{ border-top-color: #95a5a6; }
+    .En-espera .badge{ background:#95a5a6; color:black; }
+    #loginOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+#loginBox {
+    width: 90%;
+    max-width: 380px;
+    padding: 40px 30px;
+    border-radius: 16px; /* Bordes redondeados modernos, no exagerados */
+    background: #111111; /* Negro profundo profesional para la tarjeta */
+    border: 1px solid #9a0808; /* Borde muy sutil para separarlo del fondo de la página */
+    /* Sombra oscura difuminada para dar profundidad */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7); 
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Título principal "Iniciar sesión" */
+#loginBox h2 {
+    margin-top: 0;
+    margin-bottom: 28px;
+    color: #ffffff; /* Blanco limpio */
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+/* Estilo para los campos de texto (Inputs) */
+#loginBox input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    margin: 10px 0;
+    background-color: #1a1a1a; /* Gris muy oscuro, ideal para inputs en modo oscuro */
+    border: 1px solid #333333; /* Borde sutil */
+    border-radius: 8px;
+    font-size: 15px;
+    color: #ffffff !important; /* Texto que escribe el usuario en blanco */
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Estilo del texto sugerido (Placeholder) dentro de los inputs */
+#loginBox input::placeholder {
+    color: #666666; /* Gris apagado para que no compita con el texto real */
+}
+
+/* Efecto cuando el usuario hace clic para escribir en el input */
+#loginBox input:focus {
+    border-color: #ffffff; /* El borde se vuelve blanco brillante al escribir */
+    background-color: #1e1e1e;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08); /* Brillo blanco sutil */
+}
+
+/* Botón de Ingresar (Estilo premium contrastante) */
+#loginBox button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    background-color: #9a0c0c; /* Botón blanco que resalta inmediatamente sobre el negro */
+    color: #ffffff; /* Texto negro dentro del botón */
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Efectos para el botón al pasar el mouse y hacer clic */
+#loginBox button:hover {
+    background-color: #c97171; /* Se vuelve un gris muy claro */
+}
+
+#loginBox button:active {
+    transform: scale(0.98); /* Efecto de pulsación */
+}
+
+/* Enlace de ¿Olvidaste tu contraseña? */
+#loginBox a {
+    display: inline-block;
+    margin-top: 12px;
+    color: #888888; /* Gris medio para mantener la sobriedad */
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+#loginBox a:hover {
+    color: #ffffff; /* Se ilumina en blanco al pasar el mouse */
+    text-decoration: underline;
+}
+
+/* Mensajes de error o alertas */
+#loginError {
+    display: block;
+    margin-top: 15px;
+    color: #ff4d4d; /* Un rojo vibrante que resalta perfectamente sobre el negro */
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Mantenemos tus reglas específicas pero adaptadas */
+#password {
+    -webkit-text-security: disc;
+}
+
+#btnCerrarSesion {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+
+    background-color: white;
+    color: #d9534f;
+    border: 1.5px solid #d9534f;
+    border-radius: 8px;
+
+    padding: 9px 16px;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#btnCerrarSesion:hover {
+    background-color: #d9534f;
+    color: white;
+}
+
+/* MENÚ LATERAL */
+
+.btn-menu {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 10001;
+    width: 48px;
+    height: 48px;
+    background: #111;
+    color: white;
+    border: 1px solid #9a0808;
+    border-radius: 10px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.menu-fondo {
+    position: fixed;
+    inset: 0;
+    z-index: 10002;
+    background: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.25s;
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10003;
+    width: 280px;
+    max-width: 85%;
+    height: 100vh;
+    padding: 30px 20px;
+    background: #111;
+    border-right: 2px solid #9a0808;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-lateral h2 {
+    color: white;
+    margin: 15px 0 20px;
+}
+
+.menu-lateral a,
+#btnCerrarSesionMenu {
+    padding: 14px;
+    background: #202020;
+    color: white;
+    border: 1px solid #9a0808;
+    border-radius: 8px;
+    text-decoration: none;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu-lateral a:hover,
+#btnCerrarSesionMenu:hover {
+    background: #9a0808;
+}
+
+body.menu-abierto .menu-lateral {
+    transform: translateX(0);
+}
+
+body.menu-abierto .menu-fondo {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ocultar el botón antiguo de cerrar sesión */
+#btnCerrarSesion {
+    display: none;
+}
+
+/* Ocultar el menú mientras no haya sesión */
+body:not(.sesion-activa) #btnMenu,
+body:not(.sesion-activa) #menuFondo,
+body:not(.sesion-activa) #menuLateral {
+    display: none;
+}
+
+/* Fondo exclusivo de Inventario */
+body.pagina-inventario {
+    background-image: url("../fotos/logo\ 2.jpeg");
+       background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: white;
+}
+
+/* =====================================
+   BOTONES MODERNOS DE INVENTARIO
+===================================== */
+
+.inventario-opciones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    width: 100%;
+    margin: 30px 0;
+}
+
+.inventario-opcion {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 190px;
+    padding: 25px;
+    text-align: left;
+    color: #ffffff;
+    background: linear-gradient(145deg, #20212a, #14151b);
+    border: 1px solid #41414f;
+    border-radius: 18px;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+    transition: transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+.inventario-opcion:first-child {
+    border-bottom: 3px solid #a78bfa;
+}
+
+.inventario-opcion:last-child {
+    border-bottom: 3px solid #5eead4;
+}
+
+.inventario-opcion:hover {
+    transform: translateY(-5px);
+    border-color: #8b8b9d;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
+}
+
+.inventario-opcion:focus-visible {
+    outline: 3px solid #a78bfa;
+    outline-offset: 4px;
+}
+
+.inventario-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    font-size: 32px;
+    font-weight: 400;
+    color: #d8ccff;
+    background: rgba(167, 139, 250, 0.15);
+    border-radius: 14px;
+}
+
+.inventario-opcion:last-child .inventario-icono {
+    color: #5eead4;
+    background: rgba(94, 234, 212, 0.13);
+}
+
+.inventario-opcion strong {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.inventario-opcion > span:last-child {
+    color: #c1c2cd;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Adaptación para celulares */
+@media (max-width: 600px) {
+    .inventario-opciones {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .inventario-opcion {
+        min-height: 155px;
+        padding: 20px;
+    }
+}
+
+/* Centrar título y enlace de Inventario */
+body.pagina-inventario .inventario-titulo {
+    text-align: center;
+    width: 100%;
+}
+
+body.pagina-inventario .btn-link {
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0;
+    text-align: center;
+}
+
+/* =====================================
+   TITULO Y SUBTITULO DE INVENTARIO
+   Estilo cristal transparente
+===================================== */
+
+body.pagina-inventario .inventario-titulo {
+    display: table;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 16px;
+    padding: 12px 28px;
+
+    color: rgb(232, 217, 217);
+    text-align: center;
+    letter-spacing: 3px;
+
+    background: rgba(15, 18, 25, 0.648);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 16px;
+
+    box-shadow: 0 4px 20px rgb(0, 0, 0);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+body.pagina-inventario .inventario-descripcion {
+    width: fit-content;
+    max-width: 95%;
+    margin: 0 auto 25px;
+    padding: 10px 20px;
+
+    color: rgb(232, 217, 217);
+    text-align: center;
+    line-height: 1.6;
+
+    background: rgba(15, 18, 25, 0.648);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 12px;
+
+    box-shadow: 0 4px 20px rgb(0, 0, 0);;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+
+/* =====================================
+   FORMULARIO DE INVENTARIO MODERNO
+===================================== */
+
+body.pagina-inventario .inventario-panel {
+    width: 100%;
+    max-width: 760px;
+    margin: 25px auto;
+    padding: 30px;
+
+    color: #ffffff;
+    background: linear-gradient(145deg, #20212a, #14151b);
+    border: 1px solid #41414f;
+    border-top: 3px solid #a78bfa;
+    border-radius: 18px;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+body.pagina-inventario .inventario-panel h2 {
+    margin-bottom: 24px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 24px;
+}
+
+body.pagina-inventario #formularioProducto {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+body.pagina-inventario #formularioProducto label {
+    color: #d8d8e2;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+body.pagina-inventario #formularioProducto input,
+body.pagina-inventario #buscarProducto {
+    width: 100%;
+    padding: 12px 14px;
+    color: #ffffff;
+    background: #292a35;
+    border: 1px solid #484958;
+    border-radius: 10px;
+    outline: none;
+}
+
+body.pagina-inventario #formularioProducto input:focus,
+body.pagina-inventario #buscarProducto:focus {
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.14);
+}
+
+body.pagina-inventario .inventario-total {
+    margin: 16px 0;
+    padding: 15px;
+    color: #e5e5ef;
+    background: rgba(167, 139, 250, 0.10);
+    border: 1px solid rgba(167, 139, 250, 0.30);
+    border-radius: 12px;
+}
+
+body.pagina-inventario #costoTotalPreview {
+    color: #d8ccff;
+}
+
+body.pagina-inventario #formularioProducto button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #6d54b5, #51408c);
+    border: 1px solid #9a84e8;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.pagina-inventario #formularioProducto button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(109, 84, 181, 0.3);
+}
+
+/* Ocultar el título y las opciones cuando se abre un panel */
+body.pagina-inventario.seccion-abierta
+.inventario-titulo,
+body.pagina-inventario.seccion-abierta
+.inventario-descripcion,
+body.pagina-inventario.seccion-abierta
+.inventario-opciones {
+    display: none;
+}
+
+/* Ajustes para móviles */
+@media (max-width: 600px) {
+    body.pagina-inventario .inventario-panel {
+        padding: 20px;
+        margin: 15px auto;
+    }
+
+    body.pagina-inventario .inventario-panel h2 {
+        font-size: 21px;
+    }
+}
+
+/* Ocultar cabecera y botones al abrir una sección */
+body.pagina-inventario.seccion-abierta .inventario-titulo,
+body.pagina-inventario.seccion-abierta .inventario-descripcion,
+body.pagina-inventario.seccion-abierta .inventario-opciones {
+    display: none !important;
+}
+
+/* Mantener visible únicamente el panel seleccionado */
+body.pagina-inventario.seccion-abierta .inventario-panel[hidden] {
+    display: none !important;
+}
+
+.icono-casa {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #222;
+    color: white;
+    border-radius: 50%;
+    font-size: 30px;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.icono-casa:hover {
+    transform: scale(1.08);
+}
+
+body .btn-menu {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 10001;
+    font-size: 26px;
+    cursor: pointer;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+/* Corregir la capa del menú lateral */
+body.menu-abierto .menu-fondo {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+body.menu-abierto .menu-lateral {
+    display: flex;
+    transform: translateX(0);
+}
+
+/* Botón para eliminar productos del inventario */
+.btn-eliminar-stock {
+    background: #9a0808;
+    color: #fff;
+    border: 1px solid #c62828;
+    border-radius: 7px;
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-eliminar-stock:hover {
+    background: #c62828;
+}
+
+.inventario-tabla th,
+.inventario-tabla td {
+    vertical-align: middle;
+}
+
+.inventario-tabla-contenedor {
+    overflow-x: auto;
+}
+
+
+/* ==========================================
+   INVENTARIO: PANEL ADMINISTRATIVO
+   Mantiene el fondo y la identidad negro/rojo
+   ========================================== */
+
+.pagina-inventario {
+    background-color: #080808;
+}
+
+.pagina-inventario .inventario-contenedor {
+    width: 98%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 90px 22px 50px;
+    display: block;
+    min-height: 100vh;
+    color: #f4f4f4;
+}
+
+.pagina-inventario .inv-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.pagina-inventario .inv-etiqueta {
+    color: #d52b35;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 9px;
+}
+
+.pagina-inventario .inventario-titulo {
+    color: #fff;
+    font-size: clamp(26px, 4vw, 38px);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.pagina-inventario .inventario-descripcion,
+.pagina-inventario .inv-subtitulo {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.pagina-inventario .inventario-opciones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin: 28px 0;
+}
+
+.pagina-inventario .inventario-opcion {
+    min-height: 145px;
+    padding: 22px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+    background: rgba(17, 17, 17, 0.94);
+    color: #fff;
+    border: 1px solid #303030;
+    border-left: 4px solid #9a0808;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color .2s, transform .2s;
+}
+
+.pagina-inventario .inventario-opcion:hover {
+    border-color: #9a0808;
+    transform: translateY(-2px);
+}
+
+.pagina-inventario .inventario-icono {
+    font-size: 27px;
+    color: #e3323d;
+}
+
+.pagina-inventario .inventario-opcion strong {
+    font-size: 17px;
+}
+
+.pagina-inventario .inventario-opcion span:last-child {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.pagina-inventario .inventario-panel {
+    margin-top: 26px;
+    padding: clamp(16px, 3vw, 28px);
+    color: #f5f5f5;
+    background: rgba(12, 12, 12, 0.97);
+    border: 1px solid #292929;
+    border-radius: 15px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, .3);
+}
+
+.pagina-inventario .inventario-panel[hidden],
+.pagina-inventario .inventario-opciones[hidden] {
+    display: none !important;
+}
+
+.pagina-inventario .inv-panel-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.pagina-inventario .inv-panel-cabecera h2 {
+    font-size: clamp(20px, 3vw, 27px);
+    color: #fff;
+    margin: 0 0 8px;
+}
+
+.pagina-inventario .btn-link {
+    background: #1c1c1c;
+    color: #eee;
+    border: 1px solid #393939;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.pagina-inventario .btn-link:hover {
+    border-color: #a10c15;
+    color: #fff;
+}
+
+.pagina-inventario .inv-formulario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 19px;
+}
+
+.pagina-inventario .inv-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pagina-inventario .inv-campo label {
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.pagina-inventario .inv-campo input,
+.pagina-inventario #buscarProducto {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 14px;
+    color: #fff;
+    background: #171717;
+    border: 1px solid #353535;
+    border-radius: 8px;
+    outline: none;
+}
+
+.pagina-inventario .inv-campo input:focus,
+.pagina-inventario #buscarProducto:focus {
+    border-color: #b51c26;
+    box-shadow: 0 0 0 3px rgba(181, 28, 38, .12);
+}
+
+.pagina-inventario input[type="date"] {
+    color-scheme: dark;
+}
+
+.pagina-inventario .inv-total-compra {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px;
+    background: #191111;
+    border: 1px solid #4a191d;
+    border-radius: 9px;
+    color: #ccc;
+}
+
+.pagina-inventario .inv-total-compra strong {
+    color: #ff626b;
+    font-size: 21px;
+}
+
+.pagina-inventario .inv-btn-guardar {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 14px;
+    color: #fff;
+    background: #9a0808;
+    border: 1px solid #b3212b;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.pagina-inventario .inv-btn-guardar:hover {
+    background: #bd171f;
+}
+
+.pagina-inventario button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+/* Tarjetas de resumen */
+
+.pagina-inventario .inventario-resumen {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    margin: 24px 0 30px;
+}
+
+.pagina-inventario .inv-resumen-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background: #151515;
+    border: 1px solid #303030;
+    border-radius: 11px;
+    min-width: 0;
+}
+
+.pagina-inventario .inv-resumen-card span {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.pagina-inventario .inv-resumen-card strong {
+    color: #fff;
+    font-size: clamp(21px, 2.5vw, 28px);
+    overflow-wrap: anywhere;
+}
+
+.pagina-inventario .inv-resumen-card small {
+    color: #777;
+    font-size: 11px;
+}
+
+.pagina-inventario .inv-resumen-destacado {
+    background: linear-gradient(135deg, #211010, #151515);
+    border-color: #702026;
+}
+
+.pagina-inventario .inv-resumen-destacado strong {
+    color: #ff626b;
+}
+
+/* Tabla */
+
+.pagina-inventario .inv-tabla-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.pagina-inventario .inv-tabla-cabecera h3 {
+    color: #fff;
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.pagina-inventario .inv-tabla-cabecera p {
+    color: #888;
+    font-size: 12px;
+}
+
+.pagina-inventario #buscarProducto {
+    max-width: 340px;
+}
+
+.pagina-inventario .inventario-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #303030;
+    border-radius: 10px;
+    background: #101010;
+}
+
+.pagina-inventario .inventario-tabla {
+    width: 100%;
+    min-width: 920px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.pagina-inventario .inventario-tabla thead {
+    background: #211010;
+}
+
+.pagina-inventario .inventario-tabla th {
+    padding: 16px 14px;
+    color: #f0b6b9;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-bottom: 1px solid #4c2023;
+}
+
+.pagina-inventario .inventario-tabla td {
+    padding: 15px 14px;
+    color: #ddd;
+    font-size: 13px;
+    white-space: nowrap;
+    border-bottom: 1px solid #252525;
+    vertical-align: middle;
+}
+
+.pagina-inventario .inventario-tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pagina-inventario .inventario-tabla tbody tr:hover {
+    background: #1b1515;
+}
+
+.pagina-inventario .inventario-tabla .inv-codigo {
+    color: #ff777f;
+    font-weight: 700;
+}
+
+.pagina-inventario .inventario-tabla .inv-stock {
+    color: #fff;
+    font-weight: 800;
+}
+
+.pagina-inventario .btn-eliminar-stock {
+    padding: 8px 11px;
+    color: #ff8b91;
+    background: #2b1113;
+    border: 1px solid #78232a;
+    border-radius: 7px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.pagina-inventario .btn-eliminar-stock:hover {
+    color: #fff;
+    background: #a10c15;
+}
+
+.pagina-inventario .inv-nota {
+    color: #777;
+    font-size: 11px;
+    line-height: 1.6;
+    margin-top: 14px;
+}
+
+.pagina-inventario .icono-casa {
+    display: inline-block;
+    margin-top: 25px;
+}
+
+/* Adaptación a pantallas pequeñas */
+
+@media (max-width: 700px) {
+    .pagina-inventario .inventario-contenedor {
+        width: 100%;
+        padding: 82px 12px 30px;
+    }
+
+    .pagina-inventario .inventario-opciones,
+    .pagina-inventario .inventario-resumen,
+    .pagina-inventario .inv-formulario {
+        grid-template-columns: 1fr;
+    }
+
+    .pagina-inventario .inv-tabla-cabecera {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .pagina-inventario #buscarProducto {
+        max-width: none;
+    }
+
+    .pagina-inventario .inv-panel-cabecera {
+        flex-direction: column;
+    }
+
+    .pagina-inventario .inv-total-compra,
+    .pagina-inventario .inv-btn-guardar {
+        grid-column: 1;
+    }
+}
+
+/* Control de stock más ancho */
+.pagina-inventario #controlStock {
+    width: 100%;
+}
+
+.pagina-inventario .inventario-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.pagina-inventario .inventario-tabla {
+    width: 100%;
+    min-width: 1050px;
+}
+
+/* Botón Exportar a Excel */
+.pagina-inventario .btn-exportar-excel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    background: #173d29;
+    color: #fff;
+    border: 1px solid #287348;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.pagina-inventario .btn-exportar-excel:hover {
+    background: #205638;
+}
+
+/* Espaciado del encabezado de inventario */
+.pagina-inventario .inv-encabezado {
+    margin-bottom: 30px;
+}
+
+.pagina-inventario .inventario-titulo {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.pagina-inventario .inventario-descripcion {
+    margin-top: 8px;
+    line-height: 1.6;
+}
+
+/* Centrar el formulario de registro de productos */
+.pagina-inventario #registrarProducto .inv-formulario {
+    width: 100%;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pagina-inventario #registrarProducto .inv-panel-cabecera {
+    text-align: center;
+}
+
+.pagina-inventario #registrarProducto .inv-campo {
+    width: 100%;
+}
+
+.pagina-inventario #registrarProducto .inv-campo input,
+.pagina-inventario #registrarProducto .inv-campo select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ===================================
+   LISTA DE PRODUCTOS - ESTILO PREMIUM
+   =================================== */
+
+#pedido {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 44px 14px 16px;
+
+    background-color: rgba(20, 20, 20, 0.88);
+    color: #f5f1e8;
+
+    border: 1px solid #a88b4a;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+
+    cursor: pointer;
+    outline: none;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease;
+}
+
+/* Cuando seleccionas la lista */
+#pedido:hover {
+    border-color: #d4b66a;
+    background-color: rgba(28, 28, 28, 0.96);
+}
+
+/* Cuando haces clic */
+#pedido:focus {
+    border-color: #e0c477;
+    box-shadow: 0 0 0 3px rgba(212, 182, 106, 0.20);
+}
+
+/* Opciones de productos */
+#pedido option {
+    background-color: #202020;
+    color: #f5f1e8;
+    padding: 12px;
+}
+
+/* Productos agotados */
+#pedido option:disabled {
+    color: #999999;
+}
+
+/* Compatibilidad con pantallas pequeñas */
+@media (max-width: 600px) {
+    #pedido {
+        min-height: 50px;
+        font-size: 14px;
+        border-radius: 9px;
+    }
+}
+
+
+.inv-resumen-verde {
+    background: #e8f7ec;
+    border: 1px solid #a5d6b0;
+    border-left: 5px solid #239447;
+    color: #176b32;
+}
+
+.inv-resumen-verde strong {
+    color: #16803a;
+}
+
+.inv-resumen-verde {
+    background: #e8f7ec;
+    border: 1px solid #a5d6b0;
+    border-left: 5px solid #239447;
+    color: #176b32;
+}
+
+.inv-resumen-verde strong {
+    color: #16803a;
+}
+/* Cuadro verde: total vendido */
+.inv-resumen-card.inv-resumen-verde {
+    background: #e8f7ec !important;
+    border: 1px solid #a5d6b0 !important;
+    border-left: 5px solid #239447 !important;
+    color: #176b32 !important;
+}
+
+.inv-resumen-card.inv-resumen-verde span,
+.inv-resumen-card.inv-resumen-verde small {
+    color: #176b32 !important;
+}
+
+.inv-resumen-card.inv-resumen-verde strong {
+    color: #16803a !important;
+}

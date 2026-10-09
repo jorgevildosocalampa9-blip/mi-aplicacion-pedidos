@@ -1,13 +1,12 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/LOGO.ico" type="image/x-icon">
+    <link rel="icon" href="fotos/LOGO.ico" type="image/x-icon">
     <title>Mis Pedidos</title>
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="./css/Style.css">
 
     <style>
 
@@ -122,6 +121,17 @@
 
 <body>
 
+<button id="btnMenu" class="btn-menu" type="button" aria-label="Abrir menú">☰</button>
+<div id="menuFondo" class="menu-fondo"></div>
+
+<nav id="menuLateral" class="menu-lateral">
+    <h2>MENÚ</h2>
+    <a href="index.html">Registrar pedido</a>
+    <a href="mispedidos.html">Ver mis pedidos</a>
+    <a href="inventario.html">Inventario</a>
+    <button id="btnCerrarSesionMenu" type="button">Cerrar sesión</button>
+</nav>
+
     <div class="contenedor">
 
         <h2>Mis Pedidos</h2>
@@ -136,13 +146,7 @@
 
         <div class="grid" id="gridPedidos"></div>
 
-        <div style="margin-top:20px">
-            <a href="index.html" class="btn-link">
-                Volver a Registrar
-            </a>
-        </div>
-
-    </div>
+        <div style="margin-top:20px"></div>
 
 
     <!-- SUPABASE -->
@@ -167,6 +171,14 @@
         );
 
         console.log("Supabase conectado en Mis Pedidos");
+
+        supabaseClient.auth.getSession().then(({ data }) => {
+    if (data.session) {
+        document.body.classList.add("sesion-activa");
+    } else {
+        document.body.classList.remove("sesion-activa");
+    }
+});
 
 
         // =====================================================
@@ -389,46 +401,26 @@
         // CAMBIAR ESTADO
         // =====================================================
 
-        async function actualizarEstado(
-            codigo,
-            nuevoEstado
-        ) {
-
-            const { error } =
-                await supabaseClient
-                    .from("pedidos")
-                    .update({
-                        estado: nuevoEstado
-                    })
-                    .eq("codigo", codigo);
-
-
-            if (error) {
-
-                console.error(
-                    "ERROR AL ACTUALIZAR ESTADO:",
-                    error
-                );
-
-                alert(
-                    "No se pudo actualizar el estado:\n" +
-                    error.message
-                );
-
-                return false;
-            }
-
-
-            console.log(
-                "Estado actualizado:",
-                nuevoEstado
-            );
-
-
-            await mostrarPedidos();
-
-            return true;
+async function actualizarEstado(codigo, nuevoEstado) {
+    const { data, error } = await supabaseClient.rpc(
+        "cambiar_estado_pedido_seguro",
+        {
+            p_codigo: codigo,
+            p_nuevo_estado: nuevoEstado
         }
+    );
+
+    if (error) {
+        console.error("ERROR AL ACTUALIZAR ESTADO:", error);
+        alert("No se pudo actualizar el estado:\n" + error.message);
+        return false;
+    }
+
+    console.log("Resultado:", data);
+
+    await mostrarPedidos();
+    return true;
+}
 
 
 
@@ -651,54 +643,28 @@ Tu pedido ${pedido.codigo} ha sido entregado correctamente ✅.
         // ELIMINAR PEDIDO
         // =====================================================
 
-        async function borrarUno(codigo) {
+       async function borrarUno(codigo) {
+    if (!confirm("¿Seguro que quieres eliminar este pedido?")) {
+        return;
+    }
 
-            console.log(
-                "Intentando eliminar:",
-                codigo
-            );
-
-
-            if (
-                !confirm(
-                    "¿Seguro que quieres eliminar este pedido?"
-                )
-            ) {
-                return;
-            }
-
-
-            const { error } =
-                await supabaseClient
-                    .from("pedidos")
-                    .delete()
-                    .eq("codigo", codigo);
-
-
-            if (error) {
-
-                console.error(
-                    "ERROR AL ELIMINAR:",
-                    error
-                );
-
-                alert(
-                    "Error al eliminar:\n" +
-                    error.message
-                );
-
-                return;
-            }
-
-
-            alert(
-                "Pedido eliminado correctamente."
-            );
-
-
-            await mostrarPedidos();
-
+    const { data, error } = await supabaseClient.rpc(
+        "eliminar_pedido_seguro",
+        {
+            p_codigo: codigo
         }
+    );
+
+    if (error) {
+        console.error("ERROR AL ELIMINAR:", error);
+        alert("No se pudo eliminar el pedido:\n" + error.message);
+        return;
+    }
+
+    alert(data?.mensaje || "Pedido eliminado correctamente.");
+
+    await mostrarPedidos();
+}
 
 
 
@@ -886,7 +852,28 @@ Tu pedido ${pedido.codigo} ha sido entregado correctamente ✅.
 
     </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const boton = document.getElementById("btnMenu");
+    const fondo = document.getElementById("menuFondo");
+
+    if (!boton || !fondo) {
+        console.error("Falta el botón o el fondo del menú.");
+        return;
+    }
+
+    boton.addEventListener("click", function () {
+        document.body.classList.toggle("menu-abierto");
+        console.log("Menú:", document.body.classList.contains("menu-abierto"));
+    });
+
+    fondo.addEventListener("click", function () {
+        document.body.classList.remove("menu-abierto");
+    });
+});
+</script>
+    
+
 </body>
 
 </html>
-```

@@ -1,321 +1,420 @@
+
+"use strict";
+
+// ======================================
+// CONEXIÓN CON SUPABASE
+// ======================================
+
 const SUPABASE_URL = "https://ckpuoiztfavuuijaedbe.supabase.co";
 const SUPABASE_KEY = "sb_publishable_qZxbp2ozqUQ9Kj85vSoTSg_JUGIFlJP";
 
-const supabaseClient = supabase.createClient(
+const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
 console.log("Supabase conectado");
 
-// ===============================
-// CARGAR PRODUCTOS EN LA LISTA
-// ===============================
+const $ = id => document.getElementById(id);
 
-const selectorProducto = document.getElementById("pedido");
+// ======================================
+// ELEMENTOS DE LA PÁGINA
+// ======================================
+
+const formulario = $("formularioPedido");
+const selectorProducto = $("pedido");
+const selectorDestino = $("destino");
+
+const loginOverlay = $("loginOverlay");
+const btnLogin = $("btnLogin");
+const loginError = $("loginError");
+
+const btnCerrarSesion = $("btnCerrarSesion");
+const btnCerrarSesionMenu = $("btnCerrarSesionMenu");
+
+let sesionActiva = false;
+
+// ======================================
+// COMPROBAR SESIÓN
+// ======================================
+
+async function comprobarSesion() {
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error) {
+        console.error("Error al comprobar la sesión:", error);
+    }
+
+    sesionActiva = Boolean(data?.session);
+
+    if (loginOverlay) {
+        loginOverlay.style.display = sesionActiva ? "none" : "flex";
+    }
+
+    document.body.classList.toggle("sesion-activa", sesionActiva);
+
+    if (sesionActiva) {
+        await cargarProductosPedido();
+    }
+}
+
+supabaseClient.auth.onAuthStateChange((evento, session) => {
+    sesionActiva = Boolean(session);
+
+    if (loginOverlay) {
+        loginOverlay.style.display = sesionActiva ? "none" : "flex";
+    }
+
+    document.body.classList.toggle("sesion-activa", sesionActiva);
+});
+
+comprobarSesion();
+
+// ======================================
+// INICIAR SESIÓN
+// ======================================
+
+if (btnLogin) {
+    btnLogin.addEventListener("click", async () => {
+        const email = $("email")?.value.trim() || "";
+        const password = $("password")?.value || "";
+
+        if (!email || !password) {
+            if (loginError) {
+                loginError.textContent = "Escribe tu correo y contraseña.";
+            }
+            return;
+        }
+
+        if (loginError) loginError.textContent = "";
+
+        btnLogin.disabled = true;
+        btnLogin.textContent = "Ingresando...";
+
+        try {
+            const { data, error } =
+                await supabaseClient.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+            if (error) throw error;
+
+            sesionActiva = true;
+
+            if (loginOverlay) loginOverlay.style.display = "none";
+            document.body.classList.add("sesion-activa");
+
+            console.log("Usuario conectado:", data.user);
+
+            await cargarProductosPedido();
+        } catch (error) {
+            console.error("Error de inicio de sesión:", error);
+
+            if (loginError) {
+                loginError.textContent = "Correo o contraseña incorrectos.";
+            }
+        } finally {
+            btnLogin.disabled = false;
+            btnLogin.textContent = "Ingresar";
+        }
+    });
+}
+
+// ======================================
+// CARGAR PRODUCTOS DEL INVENTARIO
+// ======================================
 
 async function cargarProductosPedido() {
     if (!selectorProducto) return;
 
     selectorProducto.replaceChildren();
 
-    const opcionInicial = document.createElement("option");
-    opcionInicial.value = "";
-    opcionInicial.textContent = "Cargando productos...";
-    selectorProducto.appendChild(opcionInicial);
+    const opcionCarga = document.createElement("option");
+    opcionCarga.value = "";
+    opcionCarga.textContent = "Cargando productos...";
+    selectorProducto.appendChild(opcionCarga);
 
-    const { data: productos, error } = await supabaseClient
-        .from("inventario_productos")
-        .select("id, nombre, codigo, stock")
-        .order("nombre", { ascending: true });
+    try {
+        const { data: productos, error } = await supabaseClient
+            .from("inventario_productos")
+            .select("id, nombre, codigo, stock")
+            .order("nombre", { ascending: true });
 
-    selectorProducto.replaceChildren();
+        if (error) throw error;
 
-    if (error) {
+        selectorProducto.replaceChildren();
+
+        const opcionInicial = document.createElement("option");
+        opcionInicial.value = "";
+        opcionInicial.textContent = "Selecciona un producto";
+        selectorProducto.appendChild(opcionInicial);
+
+        (productos || []).forEach(producto => {
+            const opcion = document.createElement("option");
+
+            opcion.value = producto.id;
+            opcion.textContent =
+                `${producto.nombre} — ${producto.codigo} — Stock: ${producto.stock}`;
+
+            opcion.dataset.stock = producto.stock;
+            opcion.dataset.nombre = producto.nombre;
+            opcion.dataset.codigo = producto.codigo;
+
+            if (Number(producto.stock) <= 0) {
+                opcion.disabled = true;
+                opcion.textContent += " (Agotado)";
+            }
+
+            selectorProducto.appendChild(opcion);
+        });
+
+        if (!productos || productos.length === 0) {
+            opcionInicial.textContent = "No hay productos en el inventario";
+        }
+    } catch (error) {
         console.error("Error al cargar productos:", error);
+
+        selectorProducto.replaceChildren();
 
         const opcionError = document.createElement("option");
         opcionError.value = "";
         opcionError.textContent = "No se pudieron cargar los productos";
         selectorProducto.appendChild(opcionError);
-
-        return;
     }
-
-    const opcionInicialLista = document.createElement("option");
-    opcionInicialLista.value = "";
-    opcionInicialLista.textContent = "Selecciona un producto";
-    selectorProducto.appendChild(opcionInicialLista);
-
-    (productos || []).forEach(producto => {
-        const opcion = document.createElement("option");
-
-        opcion.value = producto.id;
-        opcion.textContent =
-            `${producto.nombre} — ${producto.codigo} — Stock: ${producto.stock}`;
-
-        opcion.dataset.stock = producto.stock;
-        opcion.dataset.nombre = producto.nombre;
-        opcion.dataset.codigo = producto.codigo;
-
-        if (Number(producto.stock) <= 0) {
-            opcion.disabled = true;
-            opcion.textContent += " (Agotado)";
-        }
-
-        selectorProducto.appendChild(opcion);
-    });
 }
 
-cargarProductosPedido();
-
-
-// ===============================
-// ELEMENTOS DEL LOGIN
-// ===============================
-
-const loginOverlay = document.getElementById("loginOverlay");
-const btnLogin = document.getElementById("btnLogin");
-const loginError = document.getElementById("loginError");
-
-
-// ===============================
-// COMPROBAR SESIÓN
-// ===============================
-
-supabaseClient.auth.getSession().then(({ data }) => {
-    if (data.session) {
-        loginOverlay.style.display = "none";
-        document.body.classList.add("sesion-activa");
-    } else {
-        loginOverlay.style.display = "flex";
-        document.body.classList.remove("sesion-activa");
-    }
-});
-
-
-// ===============================
-// INICIAR SESIÓN
-// ===============================
-
-btnLogin.addEventListener("click", async () => {
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-
-    loginError.textContent = "";
-
-    const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
-
-    if (error) {
-
-        console.error("ERROR LOGIN:", error);
-
-        loginError.textContent =
-            "Correo o contraseña incorrectos";
-
-        return;
-    }
-
-    // Login correcto
-    loginOverlay.style.display = "none";
-    document.body.classList.add("sesion-activa");
-
-    console.log("Usuario conectado:", data.user);
-
-});
-
-
-// ===============================
+// ======================================
 // REGISTRAR PEDIDO
-// ===============================
+// ======================================
 
-const formulario = document.getElementById("formularioPedido");
+if (formulario) {
+    formulario.addEventListener("submit", async event => {
+        event.preventDefault();
 
-formulario.addEventListener("submit", async function(event) {
-    event.preventDefault();
-
-    const nombre = document.getElementById("nombre").value.trim();
-    const apellido = document.getElementById("apellido").value.trim();
-    const numero = document.getElementById("numero").value.trim();
-    const provincia = document.getElementById("provincia").value.trim();
-
-    const productoId = selectorProducto.value;
-    const cantidadNumero = Number(
-        document.getElementById("cantidad").value
-    );
-
-    if (!productoId) {
-        alert("Selecciona un producto del inventario.");
-        return;
-    }
-
-    if (!Number.isInteger(cantidadNumero) || cantidadNumero < 1) {
-        alert("La cantidad debe ser un número entero mayor que cero.");
-        return;
-    }
-
-    // Consultar el stock actual en Supabase
-    const { data: producto, error: errorProducto } = await supabaseClient
-        .from("inventario_productos")
-        .select("id, nombre, codigo, stock")
-        .eq("id", productoId)
-        .single();
-
-    if (errorProducto || !producto) {
-        alert("No se pudo consultar el producto. Inténtalo nuevamente.");
-        console.error("Error al consultar producto:", errorProducto);
-        return;
-    }
-
-    if (Number(producto.stock) < cantidadNumero) {
-        alert(
-            `Stock insuficiente de ${producto.nombre}. ` +
-            `Disponible: ${producto.stock} unidades.`
-        );
-
-        await cargarProductosPedido();
-        return;
-    }
-
-    const nuevoPedido = {
-        codigo: "PED-" + Date.now(),
-        nombre,
-        apellido,
-        numero,
-        provincia,
-        pedido: producto.nombre,
-        producto_id: producto.id,
-        cantidad: String(cantidadNumero),
-        fecha: new Date().toLocaleString("es-PE", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        }),
-        estado: "En espera"
-    };
-
-    const botonRegistrar = formulario.querySelector(
-        'input[type="submit"]'
-    );
-
-    botonRegistrar.disabled = true;
-    botonRegistrar.value = "Guardando...";
-
-    try {
-        const { error } = await supabaseClient
-            .from("pedidos")
-            .insert([nuevoPedido]);
-
-        if (error) {
-            console.error("Error al guardar pedido:", error);
-            alert("No se pudo guardar el pedido: " + error.message);
+        if (!sesionActiva) {
+            alert("Inicia sesión antes de registrar un pedido.");
+            if (loginOverlay) loginOverlay.style.display = "flex";
             return;
         }
 
-        alert("Pedido guardado correctamente.");
+        // Comprobar que existen los campos necesarios
+        if (!selectorProducto || !selectorDestino) {
+            console.error(
+                "Falta el elemento HTML pedido o destino. Revisa sus respectivos ID."
+            );
+            alert("Falta un campo del formulario. Revisa el HTML.");
+            return;
+        }
 
-        formulario.reset();
-        await cargarProductosPedido();
+        const nombre = $("nombre")?.value.trim() || "";
+        const apellido = $("apellido")?.value.trim() || "";
+        const numero = $("numero")?.value.trim() || "";
+        const provincia = $("provincia")?.value.trim() || "";
+        const destino = selectorDestino.value;
+        const productoId = selectorProducto.value;
+        const cantidadNumero = Number($("cantidad")?.value);
 
-    } finally {
-        botonRegistrar.disabled = false;
-        botonRegistrar.value = "Registrar";
-    }
-});
+        if (!nombre || !apellido || !numero || !provincia) {
+            alert("Completa todos los datos del cliente.");
+            return;
+        }
 
+        if (!destino) {
+            alert("Selecciona si el envío es Lima o Provincia.");
+            selectorDestino.focus();
+            return;
+        }
 
-// ===============================
-// RECUPERAR CONTRASEÑA
-// ===============================
+        if (!productoId) {
+            alert("Selecciona un producto del inventario.");
+            selectorProducto.focus();
+            return;
+        }
 
-const btnOlvidePassword =
-    document.getElementById("btnOlvidePassword");
+        if (!Number.isInteger(cantidadNumero) || cantidadNumero < 1) {
+            alert("La cantidad debe ser un número entero mayor que cero.");
+            $("cantidad")?.focus();
+            return;
+        }
 
-const recuperacionMensaje =
-    document.getElementById("recuperacionMensaje");
-
-
-btnOlvidePassword.addEventListener("click", async (e) => {
-
-    e.preventDefault();
-
-    const email =
-        document.getElementById("email").value.trim();
-
-
-    if (!email) {
-
-        recuperacionMensaje.textContent =
-            "Escribe tu correo primero.";
-
-        return;
-    }
-
-
-    recuperacionMensaje.textContent =
-        "Enviando correo...";
-
-
-    const { error } =
-        await supabaseClient.auth.resetPasswordForEmail(
-            email,
-            {
-                redirectTo:
-                    "http://127.0.0.1:5500/aplicacion%20j/reset-password.html"
-            }
+        const botonRegistrar = formulario.querySelector(
+            'input[type="submit"]'
         );
 
+        if (botonRegistrar) {
+            botonRegistrar.disabled = true;
+            botonRegistrar.value = "Guardando...";
+        }
 
-    if (error) {
+        try {
+            // Consultar producto y stock actual
+            const { data: producto, error: errorProducto } =
+                await supabaseClient
+                    .from("inventario_productos")
+                    .select("id, nombre, codigo, stock")
+                    .eq("id", productoId)
+                    .single();
 
-        console.error(error);
+            if (errorProducto || !producto) {
+                throw new Error(
+                    "No se pudo consultar el producto. " +
+                    (errorProducto?.message || "")
+                );
+            }
 
-        recuperacionMensaje.textContent =
-            "No se pudo enviar el correo.";
+            if (Number(producto.stock) < cantidadNumero) {
+                alert(
+                    `Stock insuficiente de ${producto.nombre}. ` +
+                    `Disponible: ${producto.stock} unidades.`
+                );
 
-        return;
-    }
+                await cargarProductosPedido();
+                return;
+            }
 
+            const nuevoPedido = {
+                codigo: "PED-" + Date.now(),
+                nombre,
+                apellido,
+                numero,
+                provincia,
+                destino,
+                pedido: producto.nombre,
+                producto_id: producto.id,
+                cantidad: String(cantidadNumero),
+                fecha: new Date().toLocaleString("es-PE", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }),
+                estado: "En espera"
+            };
 
-    recuperacionMensaje.textContent =
-        "Revisa tu correo para restablecer tu contraseña.";
+            // Guardar el pedido en Supabase
+            const { data, error } = await supabaseClient
+                .from("pedidos")
+                .insert([nuevoPedido])
+                .select();
 
-});
+            if (error) throw error;
 
-const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+            console.log("Pedido registrado:", data);
 
-btnCerrarSesion.addEventListener("click", async () => {
+            alert(
+                "Pedido guardado correctamente.\n" +
+                "Código: " + nuevoPedido.codigo
+            );
 
+            formulario.reset();
+
+            await cargarProductosPedido();
+        } catch (error) {
+            console.error("Error al guardar el pedido:", error);
+
+            alert(
+                "No se pudo guardar el pedido.\n" +
+                "Detalle: " + error.message
+            );
+        } finally {
+            if (botonRegistrar) {
+                botonRegistrar.disabled = false;
+                botonRegistrar.value = "Registrar";
+            }
+        }
+    });
+}
+
+// ======================================
+// RECUPERAR CONTRASEÑA
+// ======================================
+
+const btnOlvidePassword = $("btnOlvidePassword");
+const recuperacionMensaje = $("recuperacionMensaje");
+
+if (btnOlvidePassword) {
+    btnOlvidePassword.addEventListener("click", async event => {
+        event.preventDefault();
+
+        const email = $("email")?.value.trim() || "";
+
+        if (!email) {
+            if (recuperacionMensaje) {
+                recuperacionMensaje.textContent =
+                    "Escribe tu correo primero.";
+            }
+            return;
+        }
+
+        if (recuperacionMensaje) {
+            recuperacionMensaje.textContent = "Enviando correo...";
+        }
+
+        try {
+            const { error } =
+                await supabaseClient.auth.resetPasswordForEmail(email, {
+                    redirectTo:
+                        "http://127.0.0.1:5500/aplicacion%20j/reset-password.html"
+                });
+
+            if (error) throw error;
+
+            if (recuperacionMensaje) {
+                recuperacionMensaje.textContent =
+                    "Revisa tu correo para restablecer tu contraseña.";
+            }
+        } catch (error) {
+            console.error("Error al recuperar contraseña:", error);
+
+            if (recuperacionMensaje) {
+                recuperacionMensaje.textContent =
+                    "No se pudo enviar el correo. Inténtalo más tarde.";
+            }
+        }
+    });
+}
+
+// ======================================
+// CERRAR SESIÓN
+// ======================================
+
+if (btnCerrarSesion) {
+    btnCerrarSesion.addEventListener("click", cerrarSesion);
+}
+
+if (btnCerrarSesionMenu) {
+    btnCerrarSesionMenu.addEventListener("click", cerrarSesion);
+}
+
+async function cerrarSesion() {
     const { error } = await supabaseClient.auth.signOut();
 
     if (error) {
-        console.error("ERROR AL CERRAR SESIÓN:", error);
+        console.error("Error al cerrar sesión:", error);
+        alert("No se pudo cerrar la sesión. Inténtalo nuevamente.");
         return;
     }
 
-    loginOverlay.style.display = "flex";
+    sesionActiva = false;
+
+    if (loginOverlay) loginOverlay.style.display = "flex";
+
     document.body.classList.remove("sesion-activa");
 
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
+    if ($("email")) $("email").value = "";
+    if ($("password")) $("password").value = "";
 
-});
+    document.body.classList.remove("menu-abierto");
+}
 
-// ===============================
-// FUNCIONAMIENTO DEL MENÚ LATERAL
-// ===============================
+// ======================================
+// MENÚ LATERAL
+// ======================================
 
-const btnMenu = document.getElementById("btnMenu");
-const menuFondo = document.getElementById("menuFondo");
-const btnCerrarSesionMenu =
-    document.getElementById("btnCerrarSesionMenu");
+const btnMenu = $("btnMenu");
+const menuFondo = $("menuFondo");
 
 if (btnMenu && menuFondo) {
     btnMenu.addEventListener("click", () => {
@@ -324,12 +423,5 @@ if (btnMenu && menuFondo) {
 
     menuFondo.addEventListener("click", () => {
         document.body.classList.remove("menu-abierto");
-    });
-}
-
-// Cerrar sesión usando la función que ya existe
-if (btnCerrarSesionMenu && btnCerrarSesion) {
-    btnCerrarSesionMenu.addEventListener("click", () => {
-        btnCerrarSesion.click();
     });
 }

@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Generador de Etiquetas | JAGGER MOVE</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="../fotos/LOGO.ico" type="image/x-icon">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+
+<body>
+    <!-- BOTÓN PARA ABRIR EL MENÚ -->
+    <button id="btnMenu" class="btn-menu" type="button" aria-label="Abrir menú" aria-expanded="false"> ☰ MENÚ </button>
+    <nav id="menuLateral" class="menu-lateral">
+        <h2>JAGGER MOVE</h2>
+        <a href="../index.html">Registrar pedido</a> <a href="../mispedidos.html">Ver mis pedidos</a>
+        <a href="../inventario.html">Inventario</a> <a href="etiquetas.html">Generar etiquetas</a>
+        <button id="btnCerrarSesionMenu" type="button"> Cerrar sesión </button>
+    </nav>
+    <div id="fondoMenu" class="fondo-menu"></div>
+    <main class="etq-app">
+
+        <header class="etq-header etq-no-print">
+            <img src="descarga.png" alt="Logo JAGGER MOVE" class="etq-logo" onerror="this.style.display='none'">
+            <div>
+                <h1>JAGGER MOVE</h1>
+                <p>Generador de etiquetas de envío</p>
+            </div>
+        </header>
+
+        <section class="etq-card etq-no-print" id="panelMenu">
+            <h2>Generar etiqueta</h2>
+            <p class="etq-muted">Busca un pedido registrado o crea una etiqueta manualmente.</p>
+            <div class="etq-actions">
+                <button type="button" class="etq-btn etq-primary" id="btnNuevo">Crear etiqueta nueva</button>
+                <button type="button" class="etq-btn etq-secondary" id="btnAbrirBusqueda">Buscar pedido
+                    registrado</button>
+            </div>
+            <p class="etq-message" id="mensajeGeneral" role="status"></p>
+        </section>
+
+        <section class="etq-card etq-no-print" id="panelBusqueda" hidden>
+            <h2>Buscar pedido</h2>
+            <p class="etq-muted">Busca por código o selecciona un pedido de la lista.</p>
+
+            <div class="etq-field">
+                <label for="buscarCodigo">Código del pedido</label>
+                <div class="etq-search-row">
+                    <input id="buscarCodigo" type="text" placeholder="Ej. PED-123456">
+                    <button type="button" class="etq-btn etq-primary" id="btnBuscar">Buscar</button>
+                </div>
+            </div>
+
+            <div class="etq-field">
+                <label for="listaPedidos">Pedidos registrados</label>
+                <select id="listaPedidos">
+                    <option value="">Cargando pedidos...</option>
+                </select>
+            </div>
+
+            <div class="etq-actions">
+                <button type="button" class="etq-btn etq-secondary" id="btnCargarSeleccion">Usar pedido
+                    seleccionado</button>
+                <button type="button" class="etq-btn etq-light" id="btnVolverBusqueda">Volver</button>
+            </div>
+            <p class="etq-message" id="mensajeBusqueda" role="status"></p>
+        </section>
+
+        <section class="etq-card etq-no-print" id="panelFormulario" hidden>
+            <h2>Datos de la etiqueta</h2>
+            <p class="etq-muted">Completa los datos y genera la vista previa antes de imprimir.</p>
+
+            <form id="formEtiqueta">
+                <h3>1. Datos del pedido</h3>
+                <div class="etq-grid">
+                    <div class="etq-field">
+                        <label for="codigo">Código del pedido</label>
+                        <input id="codigo" name="codigo" type="text" placeholder="Código del pedido">
+                    </div>
+                    <div class="etq-field">
+                        <label for="fecha">Fecha</label>
+                        <input id="fecha" name="fecha" type="text" placeholder="Fecha del pedido">
+                    </div>
+                </div>
+
+                <h3>2. Datos del cliente</h3>
+                <div class="etq-grid">
+                    <div class="etq-field etq-full">
+                        <label for="nombre">Nombres y apellidos</label>
+                        <input id="nombre" name="nombre" type="text" required>
+                    </div>
+                    <div class="etq-field">
+                        <label for="numero">Teléfono</label>
+                        <input id="numero" name="numero" type="tel" required>
+                    </div>
+                    <div class="etq-field">
+                        <label for="dni">DNI</label>
+                        <input id="dni" name="dni" type="text" inputmode="numeric" maxlength="12">
+                    </div>
+                    <div class="etq-field">
+                        <label for="cantidad">Cantidad de prendas</label>
+                        <input id="cantidad" name="cantidad" type="number" min="1" value="1" required>
+                    </div>
+                </div>
+
+                <h3>3. Destino del envío</h3>
+                <div class="etq-actions">
+                    <button type="button" class="etq-btn etq-destino" id="btnLima">Lima</button>
+                    <button type="button" class="etq-btn etq-destino" id="btnProvincia">Provincia</button>
+                </div>
+                <input type="hidden" id="destino" name="destino" value="">
+
+                <div id="camposLima" hidden>
+                    <h3>Datos de entrega en Lima</h3>
+                    <div class="etq-grid">
+                        <div class="etq-field">
+                            <label for="distrito">Distrito</label>
+                            <input id="distrito" name="distrito" type="text">
+                        </div>
+                        <div class="etq-field">
+                            <label for="referencia">Referencia</label>
+                            <input id="referencia" name="referencia" type="text">
+                        </div>
+                        <div class="etq-field etq-full">
+                            <label for="direccion">Dirección de entrega</label>
+                            <input id="direccion" name="direccion" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="camposProvincia" hidden>
+                    <h3>Datos de envío a provincia</h3>
+                    <div class="etq-grid">
+                        <div class="etq-field">
+                            <label for="departamento">Departamento</label>
+                            <input id="departamento" name="departamento" type="text">
+                        </div>
+                        <div class="etq-field">
+                            <label for="ciudad">Provincia / ciudad</label>
+                            <input id="ciudad" name="ciudad" type="text">
+                        </div>
+                        <div class="etq-field">
+                            <label for="transporte">Empresa de transporte</label>
+                            <input id="transporte" name="transporte" type="text" placeholder="Ej. Shalom">
+                        </div>
+                        <div class="etq-field">
+                            <label for="agencia">Agencia de destino</label>
+                            <input id="agencia" name="agencia" type="text">
+                        </div>
+                        <div class="etq-field etq-full">
+                            <label for="seguimiento">Número de seguimiento (opcional)</label>
+                            <input id="seguimiento" name="seguimiento" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <h3>4. Detalle del pedido</h3>
+                <div class="etq-grid">
+                    <div class="etq-field etq-full">
+                        <label for="pedido">Prendas / detalle</label>
+                        <textarea id="pedido" name="pedido" required placeholder="Describe las prendas"></textarea>
+                    </div>
+                    <div class="etq-field etq-full">
+                        <label for="observaciones">Observaciones</label>
+                        <textarea id="observaciones" name="observaciones"
+                            placeholder="Indicaciones adicionales (opcional)"></textarea>
+                    </div>
+                </div>
+
+                <div class="etq-actions etq-form-actions">
+                    <button type="submit" class="etq-btn etq-primary">Generar vista previa</button>
+                    <button type="button" class="etq-btn etq-secondary" id="btnVolverMenu">Volver al menú</button>
+                </div>
+                <p class="etq-message" id="mensajeFormulario" role="status"></p>
+            </form>
+        </section>
+
+        <section class="etq-card" id="panelVistaPrevia" hidden>
+            <div class="etq-preview-heading etq-no-print">
+                <h2>Vista previa de la etiqueta</h2>
+                <p class="etq-muted">Comprueba los datos antes de imprimir.</p>
+            </div>
+
+            <article id="etiquetaImprimible" class="etq-print">
+                <header class="etq-print-header">
+                    <div class="marca-etiqueta">
+                        <img src="descarga.png" alt="JAGGER MOVE" class="etq-print-logo"
+                            onerror="this.style.display='none'">
+                        <div class="marca-texto">
+                            <h2>JAGGER MOVE</h2>
+                            <p>TU ESTILO, TU IDENTIDAD</p>
+                        </div>
+                    </div>
+                    <div class="numero-pedido">
+                        <span>NÚMERO DE PEDIDO</span>
+                        <strong id="vCodigo">—</strong>
+                        <small id="vFecha"></small>
+                    </div>
+                </header>
+
+                <div class="etiqueta-destino-principal">
+                    <span>DESTINO DEL ENVÍO</span>
+                    <strong id="vDestino">—</strong>
+                </div>
+
+                <section class="bloque-etiqueta">
+                    <h3><span>01</span> DATOS DEL CLIENTE</h3>
+                    <div class="dato-destacado">
+                        <span>CLIENTE</span>
+                        <strong id="vCliente">—</strong>
+                    </div>
+                    <div class="datos-dos-columnas">
+                        <div class="dato-etiqueta">
+                            <span>TELÉFONO</span>
+                            <strong id="vTelefono">—</strong>
+                        </div>
+                        <div class="dato-etiqueta">
+                            <span>DNI</span>
+                            <strong id="vDni">—</strong>
+                        </div>
+                    </div>
+                    <div class="dato-destacado cantidad-etiqueta">
+                        <span>CANTIDAD DE PRENDAS</span>
+                        <strong id="vCantidad">—</strong>
+                    </div>
+                </section>
+
+                <section class="bloque-etiqueta">
+                    <h3><span>02</span> DATOS DEL DESTINO</h3>
+
+                    <div id="vLima" hidden>
+                        <div class="dato-etiqueta">
+                            <span>DIRECCIÓN</span>
+                            <strong id="vDireccion">—</strong>
+                        </div>
+                        <div class="datos-dos-columnas">
+                            <div class="dato-etiqueta">
+                                <span>DISTRITO</span>
+                                <strong id="vDistrito">—</strong>
+                            </div>
+                            <div class="dato-etiqueta">
+                                <span>REFERENCIA</span>
+                                <strong id="vReferencia">—</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="vProvincia" hidden>
+                        <div class="datos-dos-columnas">
+                            <div class="dato-etiqueta">
+                                <span>DEPARTAMENTO</span>
+                                <strong id="vDepartamento">—</strong>
+                            </div>
+                            <div class="dato-etiqueta">
+                                <span>PROVINCIA / CIUDAD</span>
+                                <strong id="vCiudad">—</strong>
+                            </div>
+                        </div>
+                        <div class="dato-etiqueta">
+                            <span>EMPRESA DE TRANSPORTE</span>
+                            <strong id="vTransporte">—</strong>
+                        </div>
+                        <div class="dato-etiqueta">
+                            <span>AGENCIA DE DESTINO</span>
+                            <strong id="vAgencia">—</strong>
+                        </div>
+                        <div class="dato-etiqueta">
+                            <span>NÚMERO DE SEGUIMIENTO</span>
+                            <strong id="vSeguimiento">—</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bloque-etiqueta bloque-detalle">
+                    <h3><span>03</span> DETALLE DEL PEDIDO</h3>
+                    <p id="vDetalle" class="etq-print-detail">—</p>
+                    <div class="observaciones-etiqueta">
+                        <span>OBSERVACIONES</span>
+                        <p id="vObservaciones">Sin observaciones</p>
+                    </div>
+                </section>
+
+                <footer class="etq-print-footer">
+                    <strong>¡GRACIAS POR SU COMPRA!</strong>
+                    <p>“Viste tu estilo, vive tu esencia.”</p>
+                    <span>JAGGER MOVE · HECHO PARA DESTACAR</span>
+                </footer>
+            </article>
+
+            <div class="etq-actions etq-no-print">
+                <button type="button" class="etq-btn etq-primary" id="btnGuardarDatos">
+                    Guardar datos del pedido
+                </button>
+                <button type="button" class="etq-btn etq-primary" id="btnImprimir">
+                    Imprimir etiqueta
+                </button>
+                <button type="button" class="etq-btn etq-secondary" id="btnEditar">
+                    Editar datos
+                </button>
+                <button type="button" class="etq-btn etq-light" id="btnNuevaEtiqueta">
+                    Nueva etiqueta
+                </button>
+            </div>
+            <p class="etq-message etq-no-print" id="mensajeImpresion" role="status"></p>
+        </section>
+    </main>
+
+
+    <script>
+        (() => {
+            "use strict";
+
+            // CONEXIÓN CON SUPABASE
+            const SUPABASE_URL = "https://ckpuoiztfavuuijaedbe.supabase.co";
+            const SUPABASE_KEY = "sb_publishable_qZxbp2ozqUQ9Kj85vSoTSg_JUGIFlJP";
+
+            if (!window.supabase) {
+                alert("No se ha cargado Supabase. Recarga la página.");
+                return;
+            }
+
+            const supabaseClient = window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
+
+            const $ = id => document.getElementById(id);
+
+            let pedidosCargados = [];
+            let pedidoIdActual = null;
+
+            // FUNCIONES GENERALES
+            function texto(valor) {
+                return valor === null || valor === undefined
+                    ? ""
+                    : String(valor).trim();
+            }
+
+            function valorDe(obj, nombres) {
+                for (const nombre of nombres) {
+                    if (
+                        obj &&
+                        obj[nombre] !== undefined &&
+                        obj[nombre] !== null &&
+                        String(obj[nombre]).trim() !== ""
+                    ) {
+                        return obj[nombre];
+                    }
+                }
+                return "";
+            }
+
+            function poner(id, valor) {
+                $(id).textContent = texto(valor) || "—";
+            }
+
+            function mensaje(id, valor) {
+                $(id).textContent = valor || "";
+            }
+
+            function mostrarPanel(idMostrar) {
+                ["panelMenu", "panelBusqueda", "panelFormulario"].forEach(id => {
+                    $(id).hidden = id !== idMostrar;
+                });
+            }
+
+            function elegirDestino(tipo) {
+                $("destino").value = tipo;
+
+                $("camposLima").hidden = tipo !== "Lima";
+                $("camposProvincia").hidden = tipo !== "Provincia";
+
+                $("btnLima").classList.toggle(
+                    "etq-selected",
+                    tipo === "Lima"
+                );
+
+                $("btnProvincia").classList.toggle(
+                    "etq-selected",
+                    tipo === "Provincia"
+                );
+            }
+
+            function rellenarCampo(id, valor) {
+                $(id).value = texto(valor);
+            }
+
+            // LIMPIAR FORMULARIO
+            function limpiarFormulario() {
+                $("formEtiqueta").reset();
+
+                $("destino").value = "";
+                $("camposLima").hidden = true;
+                $("camposProvincia").hidden = true;
+
+                $("btnLima").classList.remove("etq-selected");
+                $("btnProvincia").classList.remove("etq-selected");
+
+                $("cantidad").value = 1;
+                $("fecha").value = new Date().toLocaleString("es-PE");
+
+                mensaje("mensajeFormulario", "");
+            }
+
+            // CREAR UNA ETIQUETA NUEVA
+            function nuevaEtiqueta() {
+                pedidoIdActual = null;
+
+                limpiarFormulario();
+
+                $("codigo").value = "PED-" + Date.now();
+                $("panelVistaPrevia").hidden = true;
+
+                mostrarPanel("panelFormulario");
+            }
+
+            // CARGAR PEDIDOS DESDE SUPABASE
+            async function cargarPedidos() {
+                const lista = $("listaPedidos");
+
+                lista.innerHTML =
+                    '<option value="">Cargando pedidos...</option>';
+
+                mensaje("mensajeBusqueda", "");
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from("pedidos")
+                        .select("*")
+                        .order("id", { ascending: false });
+
+                    if (error) throw error;
+
+                    pedidosCargados = data || [];
+                    lista.innerHTML = "";
+
+                    if (pedidosCargados.length === 0) {
+                        lista.innerHTML =
+                            '<option value="">No hay pedidos registrados</option>';
+
+                        mensaje(
+                            "mensajeBusqueda",
+                            "No se encontraron pedidos en Supabase."
+                        );
+                        return;
+                    }
+
+                    lista.add(new Option(
+                        "Selecciona un pedido...",
+                        ""
+                    ));
+
+                    pedidosCargados.forEach((pedido, indice) => {
+                        const codigo = texto(pedido.codigo) ||
+                            "Pedido " + pedido.id;
+
+                        const cliente = [
+                            valorDe(pedido, ["nombre", "nombres"]),
+                            valorDe(pedido, ["apellido", "apellidos"])
+                        ].filter(Boolean).join(" ");
+
+                        const opcion = new Option(
+                            codigo + (cliente ? " — " + cliente : ""),
+                            String(indice)
+                        );
+
+                        lista.add(opcion);
+                    });
+
+                    mensaje(
+                        "mensajeBusqueda",
+                        "Se encontraron " + pedidosCargados.length +
+                        " pedidos registrados."
+                    );
+
+                } catch (error) {
+                    console.error("Error al cargar pedidos:", error);
+
+                    lista.innerHTML =
+                        '<option value="">Error al cargar pedidos</option>';
+
+                    mensaje(
+                        "mensajeBusqueda",
+                        "No se pudieron cargar los pedidos. Revisa los permisos de lectura de la tabla pedidos en Supabase."
+                    );
+                }
+            }
+
+            // BUSCAR DIRECTAMENTE POR CÓDIGO EN SUPABASE
+            async function buscarPedidoPorCodigo() {
+                const codigo = $("buscarCodigo").value.trim();
+
+                if (!codigo) {
+                    mensaje(
+                        "mensajeBusqueda",
+                        "Escribe el código del pedido."
+                    );
+                    return;
+                }
+
+                const boton = $("btnBuscar");
+                boton.disabled = true;
+                mensaje("mensajeBusqueda", "Buscando pedido en Supabase...");
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from("pedidos")
+                        .select("*")
+                        .eq("codigo", codigo)
+                        .maybeSingle();
+
+                    if (error) throw error;
+
+                    if (!data) {
+                        mensaje(
+                            "mensajeBusqueda",
+                            "No se encontró el código " + codigo +
+                            ". Verifica que esté registrado."
+                        );
+                        return;
+                    }
+
+                    // Actualizar la lista local con el pedido encontrado
+                    const indice = pedidosCargados.findIndex(
+                        p => String(p.id) === String(data.id)
+                    );
+
+                    let indiceFinal;
+
+                    if (indice >= 0) {
+                        pedidosCargados[indice] = data;
+                        indiceFinal = indice;
+                    } else {
+                        pedidosCargados.push(data);
+                        indiceFinal = pedidosCargados.length - 1;
+
+                        const cliente = [
+                            valorDe(data, ["nombre", "nombres"]),
+                            valorDe(data, ["apellido", "apellidos"])
+                        ].filter(Boolean).join(" ");
+
+                        $("listaPedidos").add(new Option(
+                            codigo + (cliente ? " — " + cliente : ""),
+                            String(indiceFinal)
+                        ));
+                    }
+
+                    $("listaPedidos").value = String(indiceFinal);
+
+                    cargarDatosPedido(data);
+
+                } catch (error) {
+                    console.error("Error buscando pedido:", error);
+
+                    mensaje(
+                        "mensajeBusqueda",
+                        "Error al buscar. Revisa la conexión, los permisos de Supabase y la consola del navegador."
+                    );
+                } finally {
+                    boton.disabled = false;
+                }
+            }
+
+            // CARGAR LOS DATOS DEL PEDIDO EN EL FORMULARIO
+            function cargarDatosPedido(pedido) {
+                pedidoIdActual = pedido.id ?? null;
+
+                limpiarFormulario();
+
+                const nombreCompleto = [
+                    valorDe(pedido, ["nombre", "nombres"]),
+                    valorDe(pedido, ["apellido", "apellidos"])
+                ].filter(Boolean).join(" ");
+
+                rellenarCampo("codigo", pedido.codigo);
+                rellenarCampo(
+                    "fecha",
+                    valorDe(pedido, ["fecha", "created_at", "createdAt"])
+                );
+
+                rellenarCampo(
+                    "nombre",
+                    nombreCompleto ||
+                    valorDe(pedido, ["cliente", "nombre_completo"])
+                );
+
+                rellenarCampo(
+                    "numero",
+                    valorDe(pedido, ["numero", "telefono", "celular", "phone"])
+                );
+
+                rellenarCampo(
+                    "dni",
+                    valorDe(pedido, ["dni", "documento", "numero_dni"])
+                );
+
+                rellenarCampo(
+                    "cantidad",
+                    valorDe(pedido, ["cantidad", "unidades"]) || 1
+                );
+
+                rellenarCampo(
+                    "pedido",
+                    valorDe(pedido, ["pedido", "detalle", "producto", "productos"])
+                );
+
+                rellenarCampo(
+                    "observaciones",
+                    valorDe(pedido, ["observaciones", "nota", "comentario"])
+                );
+
+                const destinoTexto = (
+                    texto(valorDe(pedido, ["destino", "tipo_envio", "tipo_destino"])) +
+                    " " +
+                    texto(pedido.provincia)
+                ).toLowerCase();
+
+                const tieneDatosProvincia = Boolean(
+                    valorDe(pedido, [
+                        "departamento",
+                        "agencia",
+                        "transporte",
+                        "empresa_transporte"
+                    ])
+                );
+
+                if (destinoTexto.includes("provincia") || tieneDatosProvincia) {
+                    elegirDestino("Provincia");
+                } else if (destinoTexto.includes("lima")) {
+                    elegirDestino("Lima");
+                } else {
+                    elegirDestino("");
+                }
+
+                rellenarCampo("distrito", pedido.distrito);
+                rellenarCampo(
+                    "direccion",
+                    valorDe(pedido, ["direccion", "dirección", "domicilio"])
+                );
+                rellenarCampo(
+                    "referencia",
+                    valorDe(pedido, ["referencia", "referencias"])
+                );
+
+                rellenarCampo(
+                    "departamento",
+                    valorDe(pedido, ["departamento", "region", "región"])
+                );
+
+                rellenarCampo(
+                    "ciudad",
+                    valorDe(pedido, ["ciudad", "provincia", "localidad"])
+                );
+
+                rellenarCampo(
+                    "transporte",
+                    valorDe(pedido, ["transporte", "empresa_transporte", "courier"])
+                );
+
+                rellenarCampo(
+                    "agencia",
+                    valorDe(pedido, ["agencia", "agencia_destino"])
+                );
+
+                rellenarCampo(
+                    "seguimiento",
+                    valorDe(pedido, [
+                        "seguimiento",
+                        "numero_seguimiento",
+                        "tracking"
+                    ])
+                );
+
+                $("panelVistaPrevia").hidden = true;
+                mostrarPanel("panelFormulario");
+
+                mensaje(
+                    "mensajeFormulario",
+                    "Pedido cargado correctamente. Completa los datos de envío que falten."
+                );
+
+                $("panelFormulario").scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+            // USAR PEDIDO SELECCIONADO EN LA LISTA
+            function cargarSeleccion() {
+                const indice = $("listaPedidos").value;
+
+                if (indice === "") {
+                    mensaje(
+                        "mensajeBusqueda",
+                        "Selecciona un pedido de la lista."
+                    );
+                    return;
+                }
+
+                const pedido = pedidosCargados[Number(indice)];
+
+                if (pedido) {
+                    cargarDatosPedido(pedido);
+                }
+            }
+
+            // ACTUALIZAR VISTA PREVIA
+            function actualizarVista() {
+                poner("vCodigo", $("codigo").value);
+                poner("vFecha", $("fecha").value);
+                poner("vCliente", $("nombre").value);
+                poner("vTelefono", $("numero").value);
+                poner("vDni", $("dni").value);
+                poner("vCantidad", $("cantidad").value);
+                poner("vDetalle", $("pedido").value);
+
+                poner(
+                    "vObservaciones",
+                    $("observaciones").value || "Sin observaciones"
+                );
+
+                const tipo = $("destino").value;
+
+                poner("vDestino", tipo || "POR CONFIRMAR");
+
+                $("vLima").hidden = tipo !== "Lima";
+                $("vProvincia").hidden = tipo !== "Provincia";
+
+                poner("vDireccion", $("direccion").value);
+                poner("vDistrito", $("distrito").value);
+                poner("vReferencia", $("referencia").value);
+
+                poner("vDepartamento", $("departamento").value);
+                poner("vCiudad", $("ciudad").value);
+                poner("vTransporte", $("transporte").value);
+                poner("vAgencia", $("agencia").value);
+                poner("vSeguimiento", $("seguimiento").value);
+            }
+
+            // GENERAR VISTA PREVIA
+            function generarVistaPrevia(event) {
+                event.preventDefault();
+
+                if (!$("destino").value) {
+                    mensaje(
+                        "mensajeFormulario",
+                        "Selecciona Lima o Provincia."
+                    );
+                    return;
+                }
+
+                if (!$("formEtiqueta").reportValidity()) {
+                    return;
+                }
+
+                if (
+                    $("destino").value === "Lima" &&
+                    !$("direccion").value.trim()
+                ) {
+                    mensaje(
+                        "mensajeFormulario",
+                        "Completa la dirección de entrega en Lima."
+                    );
+                    $("direccion").focus();
+                    return;
+                }
+
+                if (
+                    $("destino").value === "Provincia" &&
+                    (
+                        !$("departamento").value.trim() ||
+                        !$("ciudad").value.trim()
+                    )
+                ) {
+                    mensaje(
+                        "mensajeFormulario",
+                        "Completa el departamento y la provincia o ciudad."
+                    );
+                    return;
+                }
+
+                actualizarVista();
+
+                $("panelVistaPrevia").hidden = false;
+
+                mensaje(
+                    "mensajeFormulario",
+                    "Vista previa generada. Revisa los datos antes de imprimir."
+                );
+
+                $("panelVistaPrevia").scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            }
+
+            // GUARDAR LOS DATOS DE ENVÍO EN EL PEDIDO EXISTENTE
+            async function guardarDatosPedido() {
+                if (pedidoIdActual === null) {
+                    alert(
+                        "Esta etiqueta no está vinculada a un pedido registrado. " +
+                        "Busca primero un pedido existente en Supabase."
+                    );
+                    return;
+                }
+
+                if (!$("destino").value) {
+                    alert("Selecciona Lima o Provincia antes de guardar.");
+                    return;
+                }
+
+                const datosActualizar = {
+                    dni: $("dni").value.trim(),
+                    destino: $("destino").value,
+                    direccion: $("direccion").value.trim(),
+                    distrito: $("distrito").value.trim(),
+                    referencia: $("referencia").value.trim(),
+                    departamento: $("departamento").value.trim(),
+                    ciudad: $("ciudad").value.trim(),
+                    transporte: $("transporte").value.trim(),
+                    agencia: $("agencia").value.trim(),
+                    seguimiento: $("seguimiento").value.trim(),
+                    observaciones: $("observaciones").value.trim()
+                };
+
+                const boton = $("btnGuardarDatos");
+                const textoOriginal = boton.textContent;
+
+                boton.disabled = true;
+                boton.textContent = "Guardando...";
+
+                try {
+                    const { data, error } = await supabaseClient
+                        .from("pedidos")
+                        .update(datosActualizar)
+                        .eq("id", pedidoIdActual)
+                        .select();
+
+                    if (error) throw error;
+
+                    if (!data || data.length === 0) {
+                        throw new Error(
+                            "Supabase no actualizó ningún registro. " +
+                            "Comprueba los permisos de actualización."
+                        );
+                    }
+
+                    const indice = pedidosCargados.findIndex(
+                        p => String(p.id) === String(pedidoIdActual)
+                    );
+
+                    if (indice >= 0) {
+                        Object.assign(
+                            pedidosCargados[indice],
+                            datosActualizar
+                        );
+                    }
+
+                    alert(
+                        "Los datos de envío se guardaron correctamente en Supabase."
+                    );
+
+                } catch (error) {
+                    console.error("Error al guardar datos:", error);
+
+                    alert(
+                        "No se pudieron guardar los datos.\n\n" +
+                        "Detalle: " + error.message +
+                        "\n\nComprueba que las columnas de envío existan " +
+                        "en pedidos y que tengas permiso para actualizarlas."
+                    );
+                } finally {
+                    boton.disabled = false;
+                    boton.textContent = textoOriginal;
+                }
+            }
+
+            // BOTONES DEL MENÚ
+            $("btnNuevo").addEventListener("click", nuevaEtiqueta);
+
+            $("btnAbrirBusqueda").addEventListener("click", async () => {
+                mostrarPanel("panelBusqueda");
+                await cargarPedidos();
+            });
+
+            $("btnVolverBusqueda").addEventListener("click", () => {
+                mostrarPanel("panelMenu");
+            });
+
+            $("btnVolverMenu").addEventListener("click", () => {
+                mostrarPanel("panelMenu");
+            });
+
+            // BOTONES DE DESTINO
+            $("btnLima").addEventListener("click", () => {
+                elegirDestino("Lima");
+            });
+
+            $("btnProvincia").addEventListener("click", () => {
+                elegirDestino("Provincia");
+            });
+
+            // BÚSQUEDA Y SELECCIÓN
+            $("btnBuscar").addEventListener("click", buscarPedidoPorCodigo);
+
+            $("btnCargarSeleccion").addEventListener("click", cargarSeleccion);
+
+            $("buscarCodigo").addEventListener("keydown", event => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    buscarPedidoPorCodigo();
+                }
+            });
+
+            // FORMULARIO Y VISTA PREVIA
+            $("formEtiqueta").addEventListener(
+                "submit",
+                generarVistaPrevia
+            );
+
+            $("btnEditar").addEventListener("click", () => {
+                mostrarPanel("panelFormulario");
+
+                $("panelFormulario").scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            });
+
+            $("btnNuevaEtiqueta").addEventListener("click", () => {
+                $("panelVistaPrevia").hidden = true;
+                mostrarPanel("panelMenu");
+
+                mensaje(
+                    "mensajeGeneral",
+                    "Puedes crear una etiqueta nueva o buscar otro pedido."
+                );
+            });
+
+            // GUARDAR DATOS E IMPRIMIR
+            $("btnGuardarDatos").addEventListener(
+                "click",
+                guardarDatosPedido
+            );
+
+            $("btnImprimir").addEventListener("click", () => {
+                if (
+                    !$("codigo").value.trim() ||
+                    !$("nombre").value.trim()
+                ) {
+                    alert(
+                        "Verifica el código y el nombre del cliente antes de imprimir."
+                    );
+                    return;
+                }
+
+                if ($("panelVistaPrevia").hidden) {
+                    alert("Primero genera la vista previa de la etiqueta.");
+                    return;
+                }
+
+                const confirmar = window.confirm(
+                    "¿Has revisado el nombre, teléfono, DNI y destino? " +
+                    "¿Deseas imprimir la etiqueta?"
+                );
+
+                if (!confirmar) return;
+
+                mensaje(
+                    "mensajeImpresion",
+                    "Abriendo la ventana de impresión..."
+                );
+
+                window.print();
+            });
+
+            // ACTUALIZAR LA VISTA PREVIA AL EDITAR
+            const camposObservados = [
+                "codigo", "fecha", "nombre", "numero", "dni", "cantidad",
+                "distrito", "direccion", "referencia", "departamento",
+                "ciudad", "transporte", "agencia", "seguimiento",
+                "pedido", "observaciones"
+            ];
+
+            camposObservados.forEach(id => {
+                $(id).addEventListener("input", () => {
+                    if (!$("panelVistaPrevia").hidden) {
+                        actualizarVista();
+                    }
+                });
+            });
+
+            // FECHA INICIAL
+            $("fecha").value = new Date().toLocaleString("es-PE");
+
+        })();
+    </script>
+    <script> document.addEventListener("DOMContentLoaded", function () { const btnMenu = document.getElementById("btnMenu"); const menuLateral = document.getElementById("menuLateral"); const fondoMenu = document.getElementById("fondoMenu"); if (!btnMenu || !menuLateral) { console.error("No se encontró el botón o el menú lateral."); return; } function abrirMenu() { menuLateral.classList.add("abierto"); if (fondoMenu) { fondoMenu.classList.add("visible"); } btnMenu.setAttribute("aria-expanded", "true"); } function cerrarMenu() { menuLateral.classList.remove("abierto"); if (fondoMenu) { fondoMenu.classList.remove("visible"); } btnMenu.setAttribute("aria-expanded", "false"); } btnMenu.addEventListener("click", function () { if (menuLateral.classList.contains("abierto")) { cerrarMenu(); } else { abrirMenu(); } }); if (fondoMenu) { fondoMenu.addEventListener("click", cerrarMenu); } document.addEventListener("keydown", function (event) { if (event.key === "Escape") { cerrarMenu(); } }); }); </script>
+</body>
+
+</html>

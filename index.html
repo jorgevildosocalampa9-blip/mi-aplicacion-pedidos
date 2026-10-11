@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,65 +8,80 @@
     <link rel="icon" href="fotos/LOGO.ico" type="image/x-icon">
 
     <title>Registro</title>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="./css/Style.css">
-    
 </head>
 <body>
-<!-- MENÚ LATERAL -->
-    <button id="btnMenu" class="btn-menu" type="button">
-        ☰
-    </button>
 
+    <!-- MENÚ LATERAL -->
+    <button id="btnMenu" class="btn-menu" type="button">☰</button>
     <div id="menuFondo" class="menu-fondo"></div>
 
     <nav id="menuLateral" class="menu-lateral">
         <h2>MENÚ</h2>
         <a href="mispedidos.html">Ver mis pedidos</a>
         <a href="inventario.html">Inventario</a>
+        <a href="etiquetas/etiquetas.html">Generar etiqueta</a>
         <button id="btnCerrarSesionMenu" type="button">
             Cerrar sesión
         </button>
     </nav>
+
+    <!-- INICIO DE SESIÓN -->
     <div id="loginOverlay">
+        <div id="loginBox">
+            <h2>Iniciar sesión</h2>
 
-    <div id="loginBox">
+            <input type="email" id="email" placeholder="Correo" autocomplete="username">
 
-        <h2>Iniciar sesión</h2>
+            <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password">
 
-        <input type="email" id="email" placeholder="Correo">
+            <button id="btnLogin" type="button">Ingresar</button>
 
-        <input type="password" id="password" placeholder="Contraseña">
+            <p>
+                <a href="#" id="btnOlvidePassword">¿Olvidaste tu contraseña?</a>
+            </p>
 
-        <button id="btnLogin">Ingresar</button>
-        <p>
-    <a href="#" id="btnOlvidePassword">¿Olvidaste tu contraseña?</a>
-</p>
-
-<p id="recuperacionMensaje"></p>
-
-        <p id="loginError"></p>
-
+            <p id="recuperacionMensaje"></p>
+            <p id="loginError"></p>
+        </div>
     </div>
 
-</div>
+    <!-- REGISTRO DE PEDIDOS -->
+    <form id="formularioPedido">
+        <h2 class="tema">Registro de cliente</h2>
 
-  <form id="formularioPedido">
-      <h2 class="tema">Registro de cliente</h2>
-      <input type="text" id="nombre" placeholder="Nombre" required>
-      <input type="text" id="apellido" placeholder="Apellido" required>
-      <input type="text" id="numero" placeholder="Numero" required>
-      <input type="text" id="provincia" placeholder="Provincia" required>
-      <select id="pedido" required>
-    <option value="">Cargando productos...</option>
-</select>
-      <input type="number" id="cantidad" placeholder="Cantidad" required>
-      <input type="submit" class="btn" value="Registrar">
-    
-  </form>
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="apellido" placeholder="Apellido" required>
+        <input type="text" id="numero" placeholder="Número de teléfono" required>
 
-  <button id="btnCerrarSesion">Cerrar sesión</button>
-  
-  <script src="js/script.js"></script>
+        <input type="text" id="provincia" placeholder="Provincia o localidad" required>
+
+        <select id="destino" required>
+            <option value="">Selecciona el tipo de envío</option>
+            <option value="Lima">Lima</option>
+            <option value="Provincia">Provincia</option>
+        </select>
+
+        <select id="pedido" required>
+            <option value="">Cargando productos...</option>
+        </select>
+
+        <input
+            type="number"
+            id="cantidad"
+            placeholder="Cantidad"
+            min="1"
+            step="1"
+            required
+        >
+
+        <input type="submit" class="btn" value="Registrar">
+    </form>
+
+    <button id="btnCerrarSesion" type="button">Cerrar sesión</button>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

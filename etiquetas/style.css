@@ -1,0 +1,880 @@
+/* =========================================
+   JAGGER MOVE - GENERADOR DE ETIQUETAS
+   Interfaz + impresión térmica 100 x 150 mm
+   ========================================= */
+
+.etq-app {
+    width: min(100% - 32px, 1000px);
+    margin: 30px auto;
+    color: #202124;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+.etq-app,
+.etq-app * {
+    box-sizing: border-box;
+}
+
+.etq-app [hidden] {
+    display: none !important;
+}
+
+/* ENCABEZADO */
+
+.etq-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 24px 12px;
+    text-align: left;
+}
+
+.etq-logo {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.etq-header h1 {
+    margin: 0;
+    font-size: clamp(23px, 4vw, 34px);
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+}
+
+.etq-header p {
+    margin: 6px 0 0;
+    opacity: .75;
+}
+
+/* TARJETAS */
+
+.etq-card {
+    margin: 18px 0;
+    padding: clamp(18px, 3vw, 30px);
+    background: #fff;
+    color: #202124;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .07);
+}
+
+.etq-card h2 {
+    margin: 0 0 10px;
+    font-size: 23px;
+    line-height: 1.3;
+}
+
+.etq-card h3 {
+    margin: 26px 0 15px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 17px;
+}
+
+.etq-muted {
+    color: #6b7280;
+    font-size: 14px;
+    margin: 0 0 15px;
+}
+
+/* BOTONES */
+
+.etq-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.etq-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 43px;
+    padding: 11px 17px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    cursor: pointer;
+    transition: background .18s ease, transform .18s ease;
+}
+
+.etq-btn:hover {
+    transform: translateY(-1px);
+}
+
+.etq-btn:focus-visible,
+.etq-app input:focus-visible,
+.etq-app textarea:focus-visible,
+.etq-app select:focus-visible {
+    outline: 3px solid rgba(59, 130, 246, .35);
+    outline-offset: 2px;
+}
+
+.etq-primary {
+    background: #202124;
+    color: #fff;
+}
+
+.etq-primary:hover {
+    background: #383a3d;
+}
+
+.etq-secondary {
+    background: #f3f4f6;
+    color: #202124;
+    border-color: #d1d5db;
+}
+
+.etq-secondary:hover,
+.etq-light:hover {
+    background: #e5e7eb;
+}
+
+.etq-light {
+    background: #fff;
+    color: #374151;
+    border-color: #d1d5db;
+}
+
+.etq-destino {
+    background: #f3f4f6;
+    color: #202124;
+    border-color: #d1d5db;
+    min-width: 120px;
+}
+
+.etq-destino.etq-selected {
+    background: #202124;
+    color: #fff;
+    border-color: #202124;
+}
+
+/* BÚSQUEDA */
+
+.etq-search-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin: 8px 0 18px;
+}
+
+.etq-search-row input,
+.etq-search-row select {
+    flex: 1;
+    min-width: 0;
+}
+
+/* FORMULARIO */
+
+.etq-app label {
+    display: block;
+    margin-bottom: 6px;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.etq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.etq-field {
+    min-width: 0;
+}
+
+.etq-full {
+    grid-column: 1 / -1;
+}
+
+.etq-app input,
+.etq-app textarea,
+.etq-app select {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #202124;
+    font: inherit;
+    font-size: 14px;
+}
+
+.etq-app input {
+    min-height: 43px;
+}
+
+.etq-app textarea {
+    min-height: 82px;
+    resize: vertical;
+}
+
+.etq-app input::placeholder,
+.etq-app textarea::placeholder {
+    color: #9ca3af;
+}
+
+.etq-form-actions {
+    padding-top: 8px;
+}
+
+.etq-message {
+    min-height: 20px;
+    overflow-wrap: anywhere;
+    color: #4b5563;
+    font-size: 13px;
+}
+
+/* =========================================
+   VISTA PREVIA DE ETIQUETA
+   ========================================= */
+
+.etq-preview-heading {
+    margin-bottom: 20px;
+}
+
+.etq-print {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 22px;
+    overflow-wrap: anywhere;
+    color: #111;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* MARCA Y CÓDIGO */
+
+.etq-print-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(145px, .85fr);
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #111;
+}
+
+.marca-etiqueta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.etq-print-logo {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.marca-texto {
+    min-width: 0;
+}
+
+.marca-texto h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: .5px;
+    line-height: 1.1;
+}
+
+.marca-texto p {
+    margin: 5px 0 0;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.numero-pedido {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    padding: 9px 7px;
+    color: #fff;
+    background: #171717;
+    text-align: center;
+}
+
+.numero-pedido span {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .6px;
+}
+
+.numero-pedido strong {
+    overflow-wrap: anywhere;
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+.numero-pedido small {
+    font-size: 9px;
+    color: #e5e5e5;
+}
+
+/* DESTINO */
+
+.etiqueta-destino-principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    margin: 12px 0 15px;
+    padding: 10px 8px;
+    color: #111;
+    border: 2px solid #111;
+    text-align: center;
+}
+
+.etiqueta-destino-principal span {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.etiqueta-destino-principal strong {
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+/* SECCIONES */
+
+.bloque-etiqueta {
+    margin-top: 14px;
+    padding-top: 0;
+}
+
+.bloque-etiqueta>h3 {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 8px;
+    padding: 0 0 6px;
+    border: 0;
+    border-bottom: 1px solid #aaa;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .8px;
+}
+
+.bloque-etiqueta>h3 span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 21px;
+    height: 21px;
+    flex-shrink: 0;
+    color: #fff;
+    background: #171717;
+    font-size: 9px;
+    letter-spacing: 0;
+}
+
+/* DATOS DEL CLIENTE Y DESTINO */
+
+.dato-destacado,
+.dato-etiqueta {
+    min-width: 0;
+    margin-bottom: 6px;
+    padding: 7px 9px;
+    background: #f3f3f3;
+    border-left: 3px solid #171717;
+}
+
+.dato-destacado {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dato-destacado>span,
+.dato-etiqueta>span {
+    display: block;
+    color: #444;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+.dato-destacado>strong,
+.dato-etiqueta>strong {
+    display: block;
+    color: #111;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.dato-destacado:first-of-type>strong {
+    font-size: 15px;
+}
+
+.datos-dos-columnas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.cantidad-etiqueta {
+    margin-top: 3px;
+    background: #fff;
+    border: 1px solid #171717;
+    border-left: 3px solid #171717;
+}
+
+.cantidad-etiqueta>strong {
+    font-size: 15px;
+}
+
+/* DETALLE */
+
+.bloque-detalle {
+    margin-top: 14px;
+}
+
+.etq-print-detail {
+    min-height: 24px;
+    margin: 0;
+    padding: 8px;
+    border: 1px solid #ccc;
+    font-size: 11px;
+    line-height: 1.35;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.observaciones-etiqueta {
+    margin-top: 6px;
+    padding: 7px 9px;
+    border: 1px dashed #999;
+}
+
+.observaciones-etiqueta>span {
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+.observaciones-etiqueta p {
+    margin: 3px 0 0;
+    font-size: 10px;
+    line-height: 1.3;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+/* MENSAJE DE MARCA */
+
+.etq-print-footer {
+    margin-top: 13px;
+    padding-top: 10px;
+    border-top: 2px solid #171717;
+    text-align: center;
+}
+
+.etq-print-footer>strong {
+    display: block;
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: .5px;
+}
+
+.etq-print-footer p {
+    margin: 5px 0 7px;
+    font-size: 10px;
+    font-style: italic;
+}
+
+.etq-print-footer>span {
+    display: block;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+/* RESPONSIVE: PANTALLAS PEQUEÑAS */
+
+@media (max-width: 600px) {
+    .etq-app {
+        width: min(100% - 20px, 1000px);
+        margin: 12px auto;
+    }
+
+    .etq-header {
+        gap: 12px;
+        padding: 16px 4px;
+    }
+
+    .etq-logo {
+        width: 54px;
+        height: 54px;
+    }
+
+    .etq-header h1 {
+        font-size: 21px;
+    }
+
+    .etq-header p {
+        font-size: 12px;
+    }
+
+    .etq-card {
+        padding: 16px;
+        border-radius: 11px;
+    }
+
+    .etq-grid {
+        grid-template-columns: 1fr;
+        gap: 13px;
+    }
+
+    .etq-full {
+        grid-column: auto;
+    }
+
+    .etq-search-row {
+        flex-direction: column;
+    }
+
+    .etq-actions .etq-btn {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .etq-print {
+        padding: 14px;
+    }
+}
+
+/* =========================================
+   IMPRESIÓN TÉRMICA: 100 x 150 mm
+   Solo imprime la etiqueta, no la interfaz.
+   ========================================= */
+
+@media print {
+    @page {
+        size: 100mm 150mm;
+        margin: 0;
+    }
+
+    html,
+    body {
+        width: 100mm !important;
+        min-width: 100mm !important;
+        max-width: 100mm !important;
+        height: 150mm !important;
+        min-height: 150mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        background: #fff !important;
+    }
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    #panelVistaPrevia,
+    #panelVistaPrevia * {
+        visibility: visible !important;
+    }
+
+    #etiquetaImprimible,
+    #etiquetaImprimible * {
+        visibility: visible !important;
+    }
+
+    #panelVistaPrevia {
+        display: block !important;
+        position: static !important;
+        width: 100mm !important;
+        height: 150mm !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: #fff !important;
+        overflow: hidden !important;
+    }
+
+    #etiquetaImprimible {
+        display: block !important;
+        position: relative !important;
+        width: 100mm !important;
+        height: 150mm !important;
+        min-width: 100mm !important;
+        max-width: 100mm !important;
+        max-height: 150mm !important;
+        margin: 0 !important;
+        padding: 4mm !important;
+        overflow: hidden !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        color: #000 !important;
+        background: #fff !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 9pt !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    #etiquetaImprimible .etq-print-header {
+        grid-template-columns: minmax(0, 1fr) minmax(34mm, .85fr) !important;
+        gap: 2mm !important;
+        padding-bottom: 2mm !important;
+    }
+
+    #etiquetaImprimible .etq-print-logo {
+        width: 13mm !important;
+        height: 13mm !important;
+    }
+
+    #etiquetaImprimible .marca-etiqueta {
+        gap: 1.5mm !important;
+    }
+
+    #etiquetaImprimible .marca-texto h2 {
+        font-size: 12pt !important;
+        letter-spacing: .2mm !important;
+    }
+
+    #etiquetaImprimible .marca-texto p {
+        font-size: 5.5pt !important;
+        letter-spacing: .3mm !important;
+    }
+
+    #etiquetaImprimible .numero-pedido {
+        padding: 2mm 1mm !important;
+        gap: 1mm !important;
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+
+    #etiquetaImprimible .numero-pedido span {
+        font-size: 6pt !important;
+    }
+
+    #etiquetaImprimible .numero-pedido strong {
+        font-size: 12pt !important;
+    }
+
+    #etiquetaImprimible .numero-pedido small {
+        font-size: 6pt !important;
+    }
+
+    #etiquetaImprimible .etiqueta-destino-principal {
+        margin: 2.5mm 0 3mm !important;
+        padding: 2mm !important;
+        border-width: .5mm !important;
+    }
+
+    #etiquetaImprimible .etiqueta-destino-principal span {
+        font-size: 6.5pt !important;
+    }
+
+    #etiquetaImprimible .etiqueta-destino-principal strong {
+        font-size: 19pt !important;
+        letter-spacing: 1mm !important;
+    }
+
+    #etiquetaImprimible .bloque-etiqueta {
+        margin-top: 2.5mm !important;
+    }
+
+    #etiquetaImprimible .bloque-etiqueta>h3 {
+        gap: 1.5mm !important;
+        margin-bottom: 1.5mm !important;
+        padding-bottom: 1mm !important;
+        font-size: 7pt !important;
+    }
+
+    #etiquetaImprimible .bloque-etiqueta>h3 span {
+        width: 5mm !important;
+        height: 5mm !important;
+        font-size: 6pt !important;
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+
+    #etiquetaImprimible .dato-destacado,
+    #etiquetaImprimible .dato-etiqueta {
+        margin-bottom: 1.2mm !important;
+        padding: 1.5mm 2mm !important;
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+    }
+
+    #etiquetaImprimible .dato-destacado>span,
+    #etiquetaImprimible .dato-etiqueta>span {
+        font-size: 5.5pt !important;
+    }
+
+    #etiquetaImprimible .dato-destacado>strong,
+    #etiquetaImprimible .dato-etiqueta>strong {
+        font-size: 8pt !important;
+        line-height: 1.2 !important;
+    }
+
+    #etiquetaImprimible .dato-destacado:first-of-type>strong {
+        font-size: 10pt !important;
+    }
+
+    #etiquetaImprimible .datos-dos-columnas {
+        gap: 1.5mm !important;
+    }
+
+    #etiquetaImprimible .cantidad-etiqueta>strong {
+        font-size: 10pt !important;
+    }
+
+    #etiquetaImprimible .etq-print-detail {
+        min-height: 5mm !important;
+        padding: 1.5mm !important;
+        font-size: 7.5pt !important;
+        line-height: 1.25 !important;
+    }
+
+    #etiquetaImprimible .observaciones-etiqueta {
+        margin-top: 1.2mm !important;
+        padding: 1.5mm 2mm !important;
+    }
+
+    #etiquetaImprimible .observaciones-etiqueta>span {
+        font-size: 5.5pt !important;
+    }
+
+    #etiquetaImprimible .observaciones-etiqueta p {
+        margin-top: .5mm !important;
+        font-size: 7pt !important;
+        line-height: 1.2 !important;
+    }
+
+    #etiquetaImprimible .etq-print-footer {
+        margin-top: 2.5mm !important;
+        padding-top: 2mm !important;
+    }
+
+    #etiquetaImprimible .etq-print-footer>strong {
+        font-size: 12pt !important;
+    }
+
+    #etiquetaImprimible .etq-print-footer p {
+        margin: 1mm 0 !important;
+        font-size: 7pt !important;
+    }
+
+    #etiquetaImprimible .etq-print-footer>span {
+        font-size: 5.5pt !important;
+    }
+
+    .etq-no-print {
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
+
+/* BOTÓN DEL MENÚ */
+.btn-menu {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1002;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #171717;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* MENÚ LATERAL */
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100vh;
+    padding: 75px 20px 20px;
+    box-sizing: border-box;
+    background: #171717;
+    z-index: 1003;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+}
+
+.menu-lateral.abierto {
+    left: 0;
+}
+
+.menu-lateral h2 {
+    color: white;
+    margin: 0 0 15px;
+}
+
+.menu-lateral a,
+.menu-lateral button {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    background: #292929;
+    color: white;
+    text-align: left;
+    text-decoration: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+.menu-lateral a:hover,
+.menu-lateral button:hover {
+    background: #444;
+}
+
+/* FONDO OSCURO */
+.fondo-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+.fondo-menu.visible {
+    opacity: 1;
+    visibility: visible;
+}

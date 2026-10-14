@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="./css/Style.css">
 </head>
+
 <body>
 
     <!-- MENÚ LATERAL -->
@@ -20,14 +21,17 @@
 
     <nav id="menuLateral" class="menu-lateral">
         <h2>MENÚ</h2>
+
+        <a href="admin.html">Panel principal</a>
+        <a href="index.html">Registrar pedido</a>
         <a href="mispedidos.html">Ver mis pedidos</a>
         <a href="inventario.html">Inventario</a>
         <a href="etiquetas/etiquetas.html">Generar etiqueta</a>
+
         <button id="btnCerrarSesionMenu" type="button">
             Cerrar sesión
         </button>
     </nav>
-
     <!-- INICIO DE SESIÓN -->
     <div id="loginOverlay">
         <div id="loginBox">
@@ -68,14 +72,7 @@
             <option value="">Cargando productos...</option>
         </select>
 
-        <input
-            type="number"
-            id="cantidad"
-            placeholder="Cantidad"
-            min="1"
-            step="1"
-            required
-        >
+        <input type="number" id="cantidad" placeholder="Cantidad" min="1" step="1" required>
 
         <input type="submit" class="btn" value="Registrar">
     </form>
@@ -84,4 +81,5 @@
 
     <script src="js/script.js"></script>
 </body>
+
 </html>

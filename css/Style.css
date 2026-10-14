@@ -1,95 +1,236 @@
-* {
-    padding: 0%;
-    margin: 0%;
-    box-sizing: border-box;
 
+/* ==================================================
+   JAGGER MOVE — ESTILOS GENERALES
+================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+:root {
+    --jm-negro: #080808;
+    --jm-panel: #141414;
+    --jm-panel-claro: #202020;
+    --jm-rojo: #a5121a;
+    --jm-rojo-hover: #c51d27;
+    --jm-blanco: #ffffff;
+    --jm-gris: #aaaaaa;
+}
 
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #000;
+body {
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
+
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #000;
     background-image: url("../fotos/LOGO.jpeg");
     background-size: contain;
-    background-position: center;
+    background-position: center center;
     background-repeat: no-repeat;
-
-
+    background-attachment: fixed;
+    color: var(--jm-blanco);
 }
 
-form{
-   background-color: rgba(21, 22, 22, 0.317);
-   display: flex; 
-   flex-direction: column;
-   padding: 50px;
-   width: 420px;
-   box-shadow: 0 0 20px rgba(0, 0, 0, 0.274);
-   text-align: center;
+/* ==================================================
+   FORMULARIO PRINCIPAL — REGISTRO DE PEDIDOS
+================================================== */
+
+#formularioPedido {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    width: min(92%, 460px);
+    padding: 34px 30px;
+
+    background: rgba(12, 12, 12, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 3px solid var(--jm-rojo);
+    border-radius: 16px;
+
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    text-align: center;
 }
 
-form h2{
-    font-size: 30px;
-    color: azure;
-    margin-bottom: 35px;
-
+#formularioPedido .tema {
+    margin-bottom: 28px;
+    color: #fff;
+    font-size: clamp(24px, 4vw, 30px);
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 1.25;
+    text-transform: uppercase;
 }
 
-input{
-    padding: 17px;
-    border-radius: 25px;
-    background-color: transparent;
-    border: 2px solid #603432;
-    margin-bottom: 30px;
+#formularioPedido input:not([type="submit"]),
+#formularioPedido select {
+    width: 100%;
+    min-height: 49px;
+    margin-bottom: 16px;
+    padding: 13px 15px;
+
+    background: rgba(30, 30, 30, 0.94);
+    color: #fff;
+    border: 1px solid #414141;
+    border-radius: 9px;
+
+    font-family: inherit;
+    font-size: 14px;
     outline: none;
-    color: white;
-    font-size: 16px;
+
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background-color 0.2s ease;
 }
 
-::placeholder{
-    color: white;
+#formularioPedido input:not([type="submit"]):focus,
+#formularioPedido select:focus {
+    border-color: #bd252d;
+    background: #202020;
+    box-shadow: 0 0 0 3px rgba(189, 37, 45, 0.15);
 }
 
-.btn{
-    background-color: rgba(195, 36, 36, 0.545);
+#formularioPedido input::placeholder {
+    color: #a6a6a6;
+}
+
+#formularioPedido select {
+    cursor: pointer;
+}
+
+#formularioPedido select option {
+    background: #202020;
+    color: #fff;
+}
+
+#formularioPedido input.btn {
+    width: 100%;
+    min-height: 51px;
+    margin: 8px 0 0;
+    padding: 14px 18px;
+
+    background: var(--jm-rojo);
+    color: #fff;
+    border: 1px solid #d12b35;
+    border-radius: 9px;
+
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    cursor: pointer;
+    transition: background 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+#formularioPedido input.btn:hover {
+    background: var(--jm-rojo-hover);
+    box-shadow: 0 7px 22px rgba(165, 18, 26, 0.25);
+    transform: translateY(-2px);
+}
+
+#formularioPedido input.btn:active {
+    transform: translateY(0);
+}
+
+/* Compatibilidad con la lista de productos */
+
+#pedido {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 16px;
+
+    background: rgba(20, 20, 20, 0.88);
+    color: #f5f1e8;
+    border: 1px solid #a88b4a;
+    border-radius: 10px;
+
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    outline: none;
+
+    transition: border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background-color 0.25s ease;
+}
+
+#pedido:hover {
+    border-color: #d4b66a;
+    background: rgba(28, 28, 28, 0.96);
+}
+
+#pedido:focus {
+    border-color: #e0c477;
+    box-shadow: 0 0 0 3px rgba(212, 182, 106, 0.20);
+}
+
+#pedido option {
+    background: #202020;
+    color: #f5f1e8;
+}
+
+#pedido option:disabled {
+    color: #999;
+}
+
+/* Botones y enlaces reutilizables */
+
+.btn {
+    background: rgba(195, 36, 36, 0.545);
     border: 2px solid red;
     cursor: pointer;
 }
 
-.btn:hover{
-   background-color: rgba(144, 42, 42, 0.545);
-    border: 2px solid rgb(123, 22, 22); 
-}
-@media (max-width:991px){
-    body{
-        padding: 30px;
-    }
-    form{
-        width: 340px;
-    }
+.btn:hover {
+    background: rgba(144, 42, 42, 0.545);
+    border-color: rgb(123, 22, 22);
 }
 
-.btn-link{
-  display: inline-block;
-  margin-top: 20px;
-  padding: 15px 40px;
-  border-radius: 25px;
-  background-color: rgba(195, 36, 36, 0.545);
-  border: 2px solid red;
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
+.btn-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 40px;
+
+    background: rgba(195, 36, 36, 0.545);
+    color: #fff;
+    border: 2px solid red;
+    border-radius: 25px;
+
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
 }
-.btn-link:hover{
-  background-color: rgba(144, 42, 42, 0.545);
+
+.btn-link:hover {
+    background: rgba(144, 42, 42, 0.545);
 }
-.card.En-espera{ border-top-color: #95a5a6; }
-    .En-espera .badge{ background:#95a5a6; color:black; }
-    #loginOverlay {
+
+/* Estado de pedidos, si se usa en esta página */
+
+.card.En-espera {
+    border-top-color: #95a5a6;
+}
+
+.En-espera .badge {
+    background: #95a5a6;
+    color: #000;
+}
+
+/* ==================================================
+   INICIO DE SESIÓN
+================================================== */
+
+#loginOverlay {
     position: fixed;
     inset: 0;
     z-index: 9999;
@@ -107,155 +248,176 @@ input{
     width: 90%;
     max-width: 380px;
     padding: 40px 30px;
-    border-radius: 16px; /* Bordes redondeados modernos, no exagerados */
-    background: #111111; /* Negro profundo profesional para la tarjeta */
-    border: 1px solid #9a0808; /* Borde muy sutil para separarlo del fondo de la página */
-    /* Sombra oscura difuminada para dar profundidad */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7); 
+
+    background: #111;
+    border: 1px solid #9a0808;
+    border-radius: 16px;
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
     text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Título principal "Iniciar sesión" */
 #loginBox h2 {
-    margin-top: 0;
-    margin-bottom: 28px;
-    color: #ffffff; /* Blanco limpio */
+    margin: 0 0 28px;
+    color: #fff;
     font-size: 24px;
     font-weight: 600;
-    letter-spacing: -0.5px;
 }
 
-/* Estilo para los campos de texto (Inputs) */
 #loginBox input {
     width: 100%;
-    box-sizing: border-box;
-    padding: 14px 16px;
     margin: 10px 0;
-    background-color: #1a1a1a; /* Gris muy oscuro, ideal para inputs en modo oscuro */
-    border: 1px solid #333333; /* Borde sutil */
+    padding: 14px 16px;
+
+    background: #1a1a1a;
+    color: #fff !important;
+    border: 1px solid #333;
     border-radius: 8px;
+
     font-size: 15px;
-    color: #ffffff !important; /* Texto que escribe el usuario en blanco */
     outline: none;
-    transition: all 0.2s ease;
+
+    transition: border-color 0.2s ease,
+                background-color 0.2s ease,
+                box-shadow 0.2s ease;
 }
 
-/* Estilo del texto sugerido (Placeholder) dentro de los inputs */
 #loginBox input::placeholder {
-    color: #666666; /* Gris apagado para que no compita con el texto real */
+    color: #888;
 }
 
-/* Efecto cuando el usuario hace clic para escribir en el input */
 #loginBox input:focus {
-    border-color: #ffffff; /* El borde se vuelve blanco brillante al escribir */
-    background-color: #1e1e1e;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08); /* Brillo blanco sutil */
+    border-color: #b51c26;
+    background: #1e1e1e;
+    box-shadow: 0 0 0 3px rgba(181, 28, 38, 0.15);
 }
 
-/* Botón de Ingresar (Estilo premium contrastante) */
 #loginBox button {
     width: 100%;
+    margin: 20px 0 15px;
     padding: 14px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    background-color: #9a0c0c; /* Botón blanco que resalta inmediatamente sobre el negro */
-    color: #ffffff; /* Texto negro dentro del botón */
+
+    background: #9a0c0c;
+    color: #fff;
     border: none;
     border-radius: 8px;
+
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+
+    transition: background-color 0.2s ease,
+                transform 0.1s ease;
 }
 
-/* Efectos para el botón al pasar el mouse y hacer clic */
 #loginBox button:hover {
-    background-color: #c97171; /* Se vuelve un gris muy claro */
+    background: #bd171f;
 }
 
 #loginBox button:active {
-    transform: scale(0.98); /* Efecto de pulsación */
+    transform: scale(0.98);
 }
 
-/* Enlace de ¿Olvidaste tu contraseña? */
 #loginBox a {
     display: inline-block;
     margin-top: 12px;
-    color: #888888; /* Gris medio para mantener la sobriedad */
+    color: #aaa;
     font-size: 13px;
     text-decoration: none;
-    transition: color 0.2s ease;
 }
 
 #loginBox a:hover {
-    color: #ffffff; /* Se ilumina en blanco al pasar el mouse */
+    color: #fff;
     text-decoration: underline;
 }
 
-/* Mensajes de error o alertas */
 #loginError {
     display: block;
     margin-top: 15px;
-    color: #ff4d4d; /* Un rojo vibrante que resalta perfectamente sobre el negro */
+    color: #ff4d4d;
     font-size: 13px;
     font-weight: 500;
 }
 
-/* Mantenemos tus reglas específicas pero adaptadas */
+#recuperacionMensaje {
+    margin-top: 10px;
+    font-size: 13px;
+}
+
 #password {
     -webkit-text-security: disc;
 }
 
+/* Botón de cierre de sesión antiguo, conservado por compatibilidad */
+
 #btnCerrarSesion {
+    display: none;
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
 
-    background-color: white;
+    padding: 9px 16px;
+    background: #fff;
     color: #d9534f;
     border: 1.5px solid #d9534f;
     border-radius: 8px;
 
-    padding: 9px 16px;
     font-size: 14px;
-    font-weight: 500;
-
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
 #btnCerrarSesion:hover {
-    background-color: #d9534f;
-    color: white;
+    background: #d9534f;
+    color: #fff;
 }
 
-/* MENÚ LATERAL */
+/* ==================================================
+   MENÚ LATERAL
+================================================== */
 
 .btn-menu {
     position: fixed;
-    top: 18px;
-    left: 18px;
+    top: 15px;
+    left: 15px;
     z-index: 10001;
-    width: 48px;
-    height: 48px;
-    background: #111;
-    color: white;
-    border: 1px solid #9a0808;
+
+    display: block;
+    padding: 12px 18px;
+
+    background: rgba(17, 17, 17, 0.96);
+    color: #fff;
+    border: 1px solid var(--jm-rojo);
     border-radius: 10px;
-    font-size: 28px;
+
+    font-family: inherit;
+    font-size: 26px;
+    font-weight: bold;
     cursor: pointer;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.35);
+    transition: background 0.2s ease,
+                border-color 0.2s ease;
 }
 
-.menu-fondo {
+.btn-menu:hover {
+    background: var(--jm-rojo);
+    border-color: #d12b35;
+}
+
+.menu-fondo,
+.fondo-menu {
     position: fixed;
     inset: 0;
     z-index: 10002;
+
     background: rgba(0, 0, 0, 0.55);
     opacity: 0;
     visibility: hidden;
-    transition: 0.25s;
+
+    transition: opacity 0.25s ease,
+                visibility 0.25s ease;
 }
 
 .menu-lateral {
@@ -263,441 +425,111 @@ input{
     top: 0;
     left: 0;
     z-index: 10003;
-    width: 280px;
-    max-width: 85%;
-    height: 100vh;
-    padding: 30px 20px;
-    background: #111;
-    border-right: 2px solid #9a0808;
-    transform: translateX(-100%);
-    transition: transform 0.25s ease;
+
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
+    overflow-y: auto;
+
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    padding: 75px 20px 20px;
+
+    background: #111;
+    border-right: 2px solid var(--jm-rojo);
+    box-shadow: 12px 0 35px rgba(0, 0, 0, 0.35);
+
+    transform: translateX(-105%);
+    visibility: hidden;
+
+    transition: transform 0.3s ease,
+                visibility 0.3s ease;
 }
 
 .menu-lateral h2 {
-    color: white;
-    margin: 15px 0 20px;
+    margin: 0 0 15px;
+    padding-bottom: 15px;
+
+    color: #fff;
+    border-bottom: 1px solid #393939;
+
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: 2px;
 }
 
 .menu-lateral a,
-#btnCerrarSesionMenu {
+.menu-lateral button,
+.menu-lateral #btnCerrarSesionMenu {
+    display: block;
+    width: 100%;
     padding: 14px;
+
     background: #202020;
-    color: white;
-    border: 1px solid #9a0808;
-    border-radius: 8px;
-    text-decoration: none;
-    text-align: left;
+    color: #fff;
+    border: 1px solid #343434;
+    border-radius: 9px;
+
+    font-family: inherit;
     font-size: 15px;
+    text-align: left;
+    text-decoration: none;
     cursor: pointer;
+
+    transition: background 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.2s ease;
 }
 
 .menu-lateral a:hover,
-#btnCerrarSesionMenu:hover {
-    background: #9a0808;
+.menu-lateral button:hover,
+.menu-lateral #btnCerrarSesionMenu:hover {
+    background: var(--jm-rojo);
+    border-color: #d12b35;
+    transform: translateX(3px);
 }
 
 body.menu-abierto .menu-lateral {
     transform: translateX(0);
+    visibility: visible;
 }
 
-body.menu-abierto .menu-fondo {
+body.menu-abierto .menu-fondo,
+body.menu-abierto .fondo-menu {
     opacity: 1;
     visibility: visible;
 }
 
-/* Ocultar el botón antiguo de cerrar sesión */
-#btnCerrarSesion {
-    display: none;
-}
+/* El menú solo aparece después de iniciar sesión */
 
-/* Ocultar el menú mientras no haya sesión */
 body:not(.sesion-activa) #btnMenu,
 body:not(.sesion-activa) #menuFondo,
 body:not(.sesion-activa) #menuLateral {
-    display: none;
+    display: none !important;
 }
 
-/* Fondo exclusivo de Inventario */
+/* ==================================================
+   INVENTARIO — FONDO Y CONTENEDOR
+================================================== */
+
 body.pagina-inventario {
+    justify-content: flex-start;
+    background-color: #080808;
     background-image: url("../fotos/logo\ 2.jpeg");
-       background-size: contain;
-    background-position: center;
+    background-size: contain;
+    background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-color: white;
-}
-
-/* =====================================
-   BOTONES MODERNOS DE INVENTARIO
-===================================== */
-
-.inventario-opciones {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 22px;
-    width: 100%;
-    margin: 30px 0;
-}
-
-.inventario-opcion {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    min-height: 190px;
-    padding: 25px;
-    text-align: left;
-    color: #ffffff;
-    background: linear-gradient(145deg, #20212a, #14151b);
-    border: 1px solid #41414f;
-    border-radius: 18px;
-    cursor: pointer;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
-    transition: transform 0.25s ease,
-                border-color 0.25s ease,
-                box-shadow 0.25s ease;
-}
-
-.inventario-opcion:first-child {
-    border-bottom: 3px solid #a78bfa;
-}
-
-.inventario-opcion:last-child {
-    border-bottom: 3px solid #5eead4;
-}
-
-.inventario-opcion:hover {
-    transform: translateY(-5px);
-    border-color: #8b8b9d;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
-}
-
-.inventario-opcion:focus-visible {
-    outline: 3px solid #a78bfa;
-    outline-offset: 4px;
-}
-
-.inventario-icono {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    font-size: 32px;
-    font-weight: 400;
-    color: #d8ccff;
-    background: rgba(167, 139, 250, 0.15);
-    border-radius: 14px;
-}
-
-.inventario-opcion:last-child .inventario-icono {
-    color: #5eead4;
-    background: rgba(94, 234, 212, 0.13);
-}
-
-.inventario-opcion strong {
-    font-size: 19px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-}
-
-.inventario-opcion > span:last-child {
-    color: #c1c2cd;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-/* Adaptación para celulares */
-@media (max-width: 600px) {
-    .inventario-opciones {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .inventario-opcion {
-        min-height: 155px;
-        padding: 20px;
-    }
-}
-
-/* Centrar título y enlace de Inventario */
-body.pagina-inventario .inventario-titulo {
-    text-align: center;
-    width: 100%;
-}
-
-body.pagina-inventario .btn-link {
-    display: block;
-    width: fit-content;
-    margin: 30px auto 0;
-    text-align: center;
-}
-
-/* =====================================
-   TITULO Y SUBTITULO DE INVENTARIO
-   Estilo cristal transparente
-===================================== */
-
-body.pagina-inventario .inventario-titulo {
-    display: table;
-    width: fit-content;
-    max-width: 100%;
-    margin: 0 auto 16px;
-    padding: 12px 28px;
-
-    color: rgb(232, 217, 217);
-    text-align: center;
-    letter-spacing: 3px;
-
-    background: rgba(15, 18, 25, 0.648);
-    border: 1px solid rgba(255, 255, 255, 0.45);
-    border-radius: 16px;
-
-    box-shadow: 0 4px 20px rgb(0, 0, 0);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-}
-
-body.pagina-inventario .inventario-descripcion {
-    width: fit-content;
-    max-width: 95%;
-    margin: 0 auto 25px;
-    padding: 10px 20px;
-
-    color: rgb(232, 217, 217);
-    text-align: center;
-    line-height: 1.6;
-
-    background: rgba(15, 18, 25, 0.648);
-    border: 1px solid rgba(255, 255, 255, 0.32);
-    border-radius: 12px;
-
-    box-shadow: 0 4px 20px rgb(0, 0, 0);;
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-}
-
-
-/* =====================================
-   FORMULARIO DE INVENTARIO MODERNO
-===================================== */
-
-body.pagina-inventario .inventario-panel {
-    width: 100%;
-    max-width: 760px;
-    margin: 25px auto;
-    padding: 30px;
-
-    color: #ffffff;
-    background: linear-gradient(145deg, #20212a, #14151b);
-    border: 1px solid #41414f;
-    border-top: 3px solid #a78bfa;
-    border-radius: 18px;
-
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
-}
-
-body.pagina-inventario .inventario-panel h2 {
-    margin-bottom: 24px;
-    color: #ffffff;
-    text-align: center;
-    font-size: 24px;
-}
-
-body.pagina-inventario #formularioProducto {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-body.pagina-inventario #formularioProducto label {
-    color: #d8d8e2;
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 8px;
-}
-
-body.pagina-inventario #formularioProducto input,
-body.pagina-inventario #buscarProducto {
-    width: 100%;
-    padding: 12px 14px;
-    color: #ffffff;
-    background: #292a35;
-    border: 1px solid #484958;
-    border-radius: 10px;
-    outline: none;
-}
-
-body.pagina-inventario #formularioProducto input:focus,
-body.pagina-inventario #buscarProducto:focus {
-    border-color: #a78bfa;
-    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.14);
-}
-
-body.pagina-inventario .inventario-total {
-    margin: 16px 0;
-    padding: 15px;
-    color: #e5e5ef;
-    background: rgba(167, 139, 250, 0.10);
-    border: 1px solid rgba(167, 139, 250, 0.30);
-    border-radius: 12px;
-}
-
-body.pagina-inventario #costoTotalPreview {
-    color: #d8ccff;
-}
-
-body.pagina-inventario #formularioProducto button {
-    width: 100%;
-    margin-top: 10px;
-    padding: 14px;
-    color: #ffffff;
-    background: linear-gradient(135deg, #6d54b5, #51408c);
-    border: 1px solid #9a84e8;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-body.pagina-inventario #formularioProducto button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 18px rgba(109, 84, 181, 0.3);
-}
-
-/* Ocultar el título y las opciones cuando se abre un panel */
-body.pagina-inventario.seccion-abierta
-.inventario-titulo,
-body.pagina-inventario.seccion-abierta
-.inventario-descripcion,
-body.pagina-inventario.seccion-abierta
-.inventario-opciones {
-    display: none;
-}
-
-/* Ajustes para móviles */
-@media (max-width: 600px) {
-    body.pagina-inventario .inventario-panel {
-        padding: 20px;
-        margin: 15px auto;
-    }
-
-    body.pagina-inventario .inventario-panel h2 {
-        font-size: 21px;
-    }
-}
-
-/* Ocultar cabecera y botones al abrir una sección */
-body.pagina-inventario.seccion-abierta .inventario-titulo,
-body.pagina-inventario.seccion-abierta .inventario-descripcion,
-body.pagina-inventario.seccion-abierta .inventario-opciones {
-    display: none !important;
-}
-
-/* Mantener visible únicamente el panel seleccionado */
-body.pagina-inventario.seccion-abierta .inventario-panel[hidden] {
-    display: none !important;
-}
-
-.icono-casa {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #222;
-    color: white;
-    border-radius: 50%;
-    font-size: 30px;
-    text-decoration: none;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-}
-
-.icono-casa:hover {
-    transform: scale(1.08);
-}
-
-body .btn-menu {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 10001;
-    font-size: 26px;
-    cursor: pointer;
-    background: #222;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
-}
-
-/* Corregir la capa del menú lateral */
-body.menu-abierto .menu-fondo {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-}
-
-body.menu-abierto .menu-lateral {
-    display: flex;
-    transform: translateX(0);
-}
-
-/* Botón para eliminar productos del inventario */
-.btn-eliminar-stock {
-    background: #9a0808;
-    color: #fff;
-    border: 1px solid #c62828;
-    border-radius: 7px;
-    padding: 8px 12px;
-    font-size: 13px;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    white-space: nowrap;
-}
-
-.btn-eliminar-stock:hover {
-    background: #c62828;
-}
-
-.inventario-tabla th,
-.inventario-tabla td {
-    vertical-align: middle;
-}
-
-.inventario-tabla-contenedor {
-    overflow-x: auto;
-}
-
-
-/* ==========================================
-   INVENTARIO: PANEL ADMINISTRATIVO
-   Mantiene el fondo y la identidad negro/rojo
-   ========================================== */
-
-.pagina-inventario {
-    background-color: #080808;
 }
 
 .pagina-inventario .inventario-contenedor {
+    display: block;
     width: 98%;
     max-width: 1800px;
+    min-height: 100vh;
     margin: 0 auto;
     padding: 90px 22px 50px;
-    display: block;
-    min-height: 100vh;
     color: #f4f4f4;
 }
 
@@ -705,82 +537,201 @@ body.menu-abierto .menu-lateral {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 28px;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 .pagina-inventario .inv-etiqueta {
+    margin-bottom: 9px;
     color: #d52b35;
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 2px;
-    margin-bottom: 9px;
 }
 
 .pagina-inventario .inventario-titulo {
+    width: fit-content;
+    max-width: 100%;
+    margin: 12px auto;
+    padding: 12px 28px;
+
     color: #fff;
+    background: rgba(15, 18, 25, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 16px;
+
     font-size: clamp(26px, 4vw, 38px);
+    line-height: 1.4;
     letter-spacing: 1px;
-    margin-bottom: 10px;
+    text-align: center;
+
+    box-shadow: 0 4px 20px #000;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .pagina-inventario .inventario-descripcion,
 .pagina-inventario .inv-subtitulo {
-    color: #aaa;
+    width: fit-content;
+    max-width: 95%;
+    margin: 8px auto 25px;
+    padding: 10px 20px;
+
+    color: #ddd;
+    background: rgba(15, 18, 25, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+
     font-size: 14px;
     line-height: 1.6;
+    text-align: center;
+
+    box-shadow: 0 4px 20px #000;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
+
+/* Botón de regreso */
+
+.pagina-inventario .btn-link {
+    display: block;
+    width: fit-content;
+    margin: 25px auto 0;
+    padding: 10px 14px;
+
+    background: #1c1c1c;
+    color: #eee;
+    border: 1px solid #393939;
+    border-radius: 8px;
+
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.pagina-inventario .btn-link:hover {
+    background: #252525;
+    border-color: var(--jm-rojo);
+    color: #fff;
+}
+
+/* Icono de casa */
+
+.icono-casa {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+
+    background: #222;
+    color: #fff;
+    border-radius: 50%;
+
+    font-size: 30px;
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.icono-casa:hover {
+    transform: scale(1.08);
+}
+
+/* ==================================================
+   INVENTARIO — OPCIONES PRINCIPALES
+================================================== */
 
 .pagina-inventario .inventario-opciones {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
+    width: 100%;
     margin: 28px 0;
 }
 
 .pagina-inventario .inventario-opcion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    min-width: 0;
     min-height: 145px;
     padding: 22px;
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 10px;
-    text-align: left;
+
     background: rgba(17, 17, 17, 0.94);
     color: #fff;
     border: 1px solid #303030;
-    border-left: 4px solid #9a0808;
+    border-left: 4px solid var(--jm-rojo);
     border-radius: 12px;
+
+    text-align: left;
     cursor: pointer;
-    transition: border-color .2s, transform .2s;
+
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+    transition: border-color 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
 }
 
 .pagina-inventario .inventario-opcion:hover {
-    border-color: #9a0808;
-    transform: translateY(-2px);
+    border-color: var(--jm-rojo);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.32);
+}
+
+.pagina-inventario .inventario-opcion:focus-visible {
+    outline: 3px solid #d12b35;
+    outline-offset: 4px;
 }
 
 .pagina-inventario .inventario-icono {
-    font-size: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 52px;
+    height: 52px;
+
     color: #e3323d;
+    background: rgba(165, 18, 26, 0.15);
+    border-radius: 14px;
+    font-size: 29px;
 }
 
 .pagina-inventario .inventario-opcion strong {
+    color: #fff;
     font-size: 17px;
+    font-weight: 700;
 }
 
 .pagina-inventario .inventario-opcion span:last-child {
     color: #aaa;
     font-size: 13px;
+    line-height: 1.6;
 }
 
+/* ==================================================
+   INVENTARIO — PANELES Y FORMULARIOS
+================================================== */
+
 .pagina-inventario .inventario-panel {
+    width: 100%;
     margin-top: 26px;
     padding: clamp(16px, 3vw, 28px);
+
     color: #f5f5f5;
     background: rgba(12, 12, 12, 0.97);
     border: 1px solid #292929;
+    border-top: 3px solid var(--jm-rojo);
     border-radius: 15px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, .3);
+
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
 }
 
 .pagina-inventario .inventario-panel[hidden],
@@ -788,33 +739,25 @@ body.menu-abierto .menu-lateral {
     display: none !important;
 }
 
+.pagina-inventario .inventario-panel h2 {
+    margin-bottom: 24px;
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+}
+
 .pagina-inventario .inv-panel-cabecera {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
+    justify-content: space-between;
     gap: 16px;
     margin-bottom: 25px;
 }
 
 .pagina-inventario .inv-panel-cabecera h2 {
-    font-size: clamp(20px, 3vw, 27px);
-    color: #fff;
     margin: 0 0 8px;
-}
-
-.pagina-inventario .btn-link {
-    background: #1c1c1c;
-    color: #eee;
-    border: 1px solid #393939;
-    border-radius: 8px;
-    padding: 10px 14px;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.pagina-inventario .btn-link:hover {
-    border-color: #a10c15;
     color: #fff;
+    font-size: clamp(20px, 3vw, 27px);
 }
 
 .pagina-inventario .inv-formulario {
@@ -827,46 +770,93 @@ body.menu-abierto .menu-lateral {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
 }
 
 .pagina-inventario .inv-campo label {
+    margin-top: 4px;
     color: #ccc;
     font-size: 13px;
     font-weight: 600;
 }
 
 .pagina-inventario .inv-campo input,
-.pagina-inventario #buscarProducto {
+.pagina-inventario .inv-campo select,
+.pagina-inventario #buscarProducto,
+body.pagina-inventario #formularioProducto input,
+body.pagina-inventario #buscarProducto {
     width: 100%;
     min-width: 0;
     padding: 13px 14px;
-    color: #fff;
+
     background: #171717;
+    color: #fff;
     border: 1px solid #353535;
     border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 14px;
     outline: none;
 }
 
 .pagina-inventario .inv-campo input:focus,
-.pagina-inventario #buscarProducto:focus {
+.pagina-inventario .inv-campo select:focus,
+.pagina-inventario #buscarProducto:focus,
+body.pagina-inventario #formularioProducto input:focus {
     border-color: #b51c26;
-    box-shadow: 0 0 0 3px rgba(181, 28, 38, .12);
+    box-shadow: 0 0 0 3px rgba(181, 28, 38, 0.12);
 }
 
 .pagina-inventario input[type="date"] {
     color-scheme: dark;
 }
 
+/* Formulario alternativo por ID, conservado */
+
+body.pagina-inventario #formularioProducto {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+body.pagina-inventario #formularioProducto label {
+    margin-top: 8px;
+    color: #d8d8e2;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pagina-inventario #registrarProducto .inv-formulario {
+    width: 100%;
+    max-width: 650px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.pagina-inventario #registrarProducto .inv-panel-cabecera {
+    text-align: center;
+}
+
+.pagina-inventario #registrarProducto .inv-campo,
+.pagina-inventario #registrarProducto .inv-campo input,
+.pagina-inventario #registrarProducto .inv-campo select {
+    width: 100%;
+}
+
+/* Total de compra */
+
 .pagina-inventario .inv-total-compra {
     grid-column: 1 / -1;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
     padding: 17px;
     background: #191111;
+    color: #ccc;
     border: 1px solid #4a191d;
     border-radius: 9px;
-    color: #ccc;
 }
 
 .pagina-inventario .inv-total-compra strong {
@@ -874,28 +864,69 @@ body.menu-abierto .menu-lateral {
     font-size: 21px;
 }
 
-.pagina-inventario .inv-btn-guardar {
-    grid-column: 1 / -1;
-    width: 100%;
-    padding: 14px;
-    color: #fff;
-    background: #9a0808;
-    border: 1px solid #b3212b;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
+body.pagina-inventario .inventario-total {
+    margin: 16px 0;
+    padding: 15px;
+
+    color: #e5e5ef;
+    background: rgba(165, 18, 26, 0.10);
+    border: 1px solid rgba(165, 18, 26, 0.30);
+    border-radius: 12px;
 }
 
-.pagina-inventario .inv-btn-guardar:hover {
+body.pagina-inventario #costoTotalPreview {
+    color: #ffbfc2;
+}
+
+/* Botones para guardar */
+
+.pagina-inventario .inv-btn-guardar,
+body.pagina-inventario #formularioProducto button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 14px;
+
+    background: var(--jm-rojo);
+    color: #fff;
+    border: 1px solid #b3212b;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+
+    transition: background 0.2s ease,
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.pagina-inventario .inv-btn-guardar:hover,
+body.pagina-inventario #formularioProducto button:hover {
     background: #bd171f;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(165, 18, 26, 0.25);
 }
 
 .pagina-inventario button:disabled {
-    opacity: .6;
+    opacity: 0.6;
     cursor: wait;
 }
 
-/* Tarjetas de resumen */
+/* Ocultar cabecera y opciones al abrir un panel */
+
+body.pagina-inventario.seccion-abierta .inventario-titulo,
+body.pagina-inventario.seccion-abierta .inventario-descripcion,
+body.pagina-inventario.seccion-abierta .inventario-opciones {
+    display: none !important;
+}
+
+body.pagina-inventario.seccion-abierta .inventario-panel[hidden] {
+    display: none !important;
+}
+
+/* ==================================================
+   INVENTARIO — TARJETAS DE RESUMEN
+================================================== */
 
 .pagina-inventario .inventario-resumen {
     display: grid;
@@ -908,11 +939,13 @@ body.menu-abierto .menu-lateral {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    min-width: 0;
     padding: 20px;
+
     background: #151515;
     border: 1px solid #303030;
     border-radius: 11px;
-    min-width: 0;
 }
 
 .pagina-inventario .inv-resumen-card span {
@@ -940,7 +973,31 @@ body.menu-abierto .menu-lateral {
     color: #ff626b;
 }
 
-/* Tabla */
+/* Tarjeta verde de total vendido */
+
+.inv-resumen-verde,
+.inv-resumen-card.inv-resumen-verde {
+    background: #e8f7ec !important;
+    border: 1px solid #a5d6b0 !important;
+    border-left: 5px solid #239447 !important;
+    color: #176b32 !important;
+}
+
+.inv-resumen-verde span,
+.inv-resumen-verde small,
+.inv-resumen-card.inv-resumen-verde span,
+.inv-resumen-card.inv-resumen-verde small {
+    color: #176b32 !important;
+}
+
+.inv-resumen-verde strong,
+.inv-resumen-card.inv-resumen-verde strong {
+    color: #16803a !important;
+}
+
+/* ==================================================
+   INVENTARIO — TABLA DE PRODUCTOS
+================================================== */
 
 .pagina-inventario .inv-tabla-cabecera {
     display: flex;
@@ -951,9 +1008,9 @@ body.menu-abierto .menu-lateral {
 }
 
 .pagina-inventario .inv-tabla-cabecera h3 {
+    margin-bottom: 6px;
     color: #fff;
     font-size: 17px;
-    margin-bottom: 6px;
 }
 
 .pagina-inventario .inv-tabla-cabecera p {
@@ -965,17 +1022,23 @@ body.menu-abierto .menu-lateral {
     max-width: 340px;
 }
 
+.inventario-tabla-contenedor,
 .pagina-inventario .inventario-tabla-contenedor {
     width: 100%;
     overflow-x: auto;
+    background: #101010;
     border: 1px solid #303030;
     border-radius: 10px;
-    background: #101010;
+}
+
+.inventario-tabla th,
+.inventario-tabla td {
+    vertical-align: middle;
 }
 
 .pagina-inventario .inventario-tabla {
     width: 100%;
-    min-width: 920px;
+    min-width: 1050px;
     border-collapse: collapse;
     text-align: left;
 }
@@ -987,21 +1050,22 @@ body.menu-abierto .menu-lateral {
 .pagina-inventario .inventario-tabla th {
     padding: 16px 14px;
     color: #f0b6b9;
+    border-bottom: 1px solid #4c2023;
+
     font-size: 11px;
     font-weight: 800;
-    letter-spacing: .5px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     white-space: nowrap;
-    border-bottom: 1px solid #4c2023;
 }
 
 .pagina-inventario .inventario-tabla td {
     padding: 15px 14px;
     color: #ddd;
+    border-bottom: 1px solid #252525;
+
     font-size: 13px;
     white-space: nowrap;
-    border-bottom: 1px solid #252525;
-    vertical-align: middle;
 }
 
 .pagina-inventario .inventario-tabla tbody tr:last-child td {
@@ -1022,35 +1086,62 @@ body.menu-abierto .menu-lateral {
     font-weight: 800;
 }
 
+/* Eliminar stock */
+
+.btn-eliminar-stock,
 .pagina-inventario .btn-eliminar-stock {
     padding: 8px 11px;
-    color: #ff8b91;
     background: #2b1113;
+    color: #ff8b91;
     border: 1px solid #78232a;
     border-radius: 7px;
+
     font-size: 12px;
     cursor: pointer;
     white-space: nowrap;
+
+    transition: background 0.2s ease;
 }
 
+.btn-eliminar-stock:hover,
 .pagina-inventario .btn-eliminar-stock:hover {
-    color: #fff;
     background: #a10c15;
+    color: #fff;
+}
+
+/* Exportar a Excel */
+
+.pagina-inventario .btn-exportar-excel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 11px 16px;
+    background: #173d29;
+    color: #fff;
+    border: 1px solid #287348;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.pagina-inventario .btn-exportar-excel:hover {
+    background: #205638;
 }
 
 .pagina-inventario .inv-nota {
+    margin-top: 14px;
     color: #777;
     font-size: 11px;
     line-height: 1.6;
-    margin-top: 14px;
 }
 
-.pagina-inventario .icono-casa {
-    display: inline-block;
-    margin-top: 25px;
-}
-
-/* Adaptación a pantallas pequeñas */
+/* ==================================================
+   RESPONSIVE — TABLETS Y CELULARES
+================================================== */
 
 @media (max-width: 700px) {
     .pagina-inventario .inventario-contenedor {
@@ -1081,271 +1172,69 @@ body.menu-abierto .menu-lateral {
     .pagina-inventario .inv-btn-guardar {
         grid-column: 1;
     }
+
+    .pagina-inventario .inventario-panel {
+        margin: 15px auto;
+        padding: 20px;
+    }
+
+    .pagina-inventario .inventario-panel h2 {
+        font-size: 21px;
+    }
+
+    .pagina-inventario .inventario-opcion {
+        min-height: 155px;
+        padding: 20px;
+    }
 }
 
-/* Control de stock más ancho */
-.pagina-inventario #controlStock {
-    width: 100%;
-}
-
-.pagina-inventario .inventario-tabla-contenedor {
-    width: 100%;
-    overflow-x: auto;
-}
-
-.pagina-inventario .inventario-tabla {
-    width: 100%;
-    min-width: 1050px;
-}
-
-/* Botón Exportar a Excel */
-.pagina-inventario .btn-exportar-excel {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 11px 16px;
-    background: #173d29;
-    color: #fff;
-    border: 1px solid #287348;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.pagina-inventario .btn-exportar-excel:hover {
-    background: #205638;
-}
-
-/* Espaciado del encabezado de inventario */
-.pagina-inventario .inv-encabezado {
-    margin-bottom: 30px;
-}
-
-.pagina-inventario .inventario-titulo {
-    margin-top: 12px;
-    margin-bottom: 12px;
-    line-height: 1.4;
-}
-
-.pagina-inventario .inventario-descripcion {
-    margin-top: 8px;
-    line-height: 1.6;
-}
-
-/* Centrar el formulario de registro de productos */
-.pagina-inventario #registrarProducto .inv-formulario {
-    width: 100%;
-    max-width: 650px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.pagina-inventario #registrarProducto .inv-panel-cabecera {
-    text-align: center;
-}
-
-.pagina-inventario #registrarProducto .inv-campo {
-    width: 100%;
-}
-
-.pagina-inventario #registrarProducto .inv-campo input,
-.pagina-inventario #registrarProducto .inv-campo select {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* ===================================
-   LISTA DE PRODUCTOS - ESTILO PREMIUM
-   =================================== */
-
-#pedido {
-    width: 100%;
-    min-height: 52px;
-    padding: 14px 44px 14px 16px;
-
-    background-color: rgba(20, 20, 20, 0.88);
-    color: #f5f1e8;
-
-    border: 1px solid #a88b4a;
-    border-radius: 10px;
-
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 500;
-
-    cursor: pointer;
-    outline: none;
-
-    transition:
-        border-color 0.25s ease,
-        box-shadow 0.25s ease,
-        background-color 0.25s ease;
-}
-
-/* Cuando seleccionas la lista */
-#pedido:hover {
-    border-color: #d4b66a;
-    background-color: rgba(28, 28, 28, 0.96);
-}
-
-/* Cuando haces clic */
-#pedido:focus {
-    border-color: #e0c477;
-    box-shadow: 0 0 0 3px rgba(212, 182, 106, 0.20);
-}
-
-/* Opciones de productos */
-#pedido option {
-    background-color: #202020;
-    color: #f5f1e8;
-    padding: 12px;
-}
-
-/* Productos agotados */
-#pedido option:disabled {
-    color: #999999;
-}
-
-/* Compatibilidad con pantallas pequeñas */
 @media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
+
+    #formularioPedido {
+        width: 100%;
+        max-width: 460px;
+        padding: 27px 20px;
+        border-radius: 13px;
+    }
+
+    #formularioPedido .tema {
+        margin-bottom: 23px;
+        font-size: 25px;
+    }
+
+    #formularioPedido input:not([type="submit"]),
+    #formularioPedido select {
+        min-height: 47px;
+        font-size: 14px;
+    }
+
     #pedido {
         min-height: 50px;
         font-size: 14px;
         border-radius: 9px;
     }
+
+    #loginBox {
+        padding: 30px 22px;
+    }
+
+    .btn-menu {
+        top: 12px;
+        left: 12px;
+        padding: 10px 14px;
+        font-size: 24px;
+    }
+
+    .pagina-inventario .inventario-titulo {
+        padding: 10px 16px;
+        font-size: 25px;
+        letter-spacing: 1px;
+    }
+
+    .pagina-inventario .inventario-descripcion {
+        padding: 10px 14px;
+    }
 }
-
-
-.inv-resumen-verde {
-    background: #e8f7ec;
-    border: 1px solid #a5d6b0;
-    border-left: 5px solid #239447;
-    color: #176b32;
-}
-
-.inv-resumen-verde strong {
-    color: #16803a;
-}
-
-.inv-resumen-verde {
-    background: #e8f7ec;
-    border: 1px solid #a5d6b0;
-    border-left: 5px solid #239447;
-    color: #176b32;
-}
-
-.inv-resumen-verde strong {
-    color: #16803a;
-}
-/* Cuadro verde: total vendido */
-.inv-resumen-card.inv-resumen-verde {
-    background: #e8f7ec !important;
-    border: 1px solid #a5d6b0 !important;
-    border-left: 5px solid #239447 !important;
-    color: #176b32 !important;
-}
-
-.inv-resumen-card.inv-resumen-verde span,
-.inv-resumen-card.inv-resumen-verde small {
-    color: #176b32 !important;
-}
-
-.inv-resumen-card.inv-resumen-verde strong {
-    color: #16803a !important;
-}
-
-/* ========================================
-   MENÚ LATERAL JAGGER MOVE
-======================================== */
-
-.btn-menu {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 10002;
-    display: block;
-    padding: 12px 18px;
-    border: 1px solid #555;
-    border-radius: 8px;
-    background: #171717;
-    color: #fff;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 260px;
-    max-width: 85vw;
-    height: 100vh;
-    box-sizing: border-box;
-    padding: 75px 20px 20px;
-    background: #171717;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    overflow-y: auto;
-    z-index: 10003;
-
-    transform: translateX(-105%);
-    visibility: hidden;
-    transition: transform 0.3s ease, visibility 0.3s ease;
-}
-
-.menu-lateral h2 {
-    margin: 0 0 15px;
-    color: #fff;
-    font-family: inherit;
-    font-size: 22px;
-    letter-spacing: 1px;
-}
-
-.menu-lateral a,
-.menu-lateral button {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 13px;
-    border: none;
-    border-radius: 7px;
-    background: #292929;
-    color: #fff;
-    font-family: inherit;
-    font-size: 15px;
-    text-align: left;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background 0.2s ease;
-}
-
-.menu-lateral a:hover,
-.menu-lateral button:hover {
-    background: #444;
-}
-
-body.menu-abierto .menu-lateral {
-    transform: translateX(0);
-    visibility: visible;
-}
-
-.fondo-menu {
-    position: fixed;
-    inset: 0;
-    z-index: 10001;
-    background: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-body.menu-abierto .fondo-menu {
-    opacity: 1;
-    visibility: visible;
-}
-

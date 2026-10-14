@@ -1,0 +1,338 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Panel General | JAGGER MOVE</title>
+
+    <link rel="icon" href="fotos/LOGO.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/Style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        .admin-panel {
+            width: min(1100px, 92%);
+            margin: 70px auto 40px;
+            color: #fff;
+        }
+
+        .admin-encabezado {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .admin-marca {
+            color: #ff303b;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 4px;
+        }
+
+        .admin-titulo {
+            margin: 8px 0;
+            font-size: clamp(27px, 5vw, 42px);
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .admin-descripcion {
+            color: #ccc;
+            margin: 0;
+        }
+
+        .admin-etiqueta {
+            border: 1px solid #ff303b;
+            color: #ff5058;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .admin-seccion-titulo {
+            margin: 30px 0 15px;
+            font-size: 17px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .admin-indicadores {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .admin-tarjeta {
+            background: rgba(15, 15, 15, 0.94);
+            border: 1px solid #383838;
+            border-radius: 12px;
+            padding: 22px;
+            min-width: 0;
+        }
+
+        .admin-tarjeta.principal {
+            border-top: 3px solid #ff303b;
+        }
+
+        .admin-tarjeta-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-tarjeta-titulo {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .admin-icono {
+            font-size: 23px;
+        }
+
+        .admin-numero {
+            display: block;
+            font-size: 36px;
+            font-weight: 900;
+            margin: 18px 0 5px;
+        }
+
+        .admin-nota {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .admin-estados {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .admin-estado {
+            background: rgba(15, 15, 15, 0.94);
+            border: 1px solid #383838;
+            border-radius: 10px;
+            padding: 18px 12px;
+            text-align: center;
+        }
+
+        .admin-estado span {
+            display: block;
+            color: #ccc;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .admin-estado strong {
+            font-size: 26px;
+        }
+
+        .admin-accesos {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .admin-acceso {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 9px;
+            min-height: 110px;
+            padding: 18px;
+            background: #111;
+            border: 1px solid #393939;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .admin-acceso:hover {
+            border-color: #ff303b;
+            transform: translateY(-3px);
+        }
+
+        .admin-acceso-icono {
+            font-size: 25px;
+        }
+
+        .admin-acceso strong {
+            font-size: 14px;
+        }
+
+        .admin-acceso small {
+            color: #aaa;
+        }
+
+        .admin-mensaje {
+            margin-top: 20px;
+            color: #bbb;
+            font-size: 13px;
+        }
+
+        .admin-mensaje.error {
+            color: #ff6068;
+        }
+
+        .admin-cerrar {
+            background: #ff303b;
+            color: #fff;
+            border: 0;
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .admin-cerrar:hover {
+            background: #d91e29;
+        }
+
+        @media (max-width: 650px) {
+            .admin-panel {
+                margin-top: 75px;
+            }
+
+            .admin-indicadores {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-estados {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .admin-accesos {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .admin-encabezado {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="admin-panel">
+
+        <header class="admin-encabezado">
+            <div>
+                <div class="admin-marca">JAGGER MOVE</div>
+                <h1 class="admin-titulo">Panel general</h1>
+                <p class="admin-descripcion">
+                    Control de pedidos e inventario
+                </p>
+            </div>
+
+            <button id="btnCerrarSesionAdmin"
+                    class="admin-cerrar"
+                    type="button">
+                Cerrar sesión
+            </button>
+        </header>
+
+        <h2 class="admin-seccion-titulo">Resumen del negocio</h2>
+
+        <section class="admin-indicadores">
+
+            <article class="admin-tarjeta principal">
+                <div class="admin-tarjeta-superior">
+                    <span class="admin-tarjeta-titulo">
+                        Pedidos registrados
+                    </span>
+                    <span class="admin-icono">🛍️</span>
+                </div>
+                <strong class="admin-numero" id="totalPedidos">—</strong>
+                <span class="admin-nota">Total en Supabase</span>
+            </article>
+
+            <article class="admin-tarjeta principal">
+                <div class="admin-tarjeta-superior">
+                    <span class="admin-tarjeta-titulo">
+                        Unidades en stock
+                    </span>
+                    <span class="admin-icono">📦</span>
+                </div>
+                <strong class="admin-numero" id="totalStock">—</strong>
+                <span class="admin-nota">Suma de las existencias registradas</span>
+            </article>
+
+        </section>
+
+        <h2 class="admin-seccion-titulo">Estado de los pedidos</h2>
+
+        <section class="admin-estados">
+
+            <article class="admin-estado">
+                <span>En espera</span>
+                <strong id="pedidosEspera">—</strong>
+            </article>
+
+            <article class="admin-estado">
+                <span>Preparando</span>
+                <strong id="pedidosPreparando">—</strong>
+            </article>
+
+            <article class="admin-estado">
+                <span>Enviando</span>
+                <strong id="pedidosEnviando">—</strong>
+            </article>
+
+            <article class="admin-estado">
+                <span>Entregados</span>
+                <strong id="pedidosEntregados">—</strong>
+            </article>
+
+        </section>
+
+        <h2 class="admin-seccion-titulo">Accesos rápidos</h2>
+
+        <nav class="admin-accesos">
+
+            <a class="admin-acceso" href="index.html">
+                <span class="admin-acceso-icono">＋</span>
+                <strong>Registrar pedido</strong>
+                <small>Registrar un cliente</small>
+            </a>
+
+            <a class="admin-acceso" href="mispedidos.html">
+                <span class="admin-acceso-icono">☷</span>
+                <strong>Mis pedidos</strong>
+                <small>Consultar y gestionar</small>
+            </a>
+
+            <a class="admin-acceso" href="inventario.html">
+                <span class="admin-acceso-icono">▦</span>
+                <strong>Inventario</strong>
+                <small>Productos y existencias</small>
+            </a>
+
+            <a class="admin-acceso" href="etiquetas/etiquetas.html">
+                <span class="admin-acceso-icono">▤</span>
+                <strong>Generar etiqueta</strong>
+                <small>Preparar etiquetas</small>
+            </a>
+
+        </nav>
+
+        <p id="mensajeAdmin" class="admin-mensaje">
+            Conectando con el sistema...
+        </p>
+
+    </main>
+
+    <script src="js/admin.js"></script>
+
+</body>
+</html>
+```

@@ -5,22 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="icon" href="fotos/LOGO.ico" type="image/x-icon">
 
-    <title>Registro</title>
+    <title>Registro de pedidos | JAGGER MOVE</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <link rel="stylesheet" href="./css/Style.css">
+    <link rel="stylesheet" href="./css/registro.css">
 </head>
 
-<body>
+<body class="pagina-registro">
 
     <!-- MENÚ LATERAL -->
-    <button id="btnMenu" class="btn-menu" type="button">☰</button>
+    <button id="btnMenu" class="btn-menu" type="button" aria-label="Abrir menú">☰</button>
+
     <div id="menuFondo" class="menu-fondo"></div>
 
     <nav id="menuLateral" class="menu-lateral">
-        <h2>MENÚ</h2>
+        <h2>JAGGER MOVE</h2>
+        <p class="menu-subtitulo">SISTEMA DE GESTIÓN</p>
 
         <a href="admin.html">Panel principal</a>
         <a href="index.html">Registrar pedido</a>
@@ -32,19 +37,28 @@
             Cerrar sesión
         </button>
     </nav>
+
     <!-- INICIO DE SESIÓN -->
     <div id="loginOverlay">
         <div id="loginBox">
+            <p class="registro-etiqueta">ACCESO PRIVADO</p>
+
             <h2>Iniciar sesión</h2>
 
-            <input type="email" id="email" placeholder="Correo" autocomplete="username">
+            <p class="login-descripcion">
+                Ingresa tus credenciales para acceder al sistema.
+            </p>
+
+            <input type="email" id="email" placeholder="Correo electrónico" autocomplete="username">
 
             <input type="password" id="password" placeholder="Contraseña" autocomplete="current-password">
 
-            <button id="btnLogin" type="button">Ingresar</button>
+            <button id="btnLogin" type="button">Ingresar al sistema</button>
 
             <p>
-                <a href="#" id="btnOlvidePassword">¿Olvidaste tu contraseña?</a>
+                <a href="#" id="btnOlvidePassword">
+                    ¿Olvidaste tu contraseña?
+                </a>
             </p>
 
             <p id="recuperacionMensaje"></p>
@@ -52,34 +66,115 @@
         </div>
     </div>
 
-    <!-- REGISTRO DE PEDIDOS -->
-    <form id="formularioPedido">
-        <h2 class="tema">Registro de cliente</h2>
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="registro-layout">
 
-        <input type="text" id="nombre" placeholder="Nombre" required>
-        <input type="text" id="apellido" placeholder="Apellido" required>
-        <input type="text" id="numero" placeholder="Número de teléfono" required>
+        <!-- PRESENTACIÓN -->
+        <section class="registro-presentacion">
+            <p class="registro-etiqueta">JAGGER MOVE / GESTIÓN</p>
 
-        <input type="text" id="provincia" placeholder="Provincia o localidad" required>
+            <h1>
+                CONTROL<br>
+                <span>DE PEDIDOS.</span>
+            </h1>
 
-        <select id="destino" required>
-            <option value="">Selecciona el tipo de envío</option>
-            <option value="Lima">Lima</option>
-            <option value="Provincia">Provincia</option>
-        </select>
+            <p class="registro-descripcion">
+                Administra tus clientes y registra cada pedido
+                desde un solo lugar.
+            </p>
 
-        <select id="pedido" required>
-            <option value="">Cargando productos...</option>
-        </select>
+            <div class="registro-indicador">
+                <span class="indicador-punto"></span>
+                PANEL DE OPERACIONES
+            </div>
 
-        <input type="number" id="cantidad" placeholder="Cantidad" min="1" step="1" required>
+            <div class="registro-marca">
+                <span>JM</span>
+                <div>
+                    <strong>JAGGER MOVE</strong>
+                    <small>VISTE TU ESTILO, VIVE TU ESENCIA.</small>
+                </div>
+            </div>
+        </section>
 
-        <input type="submit" class="btn" value="Registrar">
-    </form>
+        <!-- FORMULARIO -->
+        <section class="registro-panel">
 
-    <button id="btnCerrarSesion" type="button">Cerrar sesión</button>
+            <div class="registro-panel-cabecera">
+                <div>
+                    <p class="registro-etiqueta">NUEVO REGISTRO</p>
+                    <h2>Registro de cliente</h2>
+                    <p>Completa los datos para registrar el pedido.</p>
+                </div>
+
+                <span class="registro-numero">01</span>
+            </div>
+
+            <div class="registro-separador"></div>
+
+            <form id="formularioPedido">
+
+                <div class="registro-campo">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" placeholder="Nombre del cliente" required>
+                </div>
+
+                <div class="registro-campo">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" placeholder="Apellido del cliente" required>
+                </div>
+
+                <div class="registro-campo">
+                    <label for="numero">Número de teléfono</label>
+                    <input type="text" id="numero" placeholder="Número de contacto" required>
+                </div>
+
+
+                <div class="registro-campo">
+                    <label for="provincia">Distrito</label>
+                    <input type="text" id="provincia" placeholder="Ingresa el distrito" required>
+                </div>
+
+
+                <div class="registro-campo">
+                    <label for="destino">Tipo de envío</label>
+                    <select id="destino" required>
+                        <option value="">Selecciona el tipo de envío</option>
+                        <option value="Lima">Lima</option>
+                        <option value="Provincia">Provincia</option>
+                    </select>
+                </div>
+
+                <div class="registro-campo">
+                    <label for="pedido">Producto</label>
+                    <select id="pedido" required>
+                        <option value="">Cargando productos...</option>
+                    </select>
+                </div>
+
+                <div class="registro-campo registro-campo-cantidad">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" id="cantidad" placeholder="Ej. 2" min="1" step="1" required>
+                </div>
+
+                <input type="submit" class="btn registro-boton" value="Registrar pedido">
+
+            </form>
+
+            <p class="registro-pie">
+                JAGGER MOVE · SISTEMA DE GESTIÓN PRIVADO
+            </p>
+
+        </section>
+
+    </main>
+
+    <button id="btnCerrarSesion" type="button">
+        Cerrar sesión
+    </button>
 
     <script src="js/script.js"></script>
+
 </body>
 
 </html>

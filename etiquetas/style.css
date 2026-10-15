@@ -1,14 +1,25 @@
-/* =========================================
-   JAGGER MOVE - GENERADOR DE ETIQUETAS
+/* =====================================================
+   JAGGER MOVE — PREMIUM TECHNOLOGY
    Interfaz + impresión térmica 100 x 150 mm
-   ========================================= */
+===================================================== */
+
+:root {
+    --etq-bg: #09090b;
+    --etq-panel: #141418;
+    --etq-panel-light: #1b1b21;
+    --etq-border: #303038;
+    --etq-red: #f12640;
+    --etq-red-hover: #ff344e;
+    --etq-text: #f5f5f7;
+    --etq-muted: #9999a5;
+}
 
 .etq-app {
-    width: min(100% - 32px, 1000px);
-    margin: 30px auto;
-    color: #202124;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.5;
+    width: min(100% - 36px, 1120px);
+    margin: 75px auto 45px;
+    color: var(--etq-text);
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    line-height: 1.55;
 }
 
 .etq-app,
@@ -26,59 +37,72 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 18px;
-    padding: 24px 12px;
+    gap: 20px;
+    padding: 28px 12px 38px;
     text-align: left;
 }
 
 .etq-logo {
-    width: 72px;
-    height: 72px;
+    width: 78px;
+    height: 78px;
     object-fit: contain;
     flex-shrink: 0;
+    filter: drop-shadow(0 0 16px rgba(241, 38, 64, .12));
 }
 
 .etq-header h1 {
     margin: 0;
-    font-size: clamp(23px, 4vw, 34px);
-    letter-spacing: 1.5px;
+    color: #fff;
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 900;
+    letter-spacing: 3px;
     line-height: 1.2;
 }
 
 .etq-header p {
-    margin: 6px 0 0;
-    opacity: .75;
+    margin: 8px 0 0;
+    color: var(--etq-muted);
+    font-size: 13px;
+    letter-spacing: 1px;
 }
 
-/* TARJETAS */
+/* TARJETAS PRINCIPALES */
 
 .etq-card {
-    margin: 18px 0;
-    padding: clamp(18px, 3vw, 30px);
-    background: #fff;
-    color: #202124;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, .07);
+    margin: 20px 0;
+    padding: clamp(22px, 4vw, 36px);
+    background: linear-gradient(145deg, #18181d, #111114);
+    color: var(--etq-text);
+    border: 1px solid var(--etq-border);
+    border-radius: 12px;
+    box-shadow: 0 18px 55px rgba(0, 0, 0, .22);
 }
 
 .etq-card h2 {
     margin: 0 0 10px;
-    font-size: 23px;
+    color: #fff;
+    font-size: clamp(21px, 3vw, 27px);
+    font-weight: 800;
+    letter-spacing: -.5px;
     line-height: 1.3;
 }
 
 .etq-card h3 {
-    margin: 26px 0 15px;
-    padding-bottom: 9px;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 17px;
+    margin: 30px 0 17px;
+    padding-bottom: 11px;
+    border-bottom: 1px solid #383840;
+    color: #f5f5f7;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .etq-muted {
-    color: #6b7280;
-    font-size: 14px;
-    margin: 0 0 15px;
+    margin: 0 0 18px;
+    color: var(--etq-muted);
+    font-size: 13px;
+    line-height: 1.7;
 }
 
 /* BOTONES */
@@ -86,74 +110,101 @@
 .etq-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 16px;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 .etq-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 43px;
-    padding: 11px 17px;
+    min-height: 46px;
+    padding: 12px 19px;
     border: 1px solid transparent;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.3;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .4px;
+    line-height: 1.4;
     cursor: pointer;
-    transition: background .18s ease, transform .18s ease;
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
 }
 
 .etq-btn:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+}
+
+.etq-btn:active {
+    transform: translateY(0);
+}
+
+.etq-btn:disabled {
+    opacity: .55;
+    cursor: wait;
+    transform: none;
 }
 
 .etq-btn:focus-visible,
 .etq-app input:focus-visible,
 .etq-app textarea:focus-visible,
 .etq-app select:focus-visible {
-    outline: 3px solid rgba(59, 130, 246, .35);
-    outline-offset: 2px;
+    outline: 3px solid rgba(241, 38, 64, .35);
+    outline-offset: 3px;
 }
 
 .etq-primary {
-    background: #202124;
+    background: var(--etq-red);
     color: #fff;
+    border-color: var(--etq-red);
+    box-shadow: 0 5px 16px rgba(241, 38, 64, .12);
 }
 
 .etq-primary:hover {
-    background: #383a3d;
+    background: var(--etq-red-hover);
+    border-color: var(--etq-red-hover);
+    box-shadow: 0 8px 23px rgba(241, 38, 64, .2);
 }
 
 .etq-secondary {
-    background: #f3f4f6;
-    color: #202124;
-    border-color: #d1d5db;
+    background: #24242b;
+    color: #f5f5f7;
+    border-color: #41414a;
 }
 
 .etq-secondary:hover,
 .etq-light:hover {
-    background: #e5e7eb;
+    background: #303038;
+    border-color: #555560;
 }
 
 .etq-light {
-    background: #fff;
-    color: #374151;
-    border-color: #d1d5db;
+    background: transparent;
+    color: #c5c5ce;
+    border-color: #41414a;
 }
 
 .etq-destino {
-    background: #f3f4f6;
-    color: #202124;
-    border-color: #d1d5db;
-    min-width: 120px;
+    min-width: 135px;
+    background: #202026;
+    color: #e9e9ee;
+    border-color: #42424b;
+}
+
+.etq-destino:hover {
+    border-color: var(--etq-red);
 }
 
 .etq-destino.etq-selected {
-    background: #202124;
-    color: #fff;
-    border-color: #202124;
+    background: rgba(241, 38, 64, .12);
+    color: #ff5367;
+    border-color: var(--etq-red);
+    box-shadow: inset 0 0 0 1px rgba(241, 38, 64, .1);
 }
 
 /* BÚSQUEDA */
@@ -161,8 +212,8 @@
 .etq-search-row {
     display: flex;
     align-items: stretch;
-    gap: 10px;
-    margin: 8px 0 18px;
+    gap: 12px;
+    margin: 9px 0 20px;
 }
 
 .etq-search-row input,
@@ -171,20 +222,20 @@
     min-width: 0;
 }
 
-/* FORMULARIO */
+/* CAMPOS DEL FORMULARIO */
 
 .etq-app label {
     display: block;
-    margin-bottom: 6px;
-    color: #374151;
-    font-size: 13px;
+    margin-bottom: 8px;
+    color: #d7d7df;
+    font-size: 12px;
     font-weight: 700;
 }
 
 .etq-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: 18px;
 }
 
 .etq-field {
@@ -201,46 +252,64 @@
     display: block;
     width: 100%;
     min-width: 0;
-    padding: 11px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    background: #fff;
-    color: #202124;
-    font: inherit;
-    font-size: 14px;
+    padding: 12px 14px;
+    border: 1px solid #393941;
+    border-radius: 6px;
+    background: #0d0d10;
+    color: #f5f5f7;
+    font-family: inherit;
+    font-size: 13px;
+    transition: border-color .2s ease, box-shadow .2s ease;
 }
 
 .etq-app input {
-    min-height: 43px;
+    min-height: 46px;
 }
 
 .etq-app textarea {
-    min-height: 82px;
+    min-height: 95px;
     resize: vertical;
 }
 
 .etq-app input::placeholder,
 .etq-app textarea::placeholder {
-    color: #9ca3af;
+    color: #70707c;
+}
+
+.etq-app input:focus,
+.etq-app textarea:focus,
+.etq-app select:focus {
+    border-color: var(--etq-red);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(241, 38, 64, .09);
+}
+
+.etq-app select {
+    cursor: pointer;
+}
+
+.etq-app select option {
+    background: #141418;
+    color: #f5f5f7;
 }
 
 .etq-form-actions {
-    padding-top: 8px;
+    padding-top: 10px;
 }
 
 .etq-message {
     min-height: 20px;
+    margin-top: 15px;
     overflow-wrap: anywhere;
-    color: #4b5563;
-    font-size: 13px;
+    color: #b6b6c0;
+    font-size: 12px;
+    line-height: 1.7;
 }
 
-/* =========================================
-   VISTA PREVIA DE ETIQUETA
-   ========================================= */
+/* VISTA PREVIA */
 
 .etq-preview-heading {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .etq-print {
@@ -251,12 +320,12 @@
     overflow-wrap: anywhere;
     color: #111;
     background: #fff;
-    border: 1px solid #d1d5db;
-    border-radius: 5px;
+    border: 1px solid #d1d1d6;
+    border-radius: 4px;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* MARCA Y CÓDIGO */
+/* CABECERA DE ETIQUETA */
 
 .etq-print-header {
     display: grid;
@@ -287,6 +356,7 @@
 
 .marca-texto h2 {
     margin: 0;
+    color: #111;
     font-size: 20px;
     font-weight: 900;
     letter-spacing: .5px;
@@ -295,6 +365,7 @@
 
 .marca-texto p {
     margin: 5px 0 0;
+    color: #333;
     font-size: 8px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -310,6 +381,8 @@
     color: #fff;
     background: #171717;
     text-align: center;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
 }
 
 .numero-pedido span {
@@ -326,8 +399,8 @@
 }
 
 .numero-pedido small {
-    font-size: 9px;
     color: #e5e5e5;
+    font-size: 9px;
 }
 
 /* DESTINO */
@@ -358,14 +431,13 @@
     text-transform: uppercase;
 }
 
-/* SECCIONES */
+/* BLOQUES DE INFORMACIÓN */
 
 .bloque-etiqueta {
     margin-top: 14px;
-    padding-top: 0;
 }
 
-.bloque-etiqueta>h3 {
+.bloque-etiqueta > h3 {
     display: flex;
     align-items: center;
     gap: 7px;
@@ -373,12 +445,13 @@
     padding: 0 0 6px;
     border: 0;
     border-bottom: 1px solid #aaa;
+    color: #111;
     font-size: 10px;
     font-weight: 900;
     letter-spacing: .8px;
 }
 
-.bloque-etiqueta>h3 span {
+.bloque-etiqueta > h3 span {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -391,7 +464,7 @@
     letter-spacing: 0;
 }
 
-/* DATOS DEL CLIENTE Y DESTINO */
+/* DATOS */
 
 .dato-destacado,
 .dato-etiqueta {
@@ -408,8 +481,8 @@
     gap: 2px;
 }
 
-.dato-destacado>span,
-.dato-etiqueta>span {
+.dato-destacado > span,
+.dato-etiqueta > span {
     display: block;
     color: #444;
     font-size: 8px;
@@ -417,8 +490,8 @@
     letter-spacing: .7px;
 }
 
-.dato-destacado>strong,
-.dato-etiqueta>strong {
+.dato-destacado > strong,
+.dato-etiqueta > strong {
     display: block;
     color: #111;
     font-size: 12px;
@@ -428,7 +501,7 @@
     white-space: pre-wrap;
 }
 
-.dato-destacado:first-of-type>strong {
+.dato-destacado:first-of-type > strong {
     font-size: 15px;
 }
 
@@ -445,11 +518,11 @@
     border-left: 3px solid #171717;
 }
 
-.cantidad-etiqueta>strong {
+.cantidad-etiqueta > strong {
     font-size: 15px;
 }
 
-/* DETALLE */
+/* DETALLE DEL PEDIDO */
 
 .bloque-detalle {
     margin-top: 14px;
@@ -460,6 +533,7 @@
     margin: 0;
     padding: 8px;
     border: 1px solid #ccc;
+    color: #111;
     font-size: 11px;
     line-height: 1.35;
     white-space: pre-wrap;
@@ -472,7 +546,7 @@
     border: 1px dashed #999;
 }
 
-.observaciones-etiqueta>span {
+.observaciones-etiqueta > span {
     font-size: 8px;
     font-weight: 800;
     letter-spacing: .7px;
@@ -480,22 +554,24 @@
 
 .observaciones-etiqueta p {
     margin: 3px 0 0;
+    color: #111;
     font-size: 10px;
     line-height: 1.3;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
 
-/* MENSAJE DE MARCA */
+/* FIRMA DE MARCA */
 
 .etq-print-footer {
     margin-top: 13px;
     padding-top: 10px;
     border-top: 2px solid #171717;
+    color: #111;
     text-align: center;
 }
 
-.etq-print-footer>strong {
+.etq-print-footer > strong {
     display: block;
     font-size: 17px;
     font-weight: 900;
@@ -508,47 +584,147 @@
     font-style: italic;
 }
 
-.etq-print-footer>span {
+.etq-print-footer > span {
     display: block;
     font-size: 8px;
     font-weight: 800;
     letter-spacing: 1px;
 }
 
-/* RESPONSIVE: PANTALLAS PEQUEÑAS */
+/* MENÚ LATERAL */
+
+.btn-menu {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 1002;
+    padding: 12px 17px;
+    border: 1px solid #393940;
+    border-radius: 6px;
+    background: #17171c;
+    color: #fff;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+}
+
+.btn-menu:hover {
+    background: #25252c;
+    border-color: var(--etq-red);
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -290px;
+    width: 270px;
+    height: 100vh;
+    padding: 82px 20px 24px;
+    box-sizing: border-box;
+    background: #111114;
+    border-right: 1px solid #33333b;
+    z-index: 1003;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: left .3s ease;
+    overflow-y: auto;
+}
+
+.menu-lateral.abierto {
+    left: 0;
+}
+
+.menu-lateral h2 {
+    margin: 0 0 15px;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.menu-lateral a,
+.menu-lateral button {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 13px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: #1d1d23;
+    color: #dedee5;
+    text-align: left;
+    text-decoration: none;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+}
+
+.menu-lateral a:hover,
+.menu-lateral button:hover {
+    background: rgba(241, 38, 64, .1);
+    color: #ff5367;
+    border-color: rgba(241, 38, 64, .3);
+}
+
+/* FONDO DEL MENÚ */
+
+.fondo-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .68);
+    backdrop-filter: blur(3px);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease;
+}
+
+.fondo-menu.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* PANTALLAS PEQUEÑAS */
 
 @media (max-width: 600px) {
     .etq-app {
-        width: min(100% - 20px, 1000px);
-        margin: 12px auto;
+        width: calc(100% - 22px);
+        margin: 82px auto 28px;
     }
 
     .etq-header {
         gap: 12px;
-        padding: 16px 4px;
+        padding: 15px 3px 24px;
     }
 
     .etq-logo {
-        width: 54px;
-        height: 54px;
+        width: 55px;
+        height: 55px;
     }
 
     .etq-header h1 {
         font-size: 21px;
+        letter-spacing: 1.5px;
     }
 
     .etq-header p {
-        font-size: 12px;
+        font-size: 11px;
+        letter-spacing: .3px;
     }
 
     .etq-card {
-        padding: 16px;
-        border-radius: 11px;
+        padding: 18px 15px;
+        border-radius: 9px;
     }
 
     .etq-grid {
         grid-template-columns: 1fr;
-        gap: 13px;
+        gap: 14px;
     }
 
     .etq-full {
@@ -567,12 +743,34 @@
     .etq-print {
         padding: 14px;
     }
+
+    .etq-print-header {
+        grid-template-columns: minmax(0, 1fr) minmax(120px, .85fr);
+        gap: 7px;
+    }
+
+    .etq-print-logo {
+        width: 38px;
+        height: 38px;
+    }
+
+    .marca-texto h2 {
+        font-size: 15px;
+    }
+
+    .numero-pedido strong {
+        font-size: 14px;
+    }
+
+    .etiqueta-destino-principal strong {
+        font-size: 23px;
+    }
 }
 
-/* =========================================
-   IMPRESIÓN TÉRMICA: 100 x 150 mm
+/* =====================================================
+   IMPRESIÓN TÉRMICA — 100 x 150 mm
    Solo imprime la etiqueta, no la interfaz.
-   ========================================= */
+===================================================== */
 
 @media print {
     @page {
@@ -707,14 +905,14 @@
         margin-top: 2.5mm !important;
     }
 
-    #etiquetaImprimible .bloque-etiqueta>h3 {
+    #etiquetaImprimible .bloque-etiqueta > h3 {
         gap: 1.5mm !important;
         margin-bottom: 1.5mm !important;
         padding-bottom: 1mm !important;
         font-size: 7pt !important;
     }
 
-    #etiquetaImprimible .bloque-etiqueta>h3 span {
+    #etiquetaImprimible .bloque-etiqueta > h3 span {
         width: 5mm !important;
         height: 5mm !important;
         font-size: 6pt !important;
@@ -730,18 +928,18 @@
         -webkit-print-color-adjust: exact !important;
     }
 
-    #etiquetaImprimible .dato-destacado>span,
-    #etiquetaImprimible .dato-etiqueta>span {
+    #etiquetaImprimible .dato-destacado > span,
+    #etiquetaImprimible .dato-etiqueta > span {
         font-size: 5.5pt !important;
     }
 
-    #etiquetaImprimible .dato-destacado>strong,
-    #etiquetaImprimible .dato-etiqueta>strong {
+    #etiquetaImprimible .dato-destacado > strong,
+    #etiquetaImprimible .dato-etiqueta > strong {
         font-size: 8pt !important;
         line-height: 1.2 !important;
     }
 
-    #etiquetaImprimible .dato-destacado:first-of-type>strong {
+    #etiquetaImprimible .dato-destacado:first-of-type > strong {
         font-size: 10pt !important;
     }
 
@@ -749,7 +947,7 @@
         gap: 1.5mm !important;
     }
 
-    #etiquetaImprimible .cantidad-etiqueta>strong {
+    #etiquetaImprimible .cantidad-etiqueta > strong {
         font-size: 10pt !important;
     }
 
@@ -765,7 +963,7 @@
         padding: 1.5mm 2mm !important;
     }
 
-    #etiquetaImprimible .observaciones-etiqueta>span {
+    #etiquetaImprimible .observaciones-etiqueta > span {
         font-size: 5.5pt !important;
     }
 
@@ -780,7 +978,7 @@
         padding-top: 2mm !important;
     }
 
-    #etiquetaImprimible .etq-print-footer>strong {
+    #etiquetaImprimible .etq-print-footer > strong {
         font-size: 12pt !important;
     }
 
@@ -789,7 +987,7 @@
         font-size: 7pt !important;
     }
 
-    #etiquetaImprimible .etq-print-footer>span {
+    #etiquetaImprimible .etq-print-footer > span {
         font-size: 5.5pt !important;
     }
 
@@ -799,82 +997,162 @@
     }
 }
 
-/* BOTÓN DEL MENÚ */
-.btn-menu {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1002;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 8px;
-    background: #171717;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
+/* ==========================================
+   JAGGER MOVE — GENERADOR DE ETIQUETAS
+   DISEÑO INTEGRADO A PANTALLA COMPLETA
+========================================== */
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(180, 20, 35, 0.13),
+            transparent 38%
+        ),
+        #090909;
 }
 
-/* MENÚ LATERAL */
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    left: -280px;
-    width: 260px;
-    height: 100vh;
-    padding: 75px 20px 20px;
-    box-sizing: border-box;
-    background: #171717;
-    z-index: 1003;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    transition: left 0.3s ease;
-    overflow-y: auto;
-}
-
-.menu-lateral.abierto {
-    left: 0;
-}
-
-.menu-lateral h2 {
-    color: white;
-    margin: 0 0 15px;
-}
-
-.menu-lateral a,
-.menu-lateral button {
-    display: block;
-    box-sizing: border-box;
+/* Elimina la apariencia de ventana flotante */
+.etq-app {
     width: 100%;
-    padding: 12px;
+    max-width: none;
+    min-height: 100vh;
+    margin: 0;
+    padding: 35px clamp(18px, 4vw, 65px) 50px;
+    box-sizing: border-box;
+    background: transparent;
     border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Encabezado integrado en la página */
+.etq-header {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto 35px;
+    padding: 0 0 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-sizing: border-box;
+}
+
+/* Contenido extendido */
+.etq-app > * {
+    box-sizing: border-box;
+}
+
+.etq-app #panelMenu,
+.etq-app #panelBusqueda,
+.etq-app #panelFormulario,
+.etq-app #panelVistaPrevia {
+    width: 100%;
+    max-width: 1500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Tarjetas integradas, sin efecto de ventana flotante */
+.etq-card {
+    width: 100%;
+    padding: clamp(22px, 3vw, 40px);
+    margin-bottom: 24px;
+    box-sizing: border-box;
+    background: rgba(19, 19, 19, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-top: 2px solid #c62032;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+/* Botones con identidad tecnológica */
+.etq-btn {
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.etq-btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Campos de formulario */
+.etq-field input,
+.etq-field select,
+.etq-field textarea,
+#buscarCodigo,
+#listaPedidos {
+    width: 100%;
+    box-sizing: border-box;
+    background: #101010;
+    color: #f5f5f5;
+    border: 1px solid #383838;
     border-radius: 7px;
-    background: #292929;
-    color: white;
-    text-align: left;
-    text-decoration: none;
-    font: inherit;
-    cursor: pointer;
+    padding: 13px 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.etq-field input:focus,
+.etq-field select:focus,
+.etq-field textarea:focus,
+#buscarCodigo:focus,
+#listaPedidos:focus {
+    border-color: #d32136;
+    box-shadow: 0 0 0 3px rgba(211, 33, 54, 0.13);
+}
+
+/* Etiquetas de los campos */
+.etq-field label {
+    color: #d0d0d0;
+    font-weight: 600;
+}
+
+/* Panel lateral de navegación */
+.menu-lateral {
+    background: #0b0b0b;
+    border-right: 1px solid rgba(211, 33, 54, 0.5);
+    box-shadow: 12px 0 40px rgba(0, 0, 0, 0.4);
 }
 
 .menu-lateral a:hover,
 .menu-lateral button:hover {
-    background: #444;
+    background: rgba(211, 33, 54, 0.13);
 }
 
-/* FONDO OSCURO */
+/* Menú de fondo */
 .fondo-menu {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.45);
-    z-index: 1001;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(5px);
 }
 
-.fondo-menu.visible {
-    opacity: 1;
-    visibility: visible;
+/* Ajuste para móviles */
+@media (max-width: 700px) {
+    .etq-app {
+        padding: 22px 14px 35px;
+    }
+
+    .etq-header {
+        margin-bottom: 22px;
+        padding-bottom: 18px;
+    }
+
+    .etq-card {
+        padding: 20px 15px;
+        border-radius: 8px;
+    }
+}
+
+/* No modificar la apariencia de la etiqueta impresa */
+@media print {
+    body {
+        background: #fff !important;
+    }
+
+    .etq-print,
+    #etiquetaImprimible {
+        box-shadow: none !important;
+    }
 }

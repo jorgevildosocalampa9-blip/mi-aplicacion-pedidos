@@ -102,12 +102,11 @@ if (btnLogin) {
 
             sesionActiva = true;
 
-            if (loginOverlay) loginOverlay.style.display = "none";
-            document.body.classList.add("sesion-activa");
-
             console.log("Usuario conectado:", data.user);
 
-            await cargarProductosPedido();
+            // Abrir el panel administrativo después de iniciar sesión
+            window.location.replace("admin.html");
+            return;
         } catch (error) {
             console.error("Error de inicio de sesión:", error);
 

@@ -1238,3 +1238,159 @@ body.pagina-inventario.seccion-abierta .inventario-panel[hidden] {
         padding: 10px 14px;
     }
 }
+
+
+/* ======================================
+   ANÁLISIS Y ACTIVIDAD RECIENTE
+====================================== */
+
+.admin-analisis {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+}
+
+.admin-grafico,
+.admin-actividad {
+    min-width: 0;
+}
+
+.grafico-pedidos {
+    display: grid;
+    gap: 19px;
+    margin-top: 28px;
+}
+
+.grafico-fila {
+    display: grid;
+    grid-template-columns: 100px minmax(0, 1fr) 35px;
+    align-items: center;
+    gap: 12px;
+}
+
+.grafico-etiqueta {
+    color: #c3c5cc;
+    font-size: 12px;
+}
+
+.grafico-pista {
+    height: 11px;
+    overflow: hidden;
+    background: #27292f;
+    border-radius: 20px;
+}
+
+.grafico-barra {
+    height: 100%;
+    min-width: 0;
+    border-radius: 20px;
+    transition: width .45s ease;
+}
+
+.grafico-cantidad {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.tabla-admin-contenedor {
+    width: 100%;
+    margin-top: 23px;
+    overflow-x: auto;
+}
+
+.tabla-admin {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tabla-admin th {
+    padding: 14px 12px;
+    color: #9297a2;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #303137;
+}
+
+.tabla-admin td {
+    padding: 16px 12px;
+    color: #e7e8ec;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.tabla-admin tbody tr:hover {
+    background: rgba(255,255,255,.025);
+}
+
+.tabla-admin tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-admin-vacia {
+    padding: 25px !important;
+    color: #969ba6 !important;
+    text-align: center;
+}
+
+.tabla-admin-codigo {
+    color: #ff5361 !important;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.estado-etiqueta {
+    display: inline-block;
+    padding: 6px 9px;
+    border: 1px solid #444650;
+    border-radius: 6px;
+    color: #d5d7dd;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.estado-espera {
+    color: #c4c8d1;
+    border-color: #555b67;
+    background: rgba(133,139,152,.1);
+}
+
+.estado-preparando {
+    color: #ffbd67;
+    border-color: rgba(255,173,66,.3);
+    background: rgba(255,173,66,.08);
+}
+
+.estado-enviando {
+    color: #79baff;
+    border-color: rgba(85,168,255,.3);
+    background: rgba(85,168,255,.08);
+}
+
+.estado-entregado {
+    color: #64dda4;
+    border-color: rgba(66,207,145,.3);
+    background: rgba(66,207,145,.08);
+}
+
+@media (max-width: 520px) {
+    .grafico-fila {
+        grid-template-columns: 82px minmax(0, 1fr) 25px;
+        gap: 8px;
+    }
+
+    .grafico-etiqueta {
+        font-size: 10px;
+    }
+
+    .tabla-admin {
+        min-width: 480px;
+    }
+}
+
+

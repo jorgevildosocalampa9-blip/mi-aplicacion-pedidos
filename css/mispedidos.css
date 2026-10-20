@@ -1,0 +1,532 @@
+
+/* =====================================================
+   JAGGER MOVE — MIS PEDIDOS
+   Diseño unificado: blanco + azul eléctrico
+   ===================================================== */
+
+body {
+    --jm-bg: #f4f6fc;
+    --jm-panel: #ffffff;
+    --jm-panel-hover: #f8f9ff;
+    --jm-red: #4057f5;
+    --jm-red-dark: #3045d8;
+    --jm-text: #20243a;
+    --jm-muted: #7b8198;
+    --jm-border: #e8eaf3;
+
+    margin: 0;
+    min-height: 100vh;
+    color: var(--jm-text);
+    background: #f4f6fc;
+    font-family: "Segoe UI", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.contenedor {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 45px 0 55px;
+    text-align: left;
+}
+
+/* ENCABEZADO */
+
+.encabezado-pedidos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 36px;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e8eaf3;
+    border-left: 4px solid #4057f5;
+    border-radius: 19px;
+    box-shadow: 0 12px 35px rgba(35, 51, 110, 0.07);
+    animation: jmEntrada 0.35s ease both;
+}
+
+.encabezado-texto {
+    min-width: 0;
+}
+
+.encabezado-marca {
+    display: block;
+    margin-bottom: 13px;
+    color: #4057f5;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    line-height: 1.7;
+}
+
+.encabezado-pedidos h1 {
+    margin: 0;
+    color: #20243a;
+    font-size: clamp(31px, 4vw, 44px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.4px;
+}
+
+.encabezado-pedidos h1 span {
+    color: #4057f5;
+}
+
+.encabezado-descripcion {
+    max-width: 540px;
+    margin: 13px 0 0;
+    color: #7b8198;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* EXPORTAR */
+
+.btn-exportar-todo {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    min-height: 45px;
+    padding: 13px 18px;
+    color: #fff;
+    background: #4057f5;
+    border: 1px solid #4057f5;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.7px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.btn-exportar-todo:hover {
+    background: #3045d8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(64, 87, 245, 0.2);
+}
+
+/* BARRA DE LA LISTA */
+
+.barra-lista {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0 0 19px;
+}
+
+.barra-lista h2 {
+    margin: 0;
+    color: #20243a;
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.barra-lista h2::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 17px;
+    margin-right: 11px;
+    background: #4057f5;
+    border-radius: 4px;
+    vertical-align: -4px;
+}
+
+.barra-lista small {
+    color: #7b8198;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* TARJETAS DE PEDIDOS */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 17px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 22px;
+    overflow-wrap: anywhere;
+    background: #ffffff;
+    border: 1px solid #e8eaf3;
+    border-top: 3px solid #4057f5;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(35, 51, 110, 0.06);
+    color: #20243a;
+    text-align: left;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: jmEntrada 0.35s ease both;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(35, 51, 110, 0.11);
+}
+
+.card.En-espera {
+    border-top-color: #9299a9;
+}
+
+.card.Preparando {
+    border-top-color: #e9a12b;
+}
+
+.card.Enviando {
+    border-top-color: #3289e8;
+}
+
+.card.Entregado {
+    border-top-color: #20a66a;
+}
+
+.card h3 {
+    margin: 0 0 12px;
+    color: #20243a;
+    font-size: 17px;
+    font-weight: 850;
+    line-height: 1.45;
+}
+
+.card > small {
+    display: block;
+    margin-bottom: 8px;
+    color: #7b8198;
+    font-size: 11px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.card p {
+    margin: 9px 0;
+    color: #555c73;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.card p b {
+    color: #20243a;
+    font-weight: 750;
+}
+
+/* ESTADOS */
+
+.badge {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin: 10px 0 16px;
+    padding: 8px 11px;
+    background: #eef1ff;
+    border: 1px solid #dce2ff;
+    border-radius: 7px;
+    color: #4057f5;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+.badge::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    background: currentColor;
+    border-radius: 50%;
+}
+
+.En-espera .badge {
+    background: #f0f2f6;
+    border-color: #dfe3eb;
+    color: #687184;
+}
+
+.Preparando .badge {
+    background: #fff6e7;
+    border-color: #f7dfb2;
+    color: #a96b08;
+}
+
+.Enviando .badge {
+    background: #eaf4ff;
+    border-color: #cfe5ff;
+    color: #2476c5;
+}
+
+.Entregado .badge {
+    background: #e8f8f0;
+    border-color: #c8eedb;
+    color: #168451;
+}
+
+/* BOTONES DE ACCIONES */
+
+.btns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 11px;
+}
+
+.btns button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    min-height: 39px;
+    padding: 9px 7px;
+    border: 1px solid #dce2ff !important;
+    border-radius: 8px;
+    background: #eef1ff !important;
+    color: #4057f5 !important;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btns button:hover {
+    background: #dfe5ff !important;
+    transform: translateY(-1px);
+}
+
+.btns button:active {
+    transform: scale(0.98);
+}
+
+.btns button:focus-visible,
+.btn-exportar-todo:focus-visible,
+.btn-menu:focus-visible {
+    outline: 3px solid rgba(64, 87, 245, 0.35);
+    outline-offset: 3px;
+}
+
+/* CARGA Y LISTA VACÍA */
+
+#gridPedidos > p {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: 32px 20px;
+    background: #ffffff;
+    border: 1px solid #e8eaf3;
+    border-radius: 13px;
+    color: #7b8198;
+    font-size: 13px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* MENÚ LATERAL EXISTENTE */
+
+.btn-menu {
+    position: fixed;
+    top: 17px;
+    left: 17px;
+    z-index: 10002;
+    display: block;
+    padding: 12px 16px;
+    color: #4057f5;
+    background: #ffffff;
+    border: 1px solid #e1e5f0;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 5px 18px rgba(35, 51, 110, 0.08);
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10003;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 285px;
+    max-width: 86vw;
+    height: 100vh;
+    height: 100dvh;
+    padding: 80px 20px 22px;
+    overflow-y: auto;
+    background: #ffffff;
+    border-right: 1px solid #e8eaf3;
+    box-shadow: 15px 0 45px rgba(35, 51, 110, 0.12);
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-lateral h2 {
+    margin: 0 0 15px;
+    padding: 0 0 17px 12px;
+    color: #4057f5;
+    border-bottom: 1px solid #e8eaf3;
+    border-left: 3px solid #4057f5;
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.menu-lateral a,
+.menu-lateral button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    color: #424761;
+    background: #f8f9ff;
+    border: 1px solid #e8eaf3;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 750;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.menu-lateral a:hover,
+.menu-lateral button:hover {
+    color: #4057f5;
+    background: #eef1ff;
+    border-color: #dce2ff;
+}
+
+.menu-lateral #btnCerrarSesionMenu {
+    margin-top: auto;
+    color: #4057f5;
+    background: #eef1ff;
+    border-color: #dce2ff;
+}
+
+.menu-fondo {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    background: rgba(24, 30, 58, 0.38);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+body.menu-abierto .menu-lateral {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+body.menu-abierto .menu-fondo {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+    .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contenedor {
+        width: calc(100% - 40px);
+    }
+}
+
+@media (max-width: 600px) {
+    .contenedor {
+        width: calc(100% - 26px);
+        padding-top: 80px;
+        padding-bottom: 30px;
+    }
+
+    .encabezado-pedidos {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 20px;
+        padding: 23px 19px;
+        margin-bottom: 29px;
+        border-radius: 15px;
+    }
+
+    .encabezado-pedidos h1 {
+        font-size: 32px;
+    }
+
+    .encabezado-marca {
+        font-size: 9px;
+        letter-spacing: 2px;
+    }
+
+    .encabezado-descripcion {
+        font-size: 12px;
+    }
+
+    .btn-exportar-todo {
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .barra-lista {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 13px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .btns button {
+        min-height: 42px;
+        font-size: 11px;
+    }
+}
+
+/* ANIMACIÓN */
+
+@keyframes jmEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(9px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

@@ -1,0 +1,206 @@
+/* ==================================================
+   JAGGER MOVE — COMPONENTES COMPARTIDOS
+   Botones, formularios, tarjetas y tablas
+   ================================================== */
+
+/* BOTONES */
+
+.jm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 42px;
+    padding: 11px 17px;
+    border: 1px solid transparent;
+    border-radius: var(--jm-radio-pequeno);
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .2s, color .2s, border-color .2s;
+}
+
+.jm-btn-principal {
+    background: var(--jm-azul);
+    color: var(--jm-blanco);
+}
+
+.jm-btn-principal:hover {
+    background: var(--jm-azul-hover);
+}
+
+.jm-btn-secundario {
+    background: var(--jm-blanco);
+    color: var(--jm-texto);
+    border-color: var(--jm-borde);
+}
+
+.jm-btn-secundario:hover {
+    background: var(--jm-azul-suave);
+    color: var(--jm-azul);
+    border-color: var(--jm-azul);
+}
+
+.jm-btn-peligro {
+    background: #fff0f1;
+    color: #c62f43;
+    border-color: #f2cbd1;
+}
+
+.jm-btn-peligro:hover {
+    background: #ffe1e5;
+}
+
+.jm-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+/* FORMULARIOS */
+
+.jm-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+}
+
+.jm-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.jm-campo label {
+    color: var(--jm-texto);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.jm-campo input,
+.jm-campo select,
+.jm-campo textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 13px;
+    background: var(--jm-blanco);
+    color: var(--jm-texto);
+    border: 1px solid var(--jm-borde);
+    border-radius: var(--jm-radio-pequeno);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.jm-campo textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.jm-campo input:focus,
+.jm-campo select:focus,
+.jm-campo textarea:focus {
+    border-color: var(--jm-azul);
+    box-shadow: 0 0 0 3px rgba(64, 87, 245, .10);
+}
+
+.jm-campo input::placeholder,
+.jm-campo textarea::placeholder {
+    color: #a0a5b8;
+}
+
+/* TARJETAS */
+
+.jm-tarjeta {
+    min-width: 0;
+    padding: 23px;
+    background: var(--jm-blanco);
+    border: 1px solid var(--jm-borde);
+    border-radius: var(--jm-radio);
+    box-shadow: var(--jm-sombra);
+}
+
+.jm-tarjeta-titulo {
+    margin: 0 0 18px;
+    color: var(--jm-texto);
+    font-size: 16px;
+    font-weight: 800;
+}
+
+/* TABLAS */
+
+.jm-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--jm-blanco);
+    border: 1px solid var(--jm-borde);
+    border-radius: 12px;
+}
+
+.jm-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.jm-tabla th,
+.jm-tabla td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--jm-borde);
+    font-size: 12px;
+}
+
+.jm-tabla th {
+    background: #fafbff;
+    color: var(--jm-secundario);
+    font-weight: 800;
+}
+
+.jm-tabla td {
+    color: var(--jm-texto);
+}
+
+.jm-tabla tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* MENSAJES */
+
+.jm-mensaje {
+    padding: 13px 15px;
+    border: 1px solid var(--jm-borde);
+    border-radius: 10px;
+    color: var(--jm-secundario);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.jm-mensaje-exito {
+    background: #e8f8ef;
+    border-color: #c6ecd5;
+    color: #168451;
+}
+
+.jm-mensaje-error {
+    background: #fff0f1;
+    border-color: #f2cbd1;
+    color: #c62f43;
+}
+
+/* DISEÑO PARA MÓVILES */
+
+@media (max-width: 600px) {
+    .jm-btn {
+        min-height: 44px;
+    }
+
+    .jm-tarjeta {
+        padding: 17px;
+        border-radius: 14px;
+    }
+
+    .jm-tabla th,
+    .jm-tabla td {
+        padding: 12px 9px;
+    }
+}

@@ -1,0 +1,114 @@
+/* ==================================================
+   JAGGER MOVE — ESTILOS BASE
+   Diseño: blanco + azul eléctrico
+   ================================================== */
+
+:root {
+    /* Colores principales */
+    --jm-azul: #4057f5;
+    --jm-azul-hover: #3045d8;
+    --jm-azul-suave: #eef1ff;
+
+    /* Fondos */
+    --jm-fondo: #f4f6fc;
+    --jm-blanco: #ffffff;
+    --jm-superficie: #ffffff;
+
+    /* Textos */
+    --jm-texto: #20243a;
+    --jm-secundario: #7b8198;
+
+    /* Bordes y sombras */
+    --jm-borde: #e8eaf3;
+    --jm-sombra: 0 8px 28px rgba(35, 51, 110, 0.07);
+
+    /* Formas */
+    --jm-radio: 18px;
+    --jm-radio-pequeno: 10px;
+
+    /* Espaciado */
+    --jm-espacio: 16px;
+}
+
+/* REINICIO GENERAL */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--jm-fondo);
+    color: var(--jm-texto);
+    font-family: "Segoe UI", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ELEMENTOS GENERALES */
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    color: var(--jm-azul);
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    overflow-wrap: break-word;
+}
+
+/* CONTENEDORES */
+
+.contenedor {
+    width: min(1440px, 96%);
+    margin-inline: auto;
+}
+
+.tarjeta {
+    min-width: 0;
+    background: var(--jm-blanco);
+    border: 1px solid var(--jm-borde);
+    border-radius: var(--jm-radio);
+    box-shadow: var(--jm-sombra);
+}
+
+/* ACCESIBILIDAD */
+
+:focus-visible {
+    outline: 3px solid rgba(64, 87, 245, 0.45);
+    outline-offset: 3px;
+}
+
+/* MOVIMIENTO REDUCIDO */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

@@ -1,0 +1,173 @@
+/* ==================================================
+   JAGGER MOVE — MENÚ Y NAVEGACIÓN
+   Blanco + azul eléctrico
+   ================================================== */
+
+.jm-menu-fondo {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(32, 36, 58, .35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s, visibility .25s;
+}
+
+.jm-menu-fondo.activo {
+    opacity: 1;
+    visibility: visible;
+}
+
+.jm-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: min(300px, 86vw);
+    height: 100vh;
+    height: 100dvh;
+    padding: 25px 18px;
+    overflow-y: auto;
+    background: var(--jm-blanco);
+    border-right: 1px solid var(--jm-borde);
+    box-shadow: 12px 0 35px rgba(35, 51, 110, .10);
+    transform: translateX(-105%);
+    transition: transform .28s ease;
+}
+
+.jm-menu.abierto {
+    transform: translateX(0);
+}
+
+/* CABECERA DEL MENÚ */
+
+.jm-menu-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 5px 4px 20px;
+    border-bottom: 1px solid var(--jm-borde);
+}
+
+.jm-menu-marca {
+    color: var(--jm-azul);
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.jm-menu-cerrar {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    background: var(--jm-azul-suave);
+    border: 0;
+    border-radius: 10px;
+    color: var(--jm-azul);
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.jm-menu-cerrar:hover {
+    background: #dfe4ff;
+}
+
+/* ENLACES */
+
+.jm-menu-navegacion {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.jm-menu-enlace {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 46px;
+    padding: 12px 14px;
+    border: 1px solid transparent;
+    border-radius: 11px;
+    color: var(--jm-texto);
+    font-size: 13px;
+    font-weight: 650;
+    text-decoration: none;
+    transition: background .2s, color .2s, border-color .2s;
+}
+
+.jm-menu-enlace:hover,
+.jm-menu-enlace.activo {
+    background: var(--jm-azul-suave);
+    border-color: #dfe4ff;
+    color: var(--jm-azul);
+}
+
+/* PIE DEL MENÚ */
+
+.jm-menu-pie {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--jm-borde);
+}
+
+.jm-menu-salir {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    padding: 12px;
+    background: var(--jm-blanco);
+    border: 1px solid var(--jm-borde);
+    border-radius: 10px;
+    color: var(--jm-texto);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.jm-menu-salir:hover {
+    background: #fff0f1;
+    border-color: #f2cbd1;
+    color: #c62f43;
+}
+
+/* BOTÓN PARA ABRIR EL MENÚ */
+
+.jm-menu-abrir {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    background: var(--jm-blanco);
+    border: 1px solid var(--jm-borde);
+    border-radius: 12px;
+    color: var(--jm-azul);
+    font-size: 23px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+}
+
+.jm-menu-abrir:hover {
+    background: var(--jm-azul-suave);
+    border-color: var(--jm-azul);
+}
+
+/* EVITAR SCROLL SI EL MENÚ ESTÁ ABIERTO */
+
+body.jm-menu-abierto {
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .jm-menu,
+    .jm-menu-fondo {
+        transition: none;
+    }
+}

@@ -1156,3 +1156,309 @@ body {
         box-shadow: none !important;
     }
 }
+
+
+/* =====================================================
+   JAGGER MOVE — DISEÑO BLANCO + AZUL ELÉCTRICO
+   Interfaz del generador de etiquetas
+   Se conserva la impresión térmica original
+===================================================== */
+
+:root {
+    --etq-bg: #f4f6fc;
+    --etq-panel: #ffffff;
+    --etq-panel-light: #f8faff;
+    --etq-border: #e0e5f0;
+    --etq-red: #4057f5;
+    --etq-red-hover: #3045df;
+    --etq-text: #20243a;
+    --etq-muted: #707990;
+}
+
+/* Fondo general */
+body {
+    margin: 0 !important;
+    min-height: 100vh;
+    background: #f4f6fc !important;
+    color: #20243a;
+}
+
+/* Contenedor principal */
+.etq-app {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100vh;
+    margin: 0 !important;
+    padding: 35px clamp(18px, 4vw, 65px) 50px !important;
+    color: #20243a !important;
+    background: #f4f6fc !important;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Encabezado */
+.etq-header {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto 30px !important;
+    padding: 10px 0 25px !important;
+    border-bottom: 1px solid #e0e5f0 !important;
+}
+
+.etq-logo {
+    filter: none !important;
+}
+
+.etq-header h1 {
+    color: #20243a !important;
+}
+
+.etq-header p {
+    color: #707990 !important;
+}
+
+/* Paneles */
+.etq-card {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto 24px !important;
+    padding: clamp(22px, 3vw, 40px) !important;
+    color: #20243a !important;
+    background: #ffffff !important;
+    border: 1px solid #e0e5f0 !important;
+    border-top: 3px solid #4057f5 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 28px rgba(36, 54, 100, 0.06) !important;
+}
+
+.etq-card h2 {
+    color: #20243a !important;
+}
+
+.etq-card h3 {
+    color: #303b59 !important;
+    border-bottom-color: #e0e5f0 !important;
+}
+
+.etq-muted {
+    color: #707990 !important;
+}
+
+/* Etiquetas de los campos */
+.etq-app label,
+.etq-field label {
+    color: #38415c !important;
+}
+
+/* Campos */
+.etq-app input,
+.etq-app textarea,
+.etq-app select,
+.etq-field input,
+.etq-field select,
+.etq-field textarea,
+#buscarCodigo,
+#listaPedidos {
+    width: 100%;
+    box-sizing: border-box;
+    color: #20243a !important;
+    background: #ffffff !important;
+    border: 1px solid #d9dfec !important;
+    border-radius: 8px !important;
+}
+
+.etq-app input::placeholder,
+.etq-app textarea::placeholder {
+    color: #929bb0 !important;
+}
+
+.etq-app input:focus,
+.etq-app textarea:focus,
+.etq-app select:focus,
+#buscarCodigo:focus,
+#listaPedidos:focus {
+    border-color: #4057f5 !important;
+    box-shadow: 0 0 0 3px rgba(64, 87, 245, 0.12) !important;
+    outline: none;
+}
+
+.etq-app select option {
+    color: #20243a;
+    background: #ffffff;
+}
+
+.etq-message {
+    color: #596580 !important;
+}
+
+/* Botón principal */
+.etq-primary {
+    color: #ffffff !important;
+    background: #4057f5 !important;
+    border-color: #4057f5 !important;
+    box-shadow: 0 5px 14px rgba(64, 87, 245, 0.18) !important;
+}
+
+.etq-primary:hover {
+    color: #ffffff !important;
+    background: #3045df !important;
+    border-color: #3045df !important;
+}
+
+/* Botones secundarios */
+.etq-secondary {
+    color: #34405f !important;
+    background: #eef1ff !important;
+    border-color: #dce2ff !important;
+}
+
+.etq-secondary:hover {
+    color: #2539c9 !important;
+    background: #e1e7ff !important;
+    border-color: #bfcaff !important;
+}
+
+.etq-light {
+    color: #596580 !important;
+    background: #ffffff !important;
+    border-color: #d9dfec !important;
+}
+
+.etq-light:hover {
+    color: #3045df !important;
+    background: #f2f4ff !important;
+    border-color: #bfcaff !important;
+}
+
+/* Botones de destino */
+.etq-destino {
+    color: #34405f !important;
+    background: #f5f7fc !important;
+    border-color: #d9dfec !important;
+}
+
+.etq-destino:hover,
+.etq-destino.etq-selected {
+    color: #3045df !important;
+    background: #edf0ff !important;
+    border-color: #4057f5 !important;
+    box-shadow: inset 0 0 0 1px rgba(64, 87, 245, 0.08) !important;
+}
+
+/* Foco accesible */
+.etq-btn:focus-visible,
+.etq-app input:focus-visible,
+.etq-app textarea:focus-visible,
+.etq-app select:focus-visible {
+    outline: 3px solid rgba(64, 87, 245, 0.25) !important;
+    outline-offset: 3px;
+}
+
+/* Menú */
+.btn-menu {
+    color: #ffffff !important;
+    background: #4057f5 !important;
+    border-color: #4057f5 !important;
+    box-shadow: 0 5px 16px rgba(64, 87, 245, 0.18);
+}
+
+.btn-menu:hover {
+    background: #3045df !important;
+    border-color: #3045df !important;
+}
+
+.menu-lateral {
+    color: #20243a !important;
+    background: #ffffff !important;
+    border-right: 1px solid #e0e5f0 !important;
+    box-shadow: 12px 0 35px rgba(36, 54, 100, 0.12) !important;
+}
+
+.menu-lateral h2 {
+    color: #20243a !important;
+}
+
+.menu-lateral a,
+.menu-lateral button {
+    color: #38415c !important;
+    background: #f5f7fc !important;
+    border-color: #e5e9f3 !important;
+}
+
+.menu-lateral a:hover,
+.menu-lateral button:hover {
+    color: #3045df !important;
+    background: #edf0ff !important;
+    border-color: #cbd4ff !important;
+}
+
+.fondo-menu {
+    background: rgba(28, 38, 70, 0.32) !important;
+    backdrop-filter: blur(4px);
+}
+
+/* =====================================================
+   ETIQUETA PREVIA E IMPRESA
+   Mantenerla blanca, negra y legible
+===================================================== */
+
+.etq-print,
+#etiquetaImprimible {
+    color: #111111 !important;
+    background: #ffffff !important;
+    border-color: #d1d1d6;
+}
+
+.etq-print .marca-texto h2,
+.etq-print .bloque-etiqueta > h3,
+.etq-print .dato-destacado > strong,
+.etq-print .dato-etiqueta > strong,
+.etq-print .etq-print-footer {
+    color: #111111 !important;
+}
+
+/* Adaptación móvil */
+@media (max-width: 700px) {
+    .etq-app {
+        padding: 22px 14px 35px !important;
+    }
+
+    .etq-header {
+        gap: 12px;
+        margin-bottom: 22px !important;
+        padding-bottom: 18px !important;
+    }
+
+    .etq-card {
+        padding: 20px 15px !important;
+        border-radius: 10px !important;
+    }
+}
+
+/* La impresión conserva su configuración original */
+@media print {
+    html,
+    body {
+        background: #ffffff !important;
+    }
+
+    #panelVistaPrevia,
+    #etiquetaImprimible {
+        background: #ffffff !important;
+        box-shadow: none !important;
+    }
+
+    .etq-no-print {
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
+/* IGUALAR TIPOGRAFÍA DEL MENÚ */
+#menuLateral,
+#menuLateral a,
+#menuLateral button,
+#menuLateral .menu-link,
+#btnMenu {
+    font-family: "Segoe UI", Arial, sans-serif !important;
+    letter-spacing: normal !important;
+    text-transform: none;
+}

@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,785 +8,12 @@
     <title>Panel General | JAGGER MOVE</title>
 
     <link rel="icon" href="fotos/LOGO.ico" type="image/x-icon">
-    <link rel="stylesheet" href="css/Style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/componentes.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/admin.css">
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    
-<style>
-    /* ==========================================
-       JAGGER MOVE — PREMIUM TECHNOLOGY
-       Rediseño visual exclusivo del panel
-    ========================================== */
-
-    :root {
-        --jm-bg: #090a0c;
-        --jm-panel: #111317;
-        --jm-panel-hover: #181b20;
-        --jm-border: rgba(255,255,255,.085);
-        --jm-red: #ff3545;
-        --jm-red-soft: rgba(255,53,69,.12);
-        --jm-text: #f5f5f7;
-        --jm-muted: #969ba6;
-        --jm-radius: 16px;
-    }
-
-    /* Fondo exclusivo de esta página */
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background:
-            radial-gradient(
-                ellipse at 50% 0%,
-                rgba(255,53,69,.10),
-                transparent 45%
-            ),
-            linear-gradient(145deg, #0d0e11, #08090b 70%);
-        background-image:
-            radial-gradient(
-                ellipse at 50% 0%,
-                rgba(255,53,69,.10),
-                transparent 45%
-            ),
-            linear-gradient(145deg, #0d0e11, #08090b 70%);
-        background-attachment: fixed;
-        color: var(--jm-text);
-        font-family: "Segoe UI", Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-    }
-
-    .admin-panel,
-    .admin-panel * {
-        box-sizing: border-box;
-    }
-
-    .admin-panel {
-        width: min(1180px, 92%);
-        margin: 0 auto;
-        padding: 48px 0 55px;
-        color: var(--jm-text);
-        animation: jm-entrada .6s ease both;
-    }
-
-    @keyframes jm-entrada {
-        from {
-            opacity: 0;
-            transform: translateY(12px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* ENCABEZADO */
-
-    .admin-encabezado {
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 24px;
-        flex-wrap: wrap;
-        padding: 30px;
-        margin-bottom: 38px;
-        background: linear-gradient(
-            120deg,
-            rgba(24,26,31,.96),
-            rgba(14,15,18,.92)
-        );
-        border: 1px solid var(--jm-border);
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 18px 55px rgba(0,0,0,.20);
-    }
-
-    .admin-encabezado::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 3px;
-        background: var(--jm-red);
-        box-shadow: 0 0 22px rgba(255,53,69,.45);
-    }
-
-    .admin-marca {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--jm-red);
-        font-size: 11px;
-        font-weight: 900;
-        letter-spacing: 4px;
-    }
-
-    .admin-marca::before {
-        content: "";
-        width: 21px;
-        height: 2px;
-        background: var(--jm-red);
-        box-shadow: 0 0 10px rgba(255,53,69,.5);
-    }
-
-    .admin-titulo {
-        margin: 13px 0 8px;
-        color: #fff;
-        font-size: clamp(30px, 4vw, 43px);
-        line-height: 1.1;
-        font-weight: 850;
-        letter-spacing: -1.5px;
-        text-transform: uppercase;
-    }
-
-    .admin-descripcion {
-        margin: 0;
-        color: var(--jm-muted);
-        font-size: 14px;
-        line-height: 1.6;
-    }
-
-    .admin-cerrar {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        gap: 9px;
-        padding: 12px 17px;
-        background: rgba(255,53,69,.08);
-        border: 1px solid rgba(255,53,69,.35);
-        border-radius: 9px;
-        color: #ff6672;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: .3px;
-        cursor: pointer;
-        transition: background .2s, color .2s,
-                    border-color .2s, transform .2s;
-    }
-
-    .admin-cerrar::before {
-        content: "↗";
-        font-size: 16px;
-    }
-
-    .admin-cerrar:hover {
-        background: var(--jm-red);
-        border-color: var(--jm-red);
-        color: #fff;
-        transform: translateY(-2px);
-    }
-
-    /* TÍTULOS DE SECCIÓN */
-
-    .admin-seccion-titulo {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 35px 0 17px;
-        color: #f0f1f4;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 1.8px;
-        text-transform: uppercase;
-    }
-
-    .admin-seccion-titulo::before {
-        content: "";
-        width: 4px;
-        height: 17px;
-        flex-shrink: 0;
-        background: var(--jm-red);
-        border-radius: 4px;
-        box-shadow: 0 0 12px rgba(255,53,69,.28);
-    }
-
-    /* INDICADORES PRINCIPALES */
-
-    .admin-indicadores {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 18px;
-    }
-
-    .admin-tarjeta {
-        position: relative;
-        min-width: 0;
-        padding: 25px;
-        background: linear-gradient(
-            145deg,
-            rgba(22,24,29,.98),
-            rgba(15,16,20,.98)
-        );
-        border: 1px solid var(--jm-border);
-        border-radius: var(--jm-radius);
-        overflow: hidden;
-        transition: border-color .25s, transform .25s,
-                    box-shadow .25s;
-    }
-
-    .admin-tarjeta:hover {
-        border-color: rgba(255,255,255,.17);
-        transform: translateY(-3px);
-        box-shadow: 0 15px 35px rgba(0,0,0,.2);
-    }
-
-    .admin-tarjeta.principal {
-        border-top: 2px solid var(--jm-red);
-    }
-
-    .admin-tarjeta.principal::after {
-        content: "";
-        position: absolute;
-        width: 150px;
-        height: 150px;
-        right: -70px;
-        bottom: -90px;
-        background: rgba(255,53,69,.055);
-        border-radius: 50%;
-        filter: blur(4px);
-        pointer-events: none;
-    }
-
-    .admin-tarjeta-superior {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .admin-tarjeta-titulo {
-        color: #b6bac4;
-        font-size: 13px;
-        font-weight: 600;
-    }
-
-    .admin-icono {
-        display: grid;
-        place-items: center;
-        width: 43px;
-        height: 43px;
-        background: var(--jm-red-soft);
-        border: 1px solid rgba(255,53,69,.14);
-        border-radius: 12px;
-        font-size: 21px;
-    }
-
-    .admin-numero {
-        position: relative;
-        display: block;
-        margin: 21px 0 7px;
-        color: #fff;
-        font-size: clamp(34px, 4vw, 43px);
-        line-height: 1;
-        font-weight: 850;
-        letter-spacing: -1px;
-        font-variant-numeric: tabular-nums;
-    }
-
-    .admin-nota {
-        color: #858a95;
-        font-size: 11px;
-        line-height: 1.5;
-    }
-
-    /* ESTADOS DE PEDIDOS */
-
-    .admin-estados {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 13px;
-    }
-
-    .admin-estado {
-        position: relative;
-        min-width: 0;
-        padding: 20px 15px;
-        background: rgba(18,20,24,.92);
-        border: 1px solid var(--jm-border);
-        border-radius: 13px;
-        text-align: left;
-        transition: background .2s, border-color .2s,
-                    transform .2s;
-    }
-
-    .admin-estado:hover {
-        background: var(--jm-panel-hover);
-        border-color: rgba(255,255,255,.17);
-        transform: translateY(-2px);
-    }
-
-    .admin-estado span {
-        display: block;
-        margin-bottom: 14px;
-        color: #a5a9b3;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    .admin-estado strong {
-        display: block;
-        color: #f5f5f7;
-        font-size: 29px;
-        font-weight: 800;
-        font-variant-numeric: tabular-nums;
-    }
-
-    /* ACENTOS PARA LOS CUATRO ESTADOS */
-
-    .admin-estado:nth-child(1) {
-        border-bottom: 2px solid #858b98;
-    }
-
-    .admin-estado:nth-child(2) {
-        border-bottom: 2px solid #ffad42;
-    }
-
-    .admin-estado:nth-child(3) {
-        border-bottom: 2px solid #55a8ff;
-    }
-
-    .admin-estado:nth-child(4) {
-        border-bottom: 2px solid #42cf91;
-    }
-
-    /* ACCESOS RÁPIDOS */
-
-    .admin-accesos {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 14px;
-    }
-
-    .admin-acceso {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 11px;
-        min-width: 0;
-        min-height: 175px;
-        padding: 22px 19px;
-        background: linear-gradient(
-            145deg,
-            rgba(23,25,30,.96),
-            rgba(15,16,20,.96)
-        );
-        border: 1px solid var(--jm-border);
-        border-radius: 14px;
-        color: var(--jm-text);
-        text-decoration: none;
-        overflow: hidden;
-        transition: transform .25s, border-color .25s,
-                    background .25s, box-shadow .25s;
-    }
-
-    .admin-acceso::after {
-        content: "↗";
-        position: absolute;
-        top: 19px;
-        right: 17px;
-        color: #656a75;
-        font-size: 17px;
-        transition: color .2s, transform .2s;
-    }
-
-    .admin-acceso:hover {
-        background: linear-gradient(
-            145deg,
-            rgba(36,25,29,.98),
-            rgba(18,18,22,.98)
-        );
-        border-color: rgba(255,53,69,.55);
-        transform: translateY(-4px);
-        box-shadow: 0 13px 30px rgba(0,0,0,.22);
-    }
-
-    .admin-acceso:hover::after {
-        color: var(--jm-red);
-        transform: translate(2px, -2px);
-    }
-
-    .admin-acceso-icono {
-        display: grid;
-        place-items: center;
-        width: 46px;
-        height: 46px;
-        margin-bottom: 5px;
-        background: var(--jm-red-soft);
-        border: 1px solid rgba(255,53,69,.14);
-        border-radius: 12px;
-        color: #ff5361;
-        font-size: 26px;
-        line-height: 1;
-        transition: background .2s, color .2s;
-    }
-
-    .admin-acceso:hover .admin-acceso-icono {
-        background: var(--jm-red);
-        color: #fff;
-    }
-
-    .admin-acceso strong {
-        color: #f5f5f7;
-        font-size: 13px;
-        line-height: 1.4;
-        font-weight: 750;
-    }
-
-    .admin-acceso small {
-        color: #9296a0;
-        font-size: 11px;
-        line-height: 1.5;
-    }
-
-    /* MENSAJES DEL SISTEMA */
-
-    .admin-mensaje {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 24px;
-        padding: 13px 16px;
-        background: rgba(255,255,255,.025);
-        border: 1px solid var(--jm-border);
-        border-radius: 10px;
-        color: #a0a5af;
-        font-size: 12px;
-        line-height: 1.6;
-    }
-
-    .admin-mensaje::before {
-        content: "";
-        width: 7px;
-        height: 7px;
-        flex-shrink: 0;
-        background: #54b9ff;
-        border-radius: 50%;
-        box-shadow: 0 0 10px rgba(84,185,255,.45);
-    }
-
-    .admin-mensaje.error {
-        color: #ff6874;
-        border-color: rgba(255,53,69,.25);
-    }
-
-    .admin-mensaje.error::before {
-        background: var(--jm-red);
-        box-shadow: 0 0 10px rgba(255,53,69,.4);
-    }
-
-    /* TABLET */
-
-    @media (max-width: 900px) {
-        .admin-panel {
-            width: min(100% - 36px, 720px);
-            padding-top: 30px;
-        }
-
-        .admin-accesos {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .admin-estados {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-    }
-
-    /* CELULAR */
-
-    @media (max-width: 520px) {
-        .admin-panel {
-            width: calc(100% - 26px);
-            padding-top: 17px;
-            padding-bottom: 30px;
-        }
-
-        .admin-encabezado {
-            align-items: flex-start;
-            flex-direction: column;
-            gap: 22px;
-            padding: 23px 20px;
-            margin-bottom: 29px;
-            border-radius: 15px;
-        }
-
-        .admin-titulo {
-            font-size: 31px;
-            letter-spacing: -1px;
-        }
-
-        .admin-descripcion {
-            font-size: 12px;
-        }
-
-        .admin-cerrar {
-            width: 100%;
-            min-height: 44px;
-        }
-
-        .admin-seccion-titulo {
-            margin-top: 29px;
-            font-size: 11px;
-            letter-spacing: 1.2px;
-        }
-
-        .admin-indicadores {
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .admin-tarjeta {
-            padding: 21px;
-            border-radius: 14px;
-        }
-
-        .admin-numero {
-            font-size: 36px;
-        }
-
-        .admin-estados {
-            gap: 10px;
-        }
-
-        .admin-estado {
-            padding: 17px 13px;
-        }
-
-        .admin-estado span {
-            font-size: 11px;
-        }
-
-        .admin-estado strong {
-            font-size: 26px;
-        }
-
-        .admin-accesos {
-            gap: 10px;
-        }
-
-        .admin-acceso {
-            min-height: 155px;
-            padding: 17px 14px;
-            gap: 9px;
-        }
-
-        .admin-acceso-icono {
-            width: 40px;
-            height: 40px;
-            font-size: 23px;
-        }
-
-        .admin-acceso strong {
-            font-size: 12px;
-        }
-
-        .admin-acceso small {
-            font-size: 10px;
-        }
-    }
-
-    /* ACCESIBILIDAD */
-
-    @media (prefers-reduced-motion: reduce) {
-        .admin-panel,
-        .admin-panel * {
-            animation: none !important;
-            transition: none !important;
-        }
-    }
-
-    
-/* ==========================================
-   JAGGER MOVE — DISTRIBUCIÓN DEL PANEL
-========================================== */
-
-.admin-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-    align-items: start;
-    gap: 24px;
-    width: 100%;
-}
-
-.admin-columna-izquierda,
-.admin-columna-derecha {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.admin-columna-izquierda > .admin-seccion-titulo:first-child,
-.admin-columna-derecha > .admin-seccion-titulo:first-child {
-    margin-top: 0;
-}
-
-/* Gráfico y tabla ocupan el ancho de su columna */
-.admin-grafico,
-.admin-actividad {
-    width: 100%;
-    min-width: 0;
-}
-
-.grafico-pedidos {
-    display: grid;
-    gap: 19px;
-    margin-top: 25px;
-}
-
-.grafico-fila {
-    display: grid;
-    grid-template-columns: 95px minmax(0, 1fr) 30px;
-    align-items: center;
-    gap: 10px;
-}
-
-.grafico-etiqueta {
-    color: #c3c5cc;
-    font-size: 12px;
-}
-
-.grafico-pista {
-    height: 10px;
-    overflow: hidden;
-    background: #27292f;
-    border-radius: 20px;
-}
-
-.grafico-barra {
-    height: 100%;
-    border-radius: 20px;
-    transition: width .45s ease;
-}
-
-.grafico-cantidad {
-    color: #fff;
-    font-size: 12px;
-    font-weight: 800;
-    text-align: right;
-}
-
-/* Resumen compacto en la columna derecha */
-.admin-columna-derecha .admin-indicadores {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
-}
-
-/* Estados en dos columnas */
-.admin-columna-derecha .admin-estados {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
-/* Accesos rápidos en dos columnas */
-.admin-columna-derecha .admin-accesos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
-.admin-columna-derecha .admin-acceso {
-    min-height: 150px;
-    padding: 18px 15px;
-}
-
-.tabla-admin-contenedor {
-    width: 100%;
-    overflow-x: auto;
-}
-
-.tabla-admin {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-.tabla-admin th,
-.tabla-admin td {
-    padding: 13px 9px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    font-size: 11px;
-}
-
-.tabla-admin th {
-    color: #969ba6;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-}
-
-.tabla-admin td {
-    color: #e7e8ec;
-}
-
-.tabla-admin-vacia {
-    text-align: center;
-    color: #969ba6 !important;
-}
-
-.tabla-admin-codigo {
-    color: #ff5361 !important;
-    font-weight: 800;
-}
-
-.estado-etiqueta {
-    display: inline-block;
-    padding: 5px 7px;
-    border: 1px solid #444650;
-    border-radius: 6px;
-    font-size: 10px;
-    white-space: nowrap;
-}
-
-.estado-espera {
-    color: #c4c8d1;
-}
-
-.estado-preparando {
-    color: #ffbd67;
-}
-
-.estado-enviando {
-    color: #79baff;
-}
-
-.estado-entregado {
-    color: #64dda4;
-}
-
-/* Tablet y celular: una sola columna */
-@media (max-width: 900px) {
-    .admin-layout {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 32px;
-    }
-
-    .admin-columna-derecha .admin-indicadores {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-/* Celulares pequeños */
-@media (max-width: 520px) {
-    .admin-columna-derecha .admin-indicadores {
-        grid-template-columns: minmax(0, 1fr);
-    }
-
-    .grafico-fila {
-        grid-template-columns: 82px minmax(0, 1fr) 25px;
-        gap: 8px;
-    }
-
-    .grafico-etiqueta {
-        font-size: 10px;
-    }
-
-    .tabla-admin {
-        min-width: 460px;
-    }
-}
-
-    
-</style>
 
 </head>
 
@@ -803,177 +30,175 @@
                 </p>
             </div>
 
-            <button id="btnCerrarSesionAdmin"
-                    class="admin-cerrar"
-                    type="button">
+            <button id="btnCerrarSesionAdmin" class="admin-cerrar" type="button">
                 Cerrar sesión
             </button>
         </header>
 
 
-<div class="admin-layout">
+        <div class="admin-layout">
 
-    <!-- COLUMNA IZQUIERDA: GRÁFICOS Y ACTIVIDAD -->
-    <section class="admin-columna-izquierda">
+            <!-- COLUMNA IZQUIERDA: GRÁFICOS Y ACTIVIDAD -->
+            <section class="admin-columna-izquierda">
 
-        <h2 class="admin-seccion-titulo">Análisis de pedidos</h2>
+                <h2 class="admin-seccion-titulo">Análisis de pedidos</h2>
 
-        <article class="admin-tarjeta admin-grafico">
-            <div class="admin-tarjeta-superior">
-                <span class="admin-tarjeta-titulo">
-                    Distribución por estado
-                </span>
-                <span class="admin-icono">▥</span>
-            </div>
+                <article class="admin-tarjeta admin-grafico">
+                    <div class="admin-tarjeta-superior">
+                        <span class="admin-tarjeta-titulo">
+                            Distribución por estado
+                        </span>
+                        <span class="admin-icono">▥</span>
+                    </div>
 
-            <p class="admin-nota">
-                Cantidad de pedidos registrados en cada etapa.
-            </p>
+                    <p class="admin-nota">
+                        Cantidad de pedidos registrados en cada etapa.
+                    </p>
 
-            <div id="graficoPedidos" class="grafico-pedidos">
-                <p class="admin-nota">Cargando gráfico...</p>
-            </div>
-        </article>
+                    <div id="graficoPedidos" class="grafico-pedidos">
+                        <p class="admin-nota">Cargando gráfico...</p>
+                    </div>
+                </article>
 
-        <h2 class="admin-seccion-titulo">Actividad reciente</h2>
+                <h2 class="admin-seccion-titulo">Actividad reciente</h2>
 
-        <section class="admin-tarjeta admin-actividad">
+                <section class="admin-tarjeta admin-actividad">
 
-            <div class="admin-tarjeta-superior">
-                <span class="admin-tarjeta-titulo">
-                    Últimos pedidos registrados
-                </span>
-                <span class="admin-icono">◷</span>
-            </div>
+                    <div class="admin-tarjeta-superior">
+                        <span class="admin-tarjeta-titulo">
+                            Últimos pedidos registrados
+                        </span>
+                        <span class="admin-icono">◷</span>
+                    </div>
 
-            <div class="tabla-admin-contenedor">
-                <table class="tabla-admin">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Cliente</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
+                    <div class="tabla-admin-contenedor">
+                        <table class="tabla-admin">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Cliente</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
 
-                    <tbody id="tablaPedidosRecientes">
-                        <tr>
-                            <td colspan="4" class="tabla-admin-vacia">
-                                Cargando pedidos...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            <tbody id="tablaPedidosRecientes">
+                                <tr>
+                                    <td colspan="4" class="tabla-admin-vacia">
+                                        Cargando pedidos...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-        </section>
+                </section>
 
-    </section>
-
-
-    <!-- COLUMNA DERECHA: RESUMEN Y HERRAMIENTAS -->
-    <aside class="admin-columna-derecha">
-
-        <h2 class="admin-seccion-titulo">Resumen del negocio</h2>
-
-        <section class="admin-indicadores">
-
-            <article class="admin-tarjeta principal">
-                <div class="admin-tarjeta-superior">
-                    <span class="admin-tarjeta-titulo">
-                        Pedidos registrados
-                    </span>
-                    <span class="admin-icono">🛍️</span>
-                </div>
-
-                <strong class="admin-numero" id="totalPedidos">—</strong>
-
-                <span class="admin-nota">Total en Supabase</span>
-            </article>
-
-            <article class="admin-tarjeta principal">
-                <div class="admin-tarjeta-superior">
-                    <span class="admin-tarjeta-titulo">
-                        Unidades en stock
-                    </span>
-                    <span class="admin-icono">📦</span>
-                </div>
-
-                <strong class="admin-numero" id="totalStock">—</strong>
-
-                <span class="admin-nota">
-                    Suma de las existencias registradas
-                </span>
-            </article>
-
-        </section>
+            </section>
 
 
-        <h2 class="admin-seccion-titulo">Estado de los pedidos</h2>
+            <!-- COLUMNA DERECHA: RESUMEN Y HERRAMIENTAS -->
+            <aside class="admin-columna-derecha">
 
-        <section class="admin-estados">
+                <h2 class="admin-seccion-titulo">Resumen del negocio</h2>
 
-            <article class="admin-estado">
-                <span>En espera</span>
-                <strong id="pedidosEspera">—</strong>
-            </article>
+                <section class="admin-indicadores">
 
-            <article class="admin-estado">
-                <span>Preparando</span>
-                <strong id="pedidosPreparando">—</strong>
-            </article>
+                    <article class="admin-tarjeta principal">
+                        <div class="admin-tarjeta-superior">
+                            <span class="admin-tarjeta-titulo">
+                                Pedidos registrados
+                            </span>
+                            <span class="admin-icono">🛍️</span>
+                        </div>
 
-            <article class="admin-estado">
-                <span>Enviando</span>
-                <strong id="pedidosEnviando">—</strong>
-            </article>
+                        <strong class="admin-numero" id="totalPedidos">—</strong>
 
-            <article class="admin-estado">
-                <span>Entregados</span>
-                <strong id="pedidosEntregados">—</strong>
-            </article>
+                        <span class="admin-nota">Total en Supabase</span>
+                    </article>
 
-        </section>
+                    <article class="admin-tarjeta principal">
+                        <div class="admin-tarjeta-superior">
+                            <span class="admin-tarjeta-titulo">
+                                Unidades en stock
+                            </span>
+                            <span class="admin-icono">📦</span>
+                        </div>
+
+                        <strong class="admin-numero" id="totalStock">—</strong>
+
+                        <span class="admin-nota">
+                            Suma de las existencias registradas
+                        </span>
+                    </article>
+
+                </section>
 
 
-        <h2 class="admin-seccion-titulo">Accesos rápidos</h2>
+                <h2 class="admin-seccion-titulo">Estado de los pedidos</h2>
 
-        <nav class="admin-accesos">
+                <section class="admin-estados">
 
-            <a class="admin-acceso" href="index.html">
-                <span class="admin-acceso-icono">＋</span>
-                <strong>Registrar pedido</strong>
-                <small>Registrar un cliente</small>
-            </a>
+                    <article class="admin-estado">
+                        <span>En espera</span>
+                        <strong id="pedidosEspera">—</strong>
+                    </article>
 
-            <a class="admin-acceso" href="mispedidos.html">
-                <span class="admin-acceso-icono">☷</span>
-                <strong>Mis pedidos</strong>
-                <small>Consultar y gestionar</small>
-            </a>
+                    <article class="admin-estado">
+                        <span>Preparando</span>
+                        <strong id="pedidosPreparando">—</strong>
+                    </article>
 
-            <a class="admin-acceso" href="inventario.html">
-                <span class="admin-acceso-icono">▦</span>
-                <strong>Inventario</strong>
-                <small>Productos y existencias</small>
-            </a>
+                    <article class="admin-estado">
+                        <span>Enviando</span>
+                        <strong id="pedidosEnviando">—</strong>
+                    </article>
 
-            <a class="admin-acceso" href="etiquetas/etiquetas.html">
-                <span class="admin-acceso-icono">▤</span>
-                <strong>Generar etiqueta</strong>
-                <small>Preparar etiquetas</small>
-            </a>
+                    <article class="admin-estado">
+                        <span>Entregados</span>
+                        <strong id="pedidosEntregados">—</strong>
+                    </article>
 
-        </nav>
+                </section>
 
-        <p id="mensajeAdmin" class="admin-mensaje">
-            Conectando con el sistema...
-        </p>
 
-    </aside>
+                <h2 class="admin-seccion-titulo">Accesos rápidos</h2>
 
-</div>
+                <nav class="admin-accesos">
+
+                    <a class="admin-acceso" href="index.html">
+                        <span class="admin-acceso-icono">＋</span>
+                        <strong>Registrar pedido</strong>
+                        <small>Registrar un cliente</small>
+                    </a>
+
+                    <a class="admin-acceso" href="mispedidos.html">
+                        <span class="admin-acceso-icono">☷</span>
+                        <strong>Mis pedidos</strong>
+                        <small>Consultar y gestionar</small>
+                    </a>
+
+                    <a class="admin-acceso" href="inventario.html">
+                        <span class="admin-acceso-icono">▦</span>
+                        <strong>Inventario</strong>
+                        <small>Productos y existencias</small>
+                    </a>
+
+                    <a class="admin-acceso" href="etiquetas/etiquetas.html">
+                        <span class="admin-acceso-icono">▤</span>
+                        <strong>Generar etiqueta</strong>
+                        <small>Preparar etiquetas</small>
+                    </a>
+
+                </nav>
+
+                <p id="mensajeAdmin" class="admin-mensaje">
+                    Conectando con el sistema...
+                </p>
+
+            </aside>
+
+        </div>
 
 
     </main>
@@ -981,4 +206,5 @@
     <script src="js/admin.js"></script>
 
 </body>
+
 </html>

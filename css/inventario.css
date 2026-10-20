@@ -1,0 +1,771 @@
+
+/* =====================================================
+   JAGGER MOVE — INVENTARIO
+   Diseño unificado: blanco + azul eléctrico
+   ===================================================== */
+
+body.pagina-inventario {
+    --inv-bg: #f4f6fc;
+    --inv-panel: #ffffff;
+    --inv-panel-hover: #f8f9ff;
+    --inv-border: #e8eaf3;
+    --inv-red: #4057f5;
+    --inv-text: #20243a;
+    --inv-muted: #7b8198;
+
+    color: var(--inv-text);
+    background: #f4f6fc;
+    background-image: none;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.pagina-inventario [hidden] {
+    display: none !important;
+}
+
+/* CONTENEDOR */
+
+.pagina-inventario .inventario-contenedor {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 45px 0 60px;
+}
+
+/* ENCABEZADO */
+
+.pagina-inventario .inv-encabezado {
+    padding: 32px;
+    margin-bottom: 28px;
+    background: #ffffff;
+    border: 1px solid #e8eaf3;
+    border-left: 4px solid #4057f5;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(35, 51, 110, 0.07);
+}
+
+.pagina-inventario .inv-encabezado::before {
+    display: none;
+}
+
+.pagina-inventario .inv-etiqueta {
+    margin: 0 0 12px;
+    color: #4057f5;
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 2.5px;
+    line-height: 1.7;
+}
+
+.pagina-inventario .inventario-titulo {
+    margin: 0 0 12px;
+    color: #20243a;
+    font-size: clamp(32px, 5vw, 47px);
+    line-height: 1.1;
+    font-weight: 900;
+    letter-spacing: -1.5px;
+}
+
+.pagina-inventario .inventario-descripcion,
+.pagina-inventario .inv-subtitulo {
+    margin: 0;
+    color: #7b8198;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* OPCIONES PRINCIPALES */
+
+.pagina-inventario .inventario-opciones {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.pagina-inventario .inventario-opcion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13px;
+    min-width: 0;
+    min-height: 190px;
+    padding: 25px;
+    text-align: left;
+    color: #20243a;
+    background: #ffffff;
+    border: 1px solid #e8eaf3;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(35, 51, 110, 0.04);
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s,
+                box-shadow 0.2s, background 0.2s;
+}
+
+.pagina-inventario .inventario-opcion:hover {
+    transform: translateY(-3px);
+    background: #ffffff;
+    border-color: #cbd4ff;
+    box-shadow: 0 14px 30px rgba(35, 51, 110, 0.09);
+}
+
+.pagina-inventario .inventario-icono {
+    display: grid;
+    place-items: center;
+    width: 49px;
+    height: 49px;
+    color: #4057f5;
+    background: #eef1ff;
+    border: 1px solid #dce2ff;
+    border-radius: 13px;
+    font-size: 29px;
+}
+
+.pagina-inventario .inventario-opcion strong {
+    color: #20243a;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.pagina-inventario .inventario-opcion > span:last-child {
+    color: #7b8198;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* PANELES */
+
+.pagina-inventario .inventario-panel {
+    margin-top: 8px;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e8eaf3;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(35, 51, 110, 0.07);
+}
+
+.pagina-inventario .inv-panel-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 28px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid #e8eaf3;
+}
+
+.pagina-inventario .inv-panel-cabecera h2 {
+    margin: 0 0 10px;
+    color: #20243a;
+    font-size: clamp(22px, 3vw, 29px);
+    font-weight: 850;
+    letter-spacing: -0.6px;
+}
+
+.pagina-inventario .btn-link {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    color: #4057f5;
+    background: #eef1ff;
+    border: 1px solid #dce2ff;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pagina-inventario .btn-link:hover {
+    color: #ffffff;
+    background: #3045d8;
+    border-color: #3045d8;
+}
+
+/* FORMULARIO */
+
+.pagina-inventario .inv-formulario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 18px;
+}
+
+.pagina-inventario .inv-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+}
+
+.pagina-inventario .inv-campo label {
+    color: #424761;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.pagina-inventario .inv-campo input,
+.pagina-inventario #buscarProducto {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 12px 14px;
+    color: #20243a;
+    background: #fafbff;
+    border: 1px solid #e1e5f0;
+    border-radius: 9px;
+    outline: none;
+    font: inherit;
+    font-size: 13px;
+    transition: border-color 0.2s, box-shadow 0.2s,
+                background 0.2s;
+}
+
+.pagina-inventario .inv-campo input::placeholder,
+.pagina-inventario #buscarProducto::placeholder {
+    color: #a0a5b8;
+}
+
+.pagina-inventario .inv-campo input:focus,
+.pagina-inventario #buscarProducto:focus {
+    background: #ffffff;
+    border-color: #4057f5;
+    box-shadow: 0 0 0 3px rgba(64, 87, 245, 0.10);
+}
+
+.pagina-inventario input[type="date"] {
+    color-scheme: light;
+}
+
+.pagina-inventario .inv-total-compra {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #eef1ff;
+    border: 1px solid #dce2ff;
+    border-radius: 12px;
+}
+
+.pagina-inventario .inv-total-compra span {
+    color: #424761;
+    font-size: 13px;
+}
+
+.pagina-inventario .inv-total-compra strong {
+    color: #4057f5;
+    font-size: 24px;
+    font-weight: 850;
+    white-space: nowrap;
+}
+
+.pagina-inventario .inv-btn-guardar {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 49px;
+    padding: 13px 18px;
+    color: #ffffff;
+    background: #4057f5;
+    border: 1px solid #4057f5;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 850;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pagina-inventario .inv-btn-guardar:hover {
+    background: #3045d8;
+    border-color: #3045d8;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(64, 87, 245, 0.16);
+}
+
+/* RESUMEN DE STOCK */
+
+.pagina-inventario .inventario-resumen {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+}
+
+.pagina-inventario .inv-resumen-card {
+    min-width: 0;
+    padding: 21px;
+    background: #ffffff;
+    border: 1px solid #e8eaf3;
+    border-top: 3px solid #dce2ff;
+    border-radius: 13px;
+}
+
+.pagina-inventario .inv-resumen-card > span {
+    display: block;
+    margin-bottom: 16px;
+    color: #7b8198;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.pagina-inventario .inv-resumen-card strong {
+    display: block;
+    margin-bottom: 9px;
+    color: #20243a;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 850;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
+}
+
+.pagina-inventario .inv-resumen-card small {
+    color: #8b91a5;
+    font-size: 10px;
+}
+
+.pagina-inventario .inv-resumen-destacado {
+    border-top-color: #4057f5;
+}
+
+.pagina-inventario .inv-resumen-destacado strong {
+    color: #4057f5;
+}
+
+.pagina-inventario .inv-resumen-verde {
+    border-top-color: #20a66a;
+}
+
+.pagina-inventario .inv-resumen-verde strong {
+    color: #168451;
+}
+
+/* CABECERA DE LA TABLA */
+
+.pagina-inventario .inv-tabla-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 19px;
+}
+
+.pagina-inventario .inv-tabla-cabecera h3 {
+    margin: 0 0 8px;
+    color: #20243a;
+    font-size: 17px;
+}
+
+.pagina-inventario .inv-tabla-cabecera p {
+    margin: 0;
+    color: #7b8198;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.pagina-inventario .inv-acciones-tabla {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-inventario #buscarProducto {
+    width: 230px;
+    min-height: 42px;
+}
+
+.pagina-inventario .btn-exportar-excel {
+    min-height: 42px;
+    padding: 10px 14px;
+    color: #168451;
+    background: #e8f8f0;
+    border: 1px solid #c8eedb;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.pagina-inventario .btn-exportar-excel:hover {
+    color: #ffffff;
+    background: #168451;
+    border-color: #168451;
+}
+
+/* TABLA */
+
+.pagina-inventario .inventario-tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    background: #ffffff;
+    border: 1px solid #e8eaf3;
+    border-radius: 12px;
+}
+
+.pagina-inventario .inventario-tabla {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.pagina-inventario .inventario-tabla th {
+    padding: 15px 14px;
+    color: #555c73;
+    background: #f3f5ff;
+    border-bottom: 1px solid #e1e5f0;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.pagina-inventario .inventario-tabla td {
+    padding: 15px 14px;
+    color: #424761;
+    border-bottom: 1px solid #edf0f7;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.pagina-inventario .inventario-tabla tbody tr {
+    transition: background 0.18s;
+}
+
+.pagina-inventario .inventario-tabla tbody tr:hover {
+    background: #f8f9ff;
+}
+
+.pagina-inventario .inventario-tabla tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.pagina-inventario .inventario-tabla td[colspan] {
+    padding: 30px 15px;
+    color: #7b8198;
+    text-align: center;
+}
+
+.pagina-inventario .inv-nota {
+    margin: 16px 0 0;
+    color: #7b8198;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* MENÚ LATERAL */
+
+.pagina-inventario .btn-menu {
+    z-index: 1001;
+    color: #4057f5;
+    background: #ffffff;
+    border: 1px solid #e1e5f0;
+    border-radius: 10px;
+    box-shadow: 0 5px 18px rgba(35, 51, 110, 0.08);
+}
+
+.pagina-inventario .btn-menu:hover {
+    color: #3045d8;
+    border-color: #4057f5;
+}
+
+.pagina-inventario .menu-lateral {
+    color: #20243a;
+    background: #ffffff;
+    border-right: 1px solid #e8eaf3;
+    box-shadow: 15px 0 45px rgba(35, 51, 110, 0.12);
+}
+
+.pagina-inventario .menu-lateral h2 {
+    color: #4057f5;
+    border-color: #e8eaf3;
+    letter-spacing: 2px;
+}
+
+.pagina-inventario .menu-lateral a,
+.pagina-inventario .menu-lateral button {
+    color: #424761;
+    background: #f8f9ff;
+    border: 1px solid #e8eaf3;
+    border-radius: 9px;
+    text-decoration: none;
+}
+
+.pagina-inventario .menu-lateral a:hover,
+.pagina-inventario .menu-lateral button:hover {
+    color: #4057f5;
+    background: #eef1ff;
+    border-color: #dce2ff;
+}
+
+.pagina-inventario #btnCerrarSesionMenu {
+    margin-top: auto;
+}
+
+.pagina-inventario .menu-fondo {
+    background: rgba(24, 30, 58, 0.38);
+    backdrop-filter: blur(3px);
+}
+
+/* TABLET */
+
+@media (max-width: 850px) {
+    .pagina-inventario .inventario-contenedor {
+        width: calc(100% - 32px);
+        padding-top: 30px;
+    }
+
+    .pagina-inventario .inventario-resumen {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pagina-inventario .inv-resumen-verde {
+        grid-column: 1 / -1;
+    }
+
+    .pagina-inventario .inv-tabla-cabecera {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .pagina-inventario .inv-acciones-tabla {
+        width: 100%;
+    }
+
+    .pagina-inventario #buscarProducto {
+        flex: 1;
+        width: auto;
+    }
+}
+
+/* CELULAR */
+
+@media (max-width: 520px) {
+    .pagina-inventario .inventario-contenedor {
+        width: calc(100% - 24px);
+        padding-top: 76px;
+        padding-bottom: 32px;
+    }
+
+    .pagina-inventario .inv-encabezado {
+        padding: 24px 20px;
+        border-radius: 15px;
+    }
+
+    .pagina-inventario .inventario-titulo {
+        font-size: 34px;
+    }
+
+    .pagina-inventario .inventario-opciones {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .pagina-inventario .inventario-opcion {
+        min-height: 155px;
+        padding: 20px;
+    }
+
+    .pagina-inventario .inventario-panel {
+        padding: 19px 15px;
+        border-radius: 14px;
+    }
+
+    .pagina-inventario .inv-panel-cabecera {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .pagina-inventario .inv-formulario {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .pagina-inventario .inv-total-compra {
+        padding: 15px;
+    }
+
+    .pagina-inventario .inv-total-compra span {
+        font-size: 11px;
+    }
+
+    .pagina-inventario .inv-total-compra strong {
+        font-size: 20px;
+    }
+
+    .pagina-inventario .inventario-resumen {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .pagina-inventario .inv-resumen-verde {
+        grid-column: auto;
+    }
+
+    .pagina-inventario .inv-resumen-card {
+        padding: 18px;
+    }
+
+    .pagina-inventario .inv-acciones-tabla {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .pagina-inventario #buscarProducto,
+    .pagina-inventario .btn-exportar-excel {
+        width: 100%;
+        min-height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pagina-inventario,
+    .pagina-inventario * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+
+/* ==========================================
+   CORRECCIÓN FINAL — ELIMINAR FONDOS OSCUROS
+   ========================================== */
+
+body.pagina-inventario,
+body.pagina-inventario main,
+.pagina-inventario .inventario-contenedor {
+    background: #f4f6fc !important;
+    background-image: none !important;
+    color: #20243a !important;
+}
+
+/* Encabezado y títulos */
+.pagina-inventario .inv-encabezado,
+.pagina-inventario .inventario-panel,
+.pagina-inventario .inv-panel-cabecera,
+.pagina-inventario .inv-tabla-cabecera {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #20243a !important;
+}
+
+.pagina-inventario .inventario-titulo,
+.pagina-inventario .inv-panel-cabecera h2,
+.pagina-inventario .inv-tabla-cabecera h3,
+.pagina-inventario .inventario-opcion strong {
+    color: #20243a !important;
+}
+
+/* Opciones y tarjetas */
+.pagina-inventario .inventario-opcion,
+.pagina-inventario .inv-resumen-card {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #20243a !important;
+    border-color: #e8eaf3 !important;
+}
+
+.pagina-inventario .inventario-opcion:hover {
+    background: #f8f9ff !important;
+    border-color: #cbd4ff !important;
+}
+
+.pagina-inventario .inventario-opcion > span:last-child,
+.pagina-inventario .inventario-descripcion,
+.pagina-inventario .inv-subtitulo,
+.pagina-inventario .inv-resumen-card > span,
+.pagina-inventario .inv-resumen-card small {
+    color: #7b8198 !important;
+}
+
+/* Campos del formulario */
+.pagina-inventario .inv-campo,
+.pagina-inventario .inv-formulario {
+    background: transparent !important;
+    color: #20243a !important;
+}
+
+.pagina-inventario .inv-campo label {
+    color: #424761 !important;
+}
+
+.pagina-inventario .inv-campo input,
+.pagina-inventario #buscarProducto {
+    color: #20243a !important;
+    background: #fafbff !important;
+    border: 1px solid #e1e5f0 !important;
+    color-scheme: light;
+}
+
+.pagina-inventario .inv-campo input:focus,
+.pagina-inventario #buscarProducto:focus {
+    background: #ffffff !important;
+    border-color: #4057f5 !important;
+    box-shadow: 0 0 0 3px rgba(64, 87, 245, 0.10) !important;
+}
+
+.pagina-inventario .inv-campo input::placeholder,
+.pagina-inventario #buscarProducto::placeholder {
+    color: #a0a5b8 !important;
+}
+
+/* Total de compra */
+.pagina-inventario .inv-total-compra {
+    background: #eef1ff !important;
+    border-color: #dce2ff !important;
+}
+
+.pagina-inventario .inv-total-compra span {
+    color: #424761 !important;
+}
+
+.pagina-inventario .inv-total-compra strong {
+    color: #4057f5 !important;
+}
+
+/* Tabla */
+.pagina-inventario .inventario-tabla-contenedor {
+    background: #ffffff !important;
+    border-color: #e8eaf3 !important;
+}
+
+.pagina-inventario .inventario-tabla th {
+    color: #555c73 !important;
+    background: #f3f5ff !important;
+    border-color: #e1e5f0 !important;
+}
+
+.pagina-inventario .inventario-tabla td {
+    color: #424761 !important;
+    border-color: #edf0f7 !important;
+}
+
+.pagina-inventario .inventario-tabla tbody tr:hover {
+    background: #f8f9ff !important;
+}
+
+.pagina-inventario .inventario-tabla td[colspan],
+.pagina-inventario .inv-nota {
+    color: #7b8198 !important;
+}
+
+/* Botones azules */
+.pagina-inventario .btn-link,
+.pagina-inventario .inv-btn-guardar {
+    background: #4057f5 !important;
+    color: #ffffff !important;
+    border-color: #4057f5 !important;
+}
+
+.pagina-inventario .btn-link:hover,
+.pagina-inventario .inv-btn-guardar:hover {
+    background: #3045d8 !important;
+    border-color: #3045d8 !important;
+}
+
+/* Iconos */
+.pagina-inventario .inventario-icono {
+    background: #eef1ff !important;
+    color: #4057f5 !important;
+    border-color: #dce2ff !important;
+}
+
